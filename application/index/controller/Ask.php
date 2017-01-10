@@ -14,13 +14,25 @@ class Ask
 {
     public function index( $name) {
         $ret = '';
-        phpinfo();
-        if(($sock = socket_create(AF_INET,SOCK_STREAM,SOL_TCP)) < 0) {
-                echo "socket_create() 失败的原因是:".socket_strerror($sock)."\n";
-         }
-        else{
-            echo "success";
+
+        $client = new swoole_client(SWOOLE_SOCK_TCP);
+        if (!$client->connect('115.236.177.85', 20000, -1))
+        {
+            exit("connect failed. Error: {$client->errCode}\n");
         }
+
+        $buf = new Byte();
+        $writeData = '123456';
+        $buf->writeChar('xiao');
+        $buf->writeShortInt(strlen($writeData));
+        $buf->writeChar($writeData);
+        $buf->writeChar('code');
+
+// echo $buf->getByte();
+        $client->send($buf->getByte());
+        echo $client->recv();
+        $client->close();
+
 
         return $ret;
     }

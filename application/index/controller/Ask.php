@@ -8,12 +8,13 @@
 
 namespace app\index\controller;
 
-use Swoole\Client\TCP;
+use \Swoole\Client\TCP;
 
 class Ask
 {
     public function index( $name) {
         $ret = '';
+        phpinfo();
         $client = new TCP();
 
         if( $client ) {

@@ -8,16 +8,13 @@
 
 namespace app\index\controller;
 
-
-
-use think\Loader;
+use Swoole\Client\TCP;
 
 class Ask
 {
     public function index( $name) {
         $ret = '';
-        Loader::import('Swoole.Client.TCP');
-        $client = new \Swoole\Client\TCP();
+        $client = new TCP();
 
         if( $client ) {
             $ret = 'yes';

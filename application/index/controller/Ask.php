@@ -9,7 +9,7 @@
 namespace app\index\controller;
 
 
-class Hello
+class Ask
 {
     public function index( $name) {
         $ret = '';

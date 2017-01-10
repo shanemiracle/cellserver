@@ -7,7 +7,7 @@
  */
 
 namespace app\index\controller;
-
+import('Swoole.Client.TCP');
 use \Swoole\Client\TCP;
 
 class Ask

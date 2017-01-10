@@ -14,9 +14,9 @@ class Ask
 {
     public function index( $name) {
         $ret = '';
-
+        Loader::import('Swoole.Client.TCP');
         $client = new \Swoole\Client\TCP();
-        
+
         if( $client ) {
             $ret = 'yes';
         }

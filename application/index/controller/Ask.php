@@ -10,6 +10,8 @@ namespace app\index\controller;
 
 
 
+use think\Loader;
+
 class Ask
 {
     public function index( $name) {

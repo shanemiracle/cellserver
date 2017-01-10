@@ -3,7 +3,7 @@ namespace app\index\controller;
 
 use think\controller\Rest;
 
-class Index extends Rest
+class Index
 {
     public function index()
     {
@@ -12,7 +12,6 @@ class Index extends Rest
 
     public function hello()
     {
-        $data = ['hello'=>'xiaoj'];
-        return $data;
+        return "hello";
     }
 }

@@ -15,14 +15,13 @@ class Ask
     public function index( $name) {
         $ret = '';
         phpinfo();
-        $client = new TCP();
+        if(($sock = socket_create(AF_INET,SOCK_STREAM,SOL_TCP)) < 0) {
+                echo "socket_create() 失败的原因是:".socket_strerror($sock)."\n";
+         }
+        else{
+            echo "success";
+        }
 
-        if( $client ) {
-            $ret = 'yes';
-        }
-        else {
-            $ret = 'no';
-        }
         return $ret;
     }
 }

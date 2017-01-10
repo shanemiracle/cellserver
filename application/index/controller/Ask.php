@@ -9,14 +9,14 @@
 namespace app\index\controller;
 
 
-use Swoole\Client\WebSocket;
 
 class Ask
 {
     public function index( $name) {
         $ret = '';
-        $client = new WebSocket('115.236.177.85',20000);
 
+        $client = new \Swoole\Client\TCP();
+        
         if( $client ) {
             $ret = 'yes';
         }

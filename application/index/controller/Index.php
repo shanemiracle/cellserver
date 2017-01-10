@@ -13,6 +13,6 @@ class Index extends Rest
     public function hello()
     {
         $data = ['hello'=>'xiaoj'];
-        return $this->response($data,'json');
+        return $data;
     }
 }

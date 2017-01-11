@@ -29,6 +29,13 @@ class RawClient
         $this->port = $port;
     }
 
+    public function __destruct()
+    {
+        // TODO: Implement __destruct() method.
+        socket_close($this->socket);
+        $this->socket = null;
+    }
+
     /**
      * Swooleclient constructor.
      */
@@ -106,7 +113,7 @@ class RawClient
             if(!socket_set_option($socket,SOL_SOCKET,SO_REUSEADDR,1)){
                 return false;
             }
-            
+
             if(!socket_set_option($socket,SOL_SOCKET,SO_RCVTIMEO,array('sec'=>3,'usec'=>0))){
                 return false;
             }

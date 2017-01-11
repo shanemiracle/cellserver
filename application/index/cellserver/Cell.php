@@ -10,21 +10,29 @@ use app\index\tool\RawClient;
  */
 class Cell
 {
-    public static $bizip = '115.236.177.85';
-    public static $bizPort = 20000;
-    public static $bizClient = null;
-    public static $downRoot = null;
+    private static $bizip = '115.236.177.85';
+    private static $bizPort = 20000;
+    private static $bizClient = null;
+    private static $downRoot = null;
+
+    private function __construct(){}
+
+    public function __clone()
+    {
+        // TODO: Implement __clone() method.
+    }
+
+    public static function getBiz() {
+        if(!(self::$bizClient instanceof RawClient)) {
+            self::$bizClient = new RawClient(self::$bizip,self::$bizPort);
+        }
+        return self::$bizClient;
+    }
 
     public static function bizSend($data) {
-        if(Cell::$bizClient==null) {
-            echo 'cell_biz_create';
-            Cell::$bizClient = new RawClient(Cell::$bizip,Cell::$bizPort);
-        }
+        $client = self::getBiz();
 
-        if( Cell::$bizClient ) {
-            $recv = Cell::$bizClient->send($data);
-        }
-
+        $recv = $client->send($data);
         if(!$recv) {
             return 'error';
         }

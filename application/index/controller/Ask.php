@@ -8,13 +8,12 @@
 
 namespace app\index\controller;
 
-use app\index\cellserver\Cell;
 
 class Ask
 {
     public function index( $name) {
 
-       $recv = Cell::bizSend($name);
+       $recv = 0;//Cell::bizSend($name);
 
        if($recv!= null) {
            return $recv;

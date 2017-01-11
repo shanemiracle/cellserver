@@ -13,9 +13,8 @@ use app\index\tool\RawClient;
 class Ask
 {
     public function index( $name) {
-       $client = new RawClient("115.236.177.85",20000);
 
-       $recv = $client->send($name);
+       $recv = Cell::bizSend($name);
 
        if($recv!= null) {
            return $recv;

@@ -81,7 +81,7 @@ class RawClient
                }
            }
             $this->socket = null;
-            return null;
+            return false;
         }
 
     private function is_connection() {

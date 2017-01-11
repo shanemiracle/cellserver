@@ -9,16 +9,14 @@
 namespace app\index\controller;
 
 
+use app\index\cell\Cell;
+
 class Ask
 {
     public function index( $name) {
 
-       $recv = 0;//Cell::bizSend($name);
+       $recv = Cell::bizSend($name);
 
-       if($recv!= null) {
-           return $recv;
-       }
-
-        return "error";
+       return $recv;
     }
 }

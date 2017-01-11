@@ -11,7 +11,7 @@ use app\index\tool\RawClient;
 class Cell
 {
     public static function bizSend($data) {
-        $client = new RawClient('202.101.115.236',20000);
+        $client = new RawClient('115.236.177.85',20000);
         $recv = $client->send($data);
         if( $recv ) {
             return $recv;

@@ -27,14 +27,14 @@ class RawClient
     {
         $this->host = $host;
         $this->port = $port;
-        echo "client create";
+        echo "client create\n";
     }
 
     public function __destruct()
     {
         // TODO: Implement __destruct() method.
         if($this->socket){
-            echo "client release";
+            echo "client release\n";
             socket_close($this->socket);
             $this->socket = null;
         }

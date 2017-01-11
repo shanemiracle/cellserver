@@ -10,34 +10,74 @@ use app\index\tool\RawClient;
  */
 class Cell
 {
+    private static $cell;
     private static $bizip = '115.236.177.85';
     private static $bizPort = 20000;
-    private static $bizClient;
-    private static $downRoot;
+    private $bizClient;
+    private $downRoot;
 
-    private function __construct(){}
+    private function __construct(){ }
 
     public function __clone()
     {
         // TODO: Implement __clone() method.
     }
 
+    /**
+     * @return mixed
+     */
+    public function getDownRoot()
+    {
+        return $this->downRoot;
+    }
+
+    /**
+     * @param mixed $downRoot
+     */
+    public function setDownRoot($downRoot)
+    {
+        $this->downRoot = $downRoot;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getBizClient()
+    {
+        return $this->bizClient;
+    }
+
+    /**
+     * @param mixed $bizClient
+     */
+    public function setBizClient($bizClient)
+    {
+        $this->bizClient = $bizClient;
+    }
+
+
+
     public static function getBiz() {
-        if(!(self::$bizClient instanceof RawClient)) {
-            self::$bizClient = new RawClient(self::$bizip,self::$bizPort);
+        if(!(self::$cell instanceof self)) {
+            self::$cell = new self;
+            echo "cell create\n";
         }
-        return self::$bizClient;
+        return self::$cell;
     }
 
     public static function bizSend($data) {
-        $client = self::getBiz();
-
-        $recv = $client->send($data);
-        if(!$recv) {
-            return 'error';
+        $cell = self::getBiz();
+        $biz = null;
+        if(( $biz=$cell->getBizClient()) == null) {
+            $cell->setBizClient( new RawClient(Cell::$bizip,Cell::$bizPort));
         }
-
-        return $recv;
+        if($biz) {
+            $recv = $biz->send($data);
+            if($recv) {
+                return $recv;
+            }
+        }
+        return 'error';
     }
 
 }

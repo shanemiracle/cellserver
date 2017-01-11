@@ -14,9 +14,9 @@ use app\index\cell\Cell;
 class Ask
 {
     public function index( $name) {
-
-       $recv = Cell::bizSend($name);
-
+        
+        for($i =0;$i<10;$i++)
+            $recv = Cell::bizSend($name);
        return $recv;
     }
 }

@@ -15,7 +15,7 @@ class Ask
 {
     public function index( $name) {
         $recv = '';
-        for($i =0;$i<1;$i++) {
+        for($i =0;$i<10;$i++) {
             $recv .= Cell::bizSend($name);
         }
 

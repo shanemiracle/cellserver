@@ -1,20 +1,18 @@
 <?php
 /**
  * Created by PhpStorm.
- * User: xiaoj
- * Date: 2017/1/10
- * Time: 17:13
+ * User: HC
+ * Date: 2017/1/11
+ * Time: 10:32
  */
+namespace app\index\tool;
 
-namespace app\index\controller;
-
-
-class Byte
-{
+class Byte{
+    //长度  
     private $length=0;
 
     private $byte='';
-    //操作码
+    //操作码  
     private $code;
     public function setBytePrev($content){
         $this->byte=$content.$this->byte;
@@ -40,4 +38,29 @@ class Byte
         $this->length+=2;
         $this->byte.=pack('n',$interge);
     }
+
+    
 }
+
+/*$client = new swoole_client(SWOOLE_SOCK_TCP);
+if (!$client->connect('115.236.177.85', 20000, -1))
+{
+    exit("connect failed. Error: {$client->errCode}\n");
+}
+// $sendData = 'xiao';
+// $sendData .= '';
+// $sendData .= intval(5);
+// $sendData .= 'hello';
+// $sendData .= 'code';
+
+$buf = new Byte();
+$writeData = '123456';
+$buf->writeChar('xiao');
+$buf->writeShortInt(strlen($writeData));
+$buf->writeChar($writeData);
+$buf->writeChar('code');
+
+// echo $buf->getByte();
+$client->send($buf->getByte());
+echo $client->recv();
+$client->close();*/

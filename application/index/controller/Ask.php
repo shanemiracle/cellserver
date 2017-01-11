@@ -8,32 +8,19 @@
 
 namespace app\index\controller;
 
-use swoole_client;
+use app\index\tool\RawClient;
 
 class Ask
 {
     public function index( $name) {
-        $ret = '';
+       $client = new RawClient("115.236.177.85",20000);
 
-        $client = new swoole_client(SWOOLE_SOCK_TCP, SWOOLE_SOCK_SYNC);
-        if (!$client->connect('115.236.177.85', 20000, -1))
-        {
-            exit("connect failed. Error: {$client->errCode}\n");
-        }
+       $recv = $client->send($name);
 
-        $buf = new Byte();
-        $writeData = '123456';
-        $buf->writeChar('xiao');
-        $buf->writeShortInt(strlen($writeData));
-        $buf->writeChar($writeData);
-        $buf->writeChar('code');
+       if($recv!= null) {
+           return $recv;
+       }
 
-// echo $buf->getByte();
-        $client->send($buf->getByte());
-        echo $client->recv();
-        $client->close();
-
-
-        return $ret;
+        return "error";
     }
 }

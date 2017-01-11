@@ -106,9 +106,7 @@ class RawClient
             if(!socket_set_option($socket,SOL_SOCKET,SO_REUSEADDR,1)){
                 return false;
             }
-            if(!socket_set_option($socket,SOL_SOCKET,SO_REUSEPORT,1)){
-                return false;
-            }
+            
             if(!socket_set_option($socket,SOL_SOCKET,SO_RCVTIMEO,array('sec'=>3,'usec'=>0))){
                 return false;
             }

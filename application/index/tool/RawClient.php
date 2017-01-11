@@ -32,12 +32,13 @@ class RawClient
 
     public function __destruct()
     {
+        echo "client release\n";
         // TODO: Implement __destruct() method.
-        if($this->socket){
-            echo "client release\n";
-            socket_close($this->socket);
-            $this->socket = null;
-        }
+//        if($this->socket){
+//            echo "client release\n";
+//            socket_close($this->socket);
+//            $this->socket = null;
+//        }
     }
 
     /**

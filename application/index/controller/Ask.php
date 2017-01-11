@@ -8,7 +8,7 @@
 
 namespace app\index\controller;
 
-use app\index\tool\RawClient;
+use app\index\cellserver\Cell;
 
 class Ask
 {

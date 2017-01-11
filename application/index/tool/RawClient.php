@@ -14,7 +14,7 @@ class RawClient
      * send message
      *
      * */
-    static $socket = null;
+    private $socket = null;
     private $host='';
     private $port=0;
 
@@ -37,17 +37,17 @@ class RawClient
     public function send($byte)
     {
         if( !$this->is_connection() ) {
-            RawClient::$socket = $this->connect();
+            $this->socket = $this->connect();
         }
 
-        if( RawClient::$socket == null ) {
+        if( $this->socket == null ) {
             return false;
         }
 
         $sendBuf = $this->sendPack($byte);
 
         if( $sendBuf ) {
-            $send = socket_write( RawClient::$socket,$sendBuf);
+            $send = socket_write( $this->socket,$sendBuf);
             if(!$send)
             {
                 return false;
@@ -65,25 +65,25 @@ class RawClient
          * */
      public function recv( )
         {
-           if(RawClient::$socket){
-               $receive = socket_read(RawClient::$socket, 8129);
+           if($this->socket){
+               $receive = socket_read($this->socket, 8129);
                if ($receive){
                    return $receive;
                }
            }
-            RawClient::$socket = null;
+            $this->socket = null;
             return null;
         }
 
     private function is_connection() {
-        if(RawClient::$socket) {
-            $ret = socket_write(RawClient::$socket,' ',1);
+        if($this->socket) {
+            $ret = socket_write($this->socket,' ',1);
             if ($ret) {
                 return true;
             }
             else {
-                socket_close(RawClient::$socket);
-                RawClient::$socket = null;
+                socket_close($this->socket);
+                $this->socket = null;
                 return false;
             }
         }
@@ -103,7 +103,13 @@ class RawClient
         }
         //连接服务器端socket
         if($socket) {
-            if(!socket_set_option(RawClient::$socket,SOL_SOCKET,SO_RCVTIMEO,array('sec'=>3,'usec'=>0))){
+            if(!socket_set_option($socket,SOL_SOCKET,SO_REUSEADDR,1)){
+                return false;
+            }
+            if(!socket_set_option($socket,SOL_SOCKET,SO_REUSEPORT,1)){
+                return false;
+            }
+            if(!socket_set_option($socket,SOL_SOCKET,SO_RCVTIMEO,array('sec'=>3,'usec'=>0))){
                 return false;
             }
             $connection = socket_connect($socket, $this->host, $this->port);

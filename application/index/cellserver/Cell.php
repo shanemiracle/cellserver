@@ -17,6 +17,7 @@ class Cell
 
     public static function bizSend($data) {
         if(Cell::$bizClient==null) {
+            echo 'cell_biz_create';
             Cell::$bizClient = new RawClient(Cell::$bizip,Cell::$bizPort);
         }
 

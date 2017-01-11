@@ -71,6 +71,7 @@ class Cell
         if(( $biz=$cell->getBizClient()) == null) {
             $cell->setBizClient( new RawClient(Cell::$bizip,Cell::$bizPort));
         }
+        $biz = $cell->getBizClient();
         if($biz) {
             $recv = $biz->send($data);
             if($recv) {

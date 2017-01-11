@@ -16,7 +16,9 @@ class Cell
     private $bizClient;
     private $downRoot;
 
-    private function __construct(){ }
+    private function __construct(){
+        echo "cell create ";
+    }
 
     public function __clone()
     {
@@ -60,7 +62,6 @@ class Cell
     public static function getBiz() {
         if(!(self::$cell instanceof self)) {
             self::$cell = new self;
-            echo "cell create\n";
         }
         return self::$cell;
     }

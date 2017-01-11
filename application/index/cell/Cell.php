@@ -10,9 +10,20 @@ use app\index\tool\RawClient;
  */
 class Cell
 {
+    private $biz;
+    private static $cell;
+    public static function getCell() {
+        if(!(self::$cell instanceof self)){
+            self::$cell = new self;
+        }
+        return self::$cell;
+    }
     public static function bizSend($data) {
-        $client = new RawClient('115.236.177.85',20000);
-        $recv = $client->send($data);
+        $cellOb = self::getCell();
+        if( $cellOb->biz == null ) {
+            $cellOb->biz  = new RawClient('115.236.177.85',20000);
+        }
+        $recv =$cellOb->biz->send($data);
         if( $recv ) {
             return $recv;
         }

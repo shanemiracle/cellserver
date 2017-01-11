@@ -7,15 +7,15 @@
  */
 
 namespace app\index\controller;
-import('Swoole.Client.TCP');
-use \Swoole\Client\TCP;
+
+use swoole_client;
 
 class Ask
 {
     public function index( $name) {
         $ret = '';
 
-        $client = new swoole_client(SWOOLE_SOCK_TCP);
+        $client = new swoole_client(SWOOLE_SOCK_TCP, SWOOLE_SOCK_SYNC);
         if (!$client->connect('115.236.177.85', 20000, -1))
         {
             exit("connect failed. Error: {$client->errCode}\n");

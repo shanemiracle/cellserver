@@ -16,9 +16,9 @@ class Ask
     public function index( $name) {
         $recv = '';
         for($i =0;$i<10;$i++) {
-            $recv .= Cell::bizSend($name);
+            echo Cell::bizSend($name);
         }
 
-       return $recv;
+       return '';
     }
 }

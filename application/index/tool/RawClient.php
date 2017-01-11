@@ -47,8 +47,8 @@ class RawClient
         $sendBuf = $this->sendPack($byte);
 
         if( $sendBuf ) {
-            $send = socket_write( $this->socket,$sendBuf);
-            if(!$send)
+            $sendret = socket_write( $this->socket,$sendBuf);
+            if(!$sendret)
             {
                 return false;
             }

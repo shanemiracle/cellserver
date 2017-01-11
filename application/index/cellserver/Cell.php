@@ -12,8 +12,8 @@ class Cell
 {
     private static $bizip = '115.236.177.85';
     private static $bizPort = 20000;
-    private static $bizClient = null;
-    private static $downRoot = null;
+    private static $bizClient;
+    private static $downRoot;
 
     private function __construct(){}
 

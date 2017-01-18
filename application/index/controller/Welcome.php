@@ -16,9 +16,9 @@ use think\View;
 class Welcome
 {
     public function index() {
-        $cook = Request::instance()->cookie('attest');
-        //Cookie::set('attest',1234567);
-        //$cook = Cookie::get('attest');
+//        $cook = Request::instance()->cookie('attest');
+//        Cookie::set('attest',1234567);
+        $cook = Cookie::get('attest');
         return (new View())->fetch('welcome',['cook'=>'cook'.$cook]);
     }
 

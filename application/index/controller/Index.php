@@ -23,6 +23,7 @@ class Index
                 $recv = apiLogin::apiLogin($user_name,$pwd);
 
                 if($recv['ret_code'] == 0) {
+                    echo $recv['ret_code'];
                     Session::set('attest', $recv['attest']);
                     Cookie::set('attest',$recv['attest'],1800);
                     return (new View())->fetch('index');
@@ -41,7 +42,7 @@ class Index
 
     public function test() {
         $data = ['attest'=>Session::get('attest'),'hospital_name'=>'test5','hospital_number'=>'5','zone'=>'杭州','logo'=>'','level'=>'专家'];
-        return json_encode(apiHospital::apiHospitalAdd($data));
+        return '';
     }
 
 

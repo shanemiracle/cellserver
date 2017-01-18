@@ -164,11 +164,15 @@ return [
 
     'log'                    => [
         // 日志记录方式，内置 file socket 支持扩展
-        'type'  => 'File',
-        // 日志保存目录
-        'path'  => LOG_PATH,
-        // 日志记录级别
-        'level' => [],
+//        'type'  => 'File',
+//        // 日志保存目录
+//        'path'  => LOG_PATH,
+//        // 日志记录级别
+//        'level' => [],
+        'type' => 'socket',
+        'host' => '127.0.0.1',
+        'force_clientids' =>['xiaoj'],
+        'allow_client_ids' =>['xiaoj'],
     ],
 
     // +----------------------------------------------------------------------
@@ -217,7 +221,7 @@ return [
         // cookie 名称前缀
         'prefix'    => '',
         // cookie 保存时间
-        'expire'    => 0,
+        'expire'    => 1800,
         // cookie 保存路径
         'path'      => '/',
         // cookie 有效域名

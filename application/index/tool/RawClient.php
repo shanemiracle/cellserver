@@ -116,7 +116,7 @@ class RawClient
                 return false;
             }
 
-            if(!socket_set_option($socket,SOL_SOCKET,SO_RCVTIMEO,array('sec'=>3,'usec'=>0))){
+            if(!socket_set_option($socket,SOL_SOCKET,SO_RCVTIMEO,array('sec'=>1,'usec'=>0))){
                 return false;
             }
             $connection = socket_connect($socket, $this->host, $this->port);

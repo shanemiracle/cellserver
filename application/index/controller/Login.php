@@ -9,18 +9,21 @@
 namespace app\index\controller;
 
 
-use think\controller\Rest;
+use app\index\cell\Cell;
+use think\Cookie;
 use think\Request;
+use think\Session;
+use think\View;
 
-class Login extends Rest
+class Login
 {
     public function index() {
-        $name = Request::instance()->param('name');
-        $pwd = Request::instance()->param('pwd');
+        Session::delete('user_name');
+        Session::delete('pwd');
 
-        $array = ['name'=>$name,'pwd'=>$pwd];
-
-        return $this->response($array,'json',200);
+        return (new View())->fetch('/login/index');
     }
+
+
 
 }

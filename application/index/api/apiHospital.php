@@ -30,9 +30,9 @@ class apiHospital
         return false;
     }
 
-    public static function apiHospitalSet($attest,$hospital_no,$zone,$hospital_name,$logo,$level) {
+    public static function apiHospitalSet($attest,$hospital_no,$hospital_ver,$zone,$hospital_name,$logo,$level) {
         $sendArray = ['id'=>intval(3),'flag'=>intval(0),'attest'=>$attest,'hospital_name'=>$hospital_name,
-            'hospital_no'=>$hospital_no,'zone'=>$zone,'logo'=>$logo,'level'=>$level];
+            'hospital_ver'=>$hospital_ver,'hospital_no'=>$hospital_no,'zone'=>$zone,'logo'=>$logo,'level'=>$level];
         $sendData = json_encode($sendArray);
         if($sendData){
             $recvData = Cell::bizSend($sendData);

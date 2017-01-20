@@ -14,8 +14,8 @@ use app\index\cell\Cell;
 class apiDevice
 {
     public static function apiDeviceAdd($attest,$machine_code,$hospital_no,$valid_sec) {
-        $sendArray = ['id'=>intval(12),'flag'=>intval(0),'attest'=>$attest,'machine_code'=>$machine_code,
-            'hospital_no'=>$hospital_no,'valid_sec'=>$valid_sec];
+        $sendArray = ['id'=>intval(12),'flag'=>intval(0),'data'=>['attest'=>intval($attest),'machine_code'=>$machine_code,
+            'hospital_no'=>intval($hospital_no),'valid_sec'=>intval($valid_sec)]];
         $sendData = json_encode($sendArray);
         if($sendData){
             $recvData = Cell::bizSend($sendData);
@@ -32,7 +32,7 @@ class apiDevice
     }
 
     public static function apiDeviceHospitalGet($attest,$hospital_no) {
-        $sendArray = ['id'=>intval(13),'flag'=>intval(0),'attest'=>$attest,'hospital_no'=>$hospital_no];
+        $sendArray = ['id'=>intval(13),'flag'=>intval(0),'data'=>['attest'=>intval($attest),'hospital_no'=>intval($hospital_no)]];
         $sendData = json_encode($sendArray);
         if($sendData){
             $recvData = Cell::bizSend($sendData);
@@ -49,7 +49,7 @@ class apiDevice
     }
 
     public static function apiDeviceGet($attest,$machine_code) {
-        $sendArray = ['id'=>intval(14),'flag'=>intval(0),'attest'=>$attest,'machine_code'=>$machine_code];
+        $sendArray = ['id'=>intval(14),'flag'=>intval(0),'data'=>['attest'=>intval($attest),'machine_code'=>$machine_code]];
         $sendData = json_encode($sendArray);
         if($sendData){
             $recvData = Cell::bizSend($sendData);
@@ -66,7 +66,8 @@ class apiDevice
     }
 
     public static function apiDeviceSetTime($attest,$device_no,$add_sec) {
-        $sendArray = ['id'=>intval(15),'flag'=>intval(0),'attest'=>$attest,'device_no'=>$device_no,'add_sec'=>$add_sec];
+        $sendArray = ['id'=>intval(15),'flag'=>intval(0),'data'=>['attest'=>intval($attest),'device_no'=>$device_no,
+            'add_sec'=>intval($add_sec)]];
         $sendData = json_encode($sendArray);
         if($sendData){
             $recvData = Cell::bizSend($sendData);

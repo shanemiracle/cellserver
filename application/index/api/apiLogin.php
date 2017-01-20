@@ -14,9 +14,15 @@ use think\Session;
  */
 class apiLogin
 {
+    /**
+     *
+     * @param $user_name 1
+     * @param $pwd
+     * @return bool|mixed
+     */
     public static function apiLogin($user_name, $pwd) {
 
-        $sendArray = ['id'=>intval(1),'flag'=>intval(0),'user_name'=>$user_name,'pwd'=>$pwd];
+        $sendArray = ['id'=>intval(1),'flag'=>intval(0),'data'=>['user_name'=>$user_name,'pwd'=>$pwd]];
         $sendData = json_encode($sendArray);
         if($sendData) {
             $recvData = Cell::bizSend($sendData);

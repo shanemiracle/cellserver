@@ -14,7 +14,8 @@ use app\index\cell\Cell;
 class apiCellPer
 {
     public static function apiCellPerGet($attest,$hospital_no,$check_type) {
-        $sendArray = ['id'=>intval(19),'flag'=>intval(0),'attest'=>$attest,'hospital_no'=>$hospital_no,'check_type'=>$check_type ];
+        $sendArray = ['id'=>intval(20),'flag'=>intval(0),'data'=>['attest'=>intval($attest),
+            'hospital_no'=>intval($hospital_no),'check_type'=>intval($check_type)] ];
         $sendData = json_encode($sendArray);
         if($sendData){
             $recvData = Cell::bizSend($sendData);
@@ -34,8 +35,8 @@ class apiCellPer
      * $data {'cell_type','min_per','max_per','normal_per'}
      */
     public static function apiCellPerSet($attest,$hospital_no,$check_type,$info_ver,$data) {
-        $sendArray = ['id'=>intval(20),'flag'=>intval(0),'attest'=>$attest,'hospital_no'=>$hospital_no,
-            'check_type'=>$check_type,'info_ver'=>$info_ver,'data'=>$data ];
+        $sendArray = ['id'=>intval(21),'flag'=>intval(0),'data'=>['attest'=>intval($attest),'hospital_no'=>intval($hospital_no),
+            'check_type'=>intval($check_type),'info_ver'=>intval($info_ver),'data'=>$data] ];
         $sendData = json_encode($sendArray);
         if($sendData){
             $recvData = Cell::bizSend($sendData);

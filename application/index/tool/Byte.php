@@ -39,6 +39,10 @@ class Byte{
         $this->byte.=pack('n',$interge);
     }
 
+    public static function readShortInt($data){
+        return unpack('n',$data);
+    }
+
     
 }
 

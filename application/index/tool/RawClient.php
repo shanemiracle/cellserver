@@ -75,9 +75,62 @@ class RawClient
      public function recv( )
         {
            if($this->socket){
-               $receive = socket_read($this->socket, 8129);
-               if ($receive){
-                   return $receive;
+               $ret_s = '';
+               for($i = 0; $i < 20; $i++){
+                   $receive = socket_read($this->socket, 8129);
+                   if ($receive){
+
+                       $ret_s .= $receive;
+
+                       //head;
+                       $a = substr($ret_s,0,1);
+                       if($a!='x'){
+                           break;
+                       }
+                       if(substr($ret_s,1,1)!='i'){
+                           break;
+                       }
+                       if(substr($ret_s,2,1)!='a'){
+                           break;
+                       }
+                       if(substr($ret_s,3,1)!='o'){
+                           break;
+                       }
+
+                       $len = 0;
+                       $len_arry = unpack('n',substr($ret_s,4,2));
+                       if($len_arry) {
+                           $len =$len_arry['1'];
+                       }
+
+                       if($len>8096||$len ==0){
+                           break;
+                       }
+
+                       if(strlen($ret_s) < $len+10) {
+                           continue;
+                       }
+
+                       if(substr($ret_s,6+$len,1)!='c'){
+                           break;
+                       }
+                       if(substr($ret_s,7+$len,1)!='o'){
+                           break;
+                       }
+                       if(substr($ret_s,8+$len,1)!='d'){
+                           break;
+                       }
+                       if(substr($ret_s,9+$len,1)!='e'){
+                           break;
+                       }
+
+                       $ret_ok = substr($ret_s,6,$len);
+
+                       return $ret_ok;
+                   }
+                   else {
+                       break;
+                   }
                }
            }
             $this->socket = null;

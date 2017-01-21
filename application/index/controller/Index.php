@@ -21,13 +21,16 @@ class Index
 
             if($user_name != null && $pwd != null ) {
                 $recv = apiLogin::apiLogin($user_name,$pwd);
+                if( $recv ) {
+                    if($recv['ret_code'] == 0) {
+                        Session::set('attest', $recv['attest']);
+                        Cookie::set('attest',$recv['attest'],1800);
+                        return (new View())->fetch('index');
+                    }
 
-                if($recv['ret_code'] == 0) {
-                    echo $recv['ret_code'];
-                    Session::set('attest', $recv['attest']);
-                    Cookie::set('attest',$recv['attest'],1800);
-                    return (new View())->fetch('index');
                 }
+
+
             }
         }
         else {

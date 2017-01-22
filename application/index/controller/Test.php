@@ -221,6 +221,13 @@ class Test
                 $ret = apiCellPer::apiCellPerSet(intval($attest),intval($hospital_no),intval($check_type),intval($info_ver),$data);
                 break;
 
+            case 22:
+                $attest = Request::instance()->param('attest');
+                $machine_code = Request::instance()->param('machine_code');
+
+                $ret = apiDevice::apiDeviceDrop(intval($attest),$machine_code);
+                break;
+
         }
         return json_encode($ret);
     }

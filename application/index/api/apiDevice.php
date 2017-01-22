@@ -82,4 +82,21 @@ class apiDevice
 
         return false;
     }
+
+    public static function apiDeviceDrop($attest,$machine_code){
+        $sendArray = ['id'=>intval(22),'flag'=>intval(0),'data'=>['attest'=>intval($attest),'machine_code'=>$machine_code]];
+        $sendData = json_encode($sendArray);
+        if($sendData){
+            $recvData = Cell::bizSend($sendData);
+            if($recvData) {
+                $recvArray = json_decode($recvData,true);
+
+                if($recvArray) {
+                    return $recvArray;
+                }
+            }
+        }
+
+        return false;
+    }
 }

@@ -9,6 +9,8 @@
 namespace app\index\controller;
 
 
+use app\index\api\apiCellPer;
+use app\index\api\apiCellType;
 use app\index\api\apiDevice;
 use app\index\api\apiDoctor;
 use app\index\api\apiHospital;
@@ -165,7 +167,59 @@ class Test
                 $ret = apiDevice::apiDeviceSetTime(intval($attest),$device_no,intval($add_sec));
                 break;
 
+            case 16:
+                $attest = Request::instance()->param('attest');
+                $cell_name = Request::instance()->param('cell_name');
 
+                $ret = apiCellType::apiCellTypeAdd(intval($attest),$cell_name);
+                break;
+
+            case 17:
+                $attest = Request::instance()->param('attest');
+                $cell_name = Request::instance()->param('cell_name');
+
+                $ret = apiCellType::apiCellTypeDrop(intval($attest),$cell_name);
+                break;
+
+            case 18:
+                $attest = Request::instance()->param('attest');
+                $cell_start = Request::instance()->param('cell_start');
+                $get_num = Request::instance()->param('get_num');
+
+                $ret = apiCellType::apiCellTypeGet(intval($attest),intval($cell_start),intval($get_num));
+                break;
+
+            case 19:
+                $attest = Request::instance()->param('attest');
+                $cell_start = Request::instance()->param('cell_start');
+                $get_num = Request::instance()->param('get_num');
+
+                $ret = apiCellType::apiCellTypeCustomGet(intval($attest),intval($cell_start),intval($get_num));
+                break;
+
+            case 20:
+                $attest = Request::instance()->param('attest');
+                $hospital_no = Request::instance()->param('hospital_no');
+                $check_type = Request::instance()->param('check_type');
+
+                $ret = apiCellPer::apiCellPerGet(intval($attest),intval($hospital_no),intval($check_type));
+                break;
+
+            case 21:
+                $attest = Request::instance()->param('attest');
+                $hospital_no = Request::instance()->param('hospital_no');
+                $check_type = Request::instance()->param('check_type');
+                $info_ver = Request::instance()->param('info_ver');
+
+                $data = [
+                    ['cell_type'=>intval(1),'min_per'=>'10.5%','max_per'=>'25.5%','normal_per'=>'18.5%'],
+                    ['cell_type'=>intval(2),'min_per'=>'20.5%','max_per'=>'35.5%','normal_per'=>'28.5%'],
+                    ['cell_type'=>intval(3),'min_per'=>'30.5%','max_per'=>'45.5%','normal_per'=>'38.5%'],
+                    ['cell_type'=>intval(4),'min_per'=>'40.5%','max_per'=>'55.5%','normal_per'=>'48.5%']
+                ];
+
+                $ret = apiCellPer::apiCellPerSet(intval($attest),intval($hospital_no),intval($check_type),intval($info_ver),$data);
+                break;
 
         }
         return json_encode($ret);

@@ -30,6 +30,15 @@ class Byte{
             $this->byte.=pack('c',$vo);
         }
     }
+    public function writeU8($u8){
+
+        $hex = '';
+        $hex .= dechex(intval($u8));
+
+        $this->length+=strlen($hex);
+        $this->byte .= $hex;
+    }
+
     public function writeInt($str){
         $this->length+=4;
         $this->byte.=pack('L',$str);

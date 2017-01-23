@@ -11,6 +11,7 @@ use app\index\tool\RawClient;
 class Cell
 {
     private $biz;
+    private $down;
     private static $cell;
     public static function getCell() {
         if(!(self::$cell instanceof self)){
@@ -24,6 +25,18 @@ class Cell
             $cellOb->biz  = new RawClient('115.236.177.85',20000);
         }
         $recv =$cellOb->biz->send($data);
+        if( $recv ) {
+            return $recv;
+        }
+        return 'error';
+    }
+
+    public static function downSend($data) {
+        $cellOb = self::getCell();
+        if( $cellOb->down == null ) {
+            $cellOb->down  = new RawClient('115.236.177.85',20001);
+        }
+        $recv =$cellOb->down->send($data);
         if( $recv ) {
             return $recv;
         }

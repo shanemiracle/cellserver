@@ -13,12 +13,49 @@ use app\index\api\apiCellPer;
 use app\index\api\apiCellType;
 use app\index\api\apiDevice;
 use app\index\api\apiDoctor;
+use app\index\api\apiFile;
 use app\index\api\apiHospital;
 use app\index\api\apiLogin;
+use app\index\tool\Byte;
 use think\Request;
 
 class Test
 {
+    public function upfile(){
+        return '<form action="/test/up" enctype="multipart/form-data" method="post">
+                <input type="file" name="file"/> <br>
+                <input type="submit" value="上传" />
+                </form>';
+    }
+
+    public function up(){
+        $file = Request::instance()->file('file');
+        $info = $file->rule('md5')->move(ROOT_PATH.'public'.DS.'file');
+        if($info){
+            $tpye = $info->getExtension();
+            echo '<br>';
+            echo $info->getSaveName();
+            echo '<br>';
+            echo $info->getFilename();
+            echo '<br>';
+            $md5 = $info->md5();
+            $size = $info->getSize();
+
+
+           $retArray = apiFile::apiFileUp($md5,$size,$tpye);
+            if($retArray){
+                return json_encode($retArray);
+            }
+            else{
+                return 'error';
+            }
+
+        }
+        else {
+            echo $file->getError();
+        }
+    }
+
     public function index() {
         $id = Request::instance()->param('id');
 

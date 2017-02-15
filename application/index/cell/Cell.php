@@ -22,7 +22,7 @@ class Cell
     public static function bizSend($data) {
         $cellOb = self::getCell();
         if( $cellOb->biz == null ) {
-            $cellOb->biz  = new RawClient('115.236.177.85',20000);
+            $cellOb->biz  = new RawClient('192.168.0.56',20000);
         }
         $recv =$cellOb->biz->send($data);
         if( $recv ) {
@@ -34,7 +34,7 @@ class Cell
     public static function downSend($data) {
         $cellOb = self::getCell();
         if( $cellOb->down == null ) {
-            $cellOb->down  = new RawClient('115.236.177.85',20001);
+            $cellOb->down  = new RawClient('192.168.0.56',20001);
         }
         $recv =$cellOb->down->send($data);
         if( $recv ) {

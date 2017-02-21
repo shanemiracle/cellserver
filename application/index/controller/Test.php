@@ -45,6 +45,7 @@ class Test
            $retArray = apiFile::apiFileUp($md5,$size,$tpye);
             if($retArray){
                 print_r($retArray);
+                echo '1111111<br>';
                 if( $retArray['ret_code'] != 0) {
                     echo '1111111<br>';
                     return json_encode($retArray);
@@ -54,6 +55,7 @@ class Test
 
                 if($retArray1) {
                     print_r($retArray1);
+                    echo '22222222<br>';
                     if ($retArray1['ret_code'] != 0) {
                         echo '2222222222222<br>';
                         return json_encode($retArray1);

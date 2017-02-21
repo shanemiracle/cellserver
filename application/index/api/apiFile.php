@@ -85,7 +85,7 @@ class apiFile
         else {
             $file_type = 0;
         }
-        $sendArray = ['id'=>intval(23),'flag'=>intval(0),'data'=>['proto_ver'=>intval(1),'md5_id'=>$md5_id,
+        $sendArray = ['id'=>intval(25),'flag'=>intval(0),'data'=>['proto_ver'=>intval(1),'md5_id'=>$md5_id,
             'file_size'=>intval($file_size),'file_type'=>intval($file_type)]];
         $sendData = json_encode($sendArray);
         if($sendData) {

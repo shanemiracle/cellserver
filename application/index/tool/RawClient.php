@@ -16,6 +16,7 @@ class RawClient
      * */
     private $socket = null;
     private $host='';
+    private $timeout = 1;
     private $port=0;
 
     /**
@@ -23,10 +24,11 @@ class RawClient
      * @param string $host
      * @param int $port
      */
-    public function __construct($host, $port)
+    public function __construct($host, $port, $timeout)
     {
         $this->host = $host;
         $this->port = $port;
+        $this->timeout = $timeout;
     }
 
     public function __destruct()
@@ -157,7 +159,7 @@ class RawClient
      * create socket
      * @return $socket
      * */
-    private function connect(){
+    private function connect($timeout=1){
         //创建socket
         $socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
         if (!is_resource($socket)) {
@@ -169,7 +171,7 @@ class RawClient
                 return false;
             }
 
-            if(!socket_set_option($socket,SOL_SOCKET,SO_RCVTIMEO,array('sec'=>1,'usec'=>0))){
+            if(!socket_set_option($socket,SOL_SOCKET,SO_RCVTIMEO,array('sec'=>$this->timeout,'usec'=>0))){
                 return false;
             }
             $connection = socket_connect($socket, $this->host, $this->port);

@@ -47,7 +47,7 @@ class Cell
     public static function downDataSend($data) {
         $cellOb = self::getCell();
         if( $cellOb->downData == null ) {
-            $cellOb->downData  = new RawClient('192.168.0.56',20002);
+            $cellOb->downData  = new RawClient('192.168.0.56',20002,60);
         }
         $recv =$cellOb->downData->send($data);
         if( $recv ) {

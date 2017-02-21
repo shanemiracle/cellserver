@@ -45,19 +45,22 @@ class Test
            $retArray = apiFile::apiFileUp($md5,$size,$tpye);
             if($retArray){
                 if( $retArray['ret_code'] != 0) {
+                    echo '1111111<br>';
                     return json_encode($retArray);
                 }
 
-                $retArray = apiFile::apiFileDataUp($md5,$size,$tpye,$retArray['web_name'],$retArray['server_id'],$retArray['flag_index']);
+                $retArray1 = apiFile::apiFileDataUp($md5,$size,$tpye,$retArray['web_name'],$retArray['server_id'],$retArray['flag_index']);
 
-                if($retArray) {
-                    if ($retArray['ret_code'] != 0) {
-                        return json_encode($retArray);
+                if($retArray1) {
+                    if ($retArray1['ret_code'] != 0) {
+                        echo '2222222222222<br>';
+                        return json_encode($retArray1);
                     }
 
-                    $retArray = apiFile::apiFileUpOk($md5,$size,$tpye);
-                    if($retArray){
-                        return json_encode($retArray);
+                    $retArray2 = apiFile::apiFileUpOk($md5,$size,$tpye);
+                    if($retArray2){
+                        echo '333333333333<br>';
+                        return json_encode($retArray2);
                     }
 
                 }

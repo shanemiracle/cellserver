@@ -76,7 +76,7 @@ class apiFile
         if($file_type == 'bmp'){
             $file_type = 1;
         }
-        else if( $file_type == 'jpeg' ){
+        else if( $file_type == 'jpeg' || $file_type == 'jpg'){
             $file_type = 2;
         }
         else if( $file_type == 'png' ){

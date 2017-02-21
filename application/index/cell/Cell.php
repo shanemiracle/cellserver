@@ -31,10 +31,22 @@ class Cell
         return 'error';
     }
 
-    public static function downSend($data) {
+    public static function downRootSend($data) {
         $cellOb = self::getCell();
         if( $cellOb->down == null ) {
             $cellOb->down  = new RawClient('192.168.0.56',20001);
+        }
+        $recv =$cellOb->down->send($data);
+        if( $recv ) {
+            return $recv;
+        }
+        return 'error';
+    }
+
+    public static function downDataSend($data) {
+        $cellOb = self::getCell();
+        if( $cellOb->down == null ) {
+            $cellOb->down  = new RawClient('192.168.0.56',20002);
         }
         $recv =$cellOb->down->send($data);
         if( $recv ) {

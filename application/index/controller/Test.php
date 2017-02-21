@@ -44,11 +44,27 @@ class Test
 
            $retArray = apiFile::apiFileUp($md5,$size,$tpye);
             if($retArray){
-                return json_encode($retArray);
+                if( $retArray['ret_code'] != 0) {
+                    return json_encode($retArray);
+                }
+
+                $retArray = apiFile::apiFileDataUp($md5,$size,$tpye,$retArray['web_name'],$retArray['server_id'],$retArray['flag_index']);
+
+                if($retArray) {
+                    if ($retArray['ret_code'] != 0) {
+                        return json_encode($retArray);
+                    }
+
+                    $retArray = apiFile::apiFileUpOk($md5,$size,$tpye);
+                    if($retArray){
+                        return json_encode($retArray);
+                    }
+
+                }
+
             }
-            else{
-                return 'error';
-            }
+
+            return 'error';
 
         }
         else {

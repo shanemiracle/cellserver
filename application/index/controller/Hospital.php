@@ -60,7 +60,9 @@ class Hospital extends Rest
                 print $retData['ret_code'];
             }
         }
-        print 10000;
+        else {
+            print 10000;
+        }
     }
 
     public  function ajax_set() {
@@ -81,10 +83,12 @@ class Hospital extends Rest
                 print $retData['ret_code'];
             }
         }
-        print 10000;
+        else {
+            print 10000;
+        }
     }
 
-    public  function ajax_del() {
+    public  function ajax_drop() {
         $attest = Session::get('attest');
         $hospital_no = Request::instance()->param('hospital_no');
 
@@ -96,8 +100,9 @@ class Hospital extends Rest
             else {
                 print $retData['ret_code'];
             }
+        }        else {
+            print 10000;
         }
-        print 10000;
     }
 }
 

@@ -27,6 +27,7 @@ class Index
             if($recv['ret_code'] == 0) {
                 Session::set('user_name', $user_name);
                 Session::set('pwd', $pwd);
+                Session::set('attest',$recv['attest']);
                 return (new View())->fetch('index');
             }
         }

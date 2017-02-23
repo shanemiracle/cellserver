@@ -11,6 +11,7 @@ namespace app\index\controller;
 
 use app\index\api\apiHospital;
 use think\controller\Rest;
+use think\Request;
 use think\Session;
 use think\View;
 
@@ -43,7 +44,6 @@ class Hospital extends Rest
 
 
     public  function ajax_add() {
-        $data = [];
         $attest = Session::get('attest');
         $hospital_name = Request::instance()->param('hospital_name');
         $hospital_number = Request::instance()->param('hospital_number');
@@ -57,14 +57,13 @@ class Hospital extends Rest
                 print 0;
             }
             else {
-                print retData['ret_code'];
+                print $retData['ret_code'];
             }
         }
         print 10000;
     }
 
     public  function ajax_set() {
-        $data = [];
         $attest = Session::get('attest');
         $hospital_no = Request::instance()->param('hospital_no');
         $hospital_ver = Request::instance()->param('hospital_ver');
@@ -79,14 +78,13 @@ class Hospital extends Rest
                 print 0;
             }
             else {
-                print retData['ret_code'];
+                print $retData['ret_code'];
             }
         }
         print 10000;
     }
 
     public  function ajax_del() {
-        $data = [];
         $attest = Session::get('attest');
         $hospital_no = Request::instance()->param('hospital_no');
 
@@ -96,7 +94,7 @@ class Hospital extends Rest
                 print 0;
             }
             else {
-                print retData['ret_code'];
+                print $retData['ret_code'];
             }
         }
         print 10000;

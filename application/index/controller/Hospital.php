@@ -35,6 +35,7 @@ class Hospital extends Rest
         return (new View())->fetch('/hospital/add');
     }
 
+
     public  function ajax_list() {
         $data = [];
         $attest = Session::get('attest');
@@ -55,6 +56,8 @@ class Hospital extends Rest
         $zone = Request::instance()->param('zone');
         $logo = Request::instance()->param('logo');
         $level = Request::instance()->param('level');
+
+        ///$data = ['hos_name'=>$hospital_name,'hos_num'=>$hospital_number,'zone'=>$zone,'logo'=>$logo,'level'=>$level];
 
         $retData = apiHospital::apiHospitalAdd($attest,$hospital_name,$hospital_number,$zone,$logo,$level);
         if( $retData ) {
@@ -90,6 +93,24 @@ class Hospital extends Rest
         }
         else {
             print 10000;
+        }
+    }
+
+    public  function ajax_exist() {
+        $attest = Session::get('attest');
+        $hospital_number = Request::instance()->param('hospital_number');
+
+        $retData = apiHospital::apiHospitalNumberGet($attest,$hospital_number);
+        if( $retData ) {
+            if( $retData['ret_code'] == 0 ) {
+                return false;
+            }
+            else if($retData['ret_code'] == 0x22){
+                return true;
+            }
+        }
+        else {
+            return false;
         }
     }
 

@@ -31,8 +31,8 @@
 <div class="page-container">
     <div class="cl pd-5 bg-1 bk-gray mt-20">
 		<span class="l">
-			<i class="Hui-iconfont">&#xe600;</i>
-			<input type="button" id="btnAdd" value="添加医院" class="btn btn-primary radius">
+            <a href="javascript:void();" id="btnAdd" class="btn btn-primary radius"><i
+                    class="Hui-iconfont Hui-iconfont-add"></i>添加医院</a>
 		</span>
 
         <span class="r">
@@ -41,7 +41,7 @@
     </div>
 
     <div class="mt-20">
-        <table class="table table-border table-bordered table-bg th radius table-hover table-sort">
+        <table id='hos_table' class="table table-border table-bordered table-bg th radius table-hover table-sort">
             <thead class="text-c">
             <th>医院编号</th>
             <th>医院名称</th>
@@ -50,7 +50,7 @@
             <th>统一编码</th>
             <th>等级</th>
             <th>创建时间</th>
-            <th>编辑</th>
+            <th>操作</th>
             </thead>
             <tbody class="text-c">
 
@@ -86,7 +86,7 @@
                 {data: 'hospital_number'},
                 {data: 'level'},
                 {data: 'create_time'},
-                {targets: -1, data: null, defaultContent: '<button class="btn btn-default radius">编辑</button>'}
+                {targets: -1, data: null, defaultContent: '<a href="javascript:void();" id="edit" class="btn btn-primary radius"><i class="Hui-iconfont Hui-iconfont-edit"></i>编辑</a>   | <a href="javascript:void();" id="del" class="btn btn-primary radius"><i class="Hui-iconfont Hui-iconfont-del2"></i>删除</a>'}
             ],
             language: {
                 'emptyTable': '没有数据',
@@ -112,17 +112,30 @@
         $('#btnAdd').on('click', addRow);
 
         function addRow() {
-            layer.open({
+            var index= layer.open({
                 type: 2,
+                maxmin:true,
                 title: '添加医院',
                 area: ['800px', '300px'],
                 content: 'hospital/add',
                 end: function () {
-                    hostable.ajax.reload();
+                    hostable.ajax.reload(function () {
+                        var info = hostable.page.info();
+                        $('#hos_count').html(info.recordsTotal);
+                    },false);
                 }
             });
 
+            layer.full(index);
         }
+
+        $('#hos_table tbody').on('click','a#edit',function () {
+           alert('edit');
+        });
+
+        $('#hos_table tbody').on('click','a#del',function () {
+            alert('del');
+        });
 
 
     });

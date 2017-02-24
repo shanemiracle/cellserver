@@ -30,7 +30,7 @@
         <div class="row cl">
             <label class="form-label col-xs-4 col-sm-2 col-sm-offset-1"><span class="c-red">*</span>医院编码:</label>
             <div class="formControls col-xs-8 col-sm-6">
-                <input type="text" class="input-text radius" value="" id="hos_number" name="hos_number" maxlength="32" required >
+                <input type="text" class="input-text radius" value="" id="hos_number">
             </div>
             <div class="row cr">
                 <label id="ltips" class="c-red" style="display:none">已存在</label>
@@ -40,7 +40,7 @@
         <div class="row cl">
             <label class="form-label col-xs-4 col-sm-2 col-sm-offset-1">医院名称:</label>
             <div class="formControls col-xs-8 col-sm-6">
-                <input type="text" class="input-text radius" value="" id="hos_name" maxlength="40">
+                <input type="text" class="input-text radius" value="" id="hos_name">
             </div>
         </div>
 
@@ -110,82 +110,49 @@
 <script type="text/javascript" src="/lib/datatables/1.10.0/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="/static/h-ui/js/H-ui.js"></script>
 <script type="text/javascript" src="/static/h-ui.admin/js/H-ui.admin.js"></script>
-
-<script type="text/javascript" src="/lib/jquery.validation/1.14.0/jquery.validate.js"></script>
-<script type="text/javascript" src="/lib/jquery.validation/1.14.0/validate-methods.js"></script>
-<script type="text/javascript" src="/lib/jquery.validation/1.14.0/messages_zh.js"></script>
-
-
-
 <script type="text/javascript">
-    var form = $('#hos_add');
     function submitCheck(b) {
         $('#btnSubmit').attr('disabled', b);
     }
     $(document).ready(function () {
-        form.validate({
-            rules:{
-                hos_number:{
-                    remote:{
-                        url:'/hospital/ajax_exist',
-                        type:'post',
-                        data:{
-                            hospital_number:function(){
-                                return $('#hos_number').val();
-                            }
-                        }
-                    }
-                }
-            },
-            messages:{
-                hos_number:{
-                    remote:"医院编码已经存在!"
-                }
-            }
+        submitCheck(true);
 
+        $('#hos_number').on('blur', function () {
+            if ($('#hos_number').val().length <= 0) {
+                $('#ltips').html('必填');
+                $('#ltips').show();
+            }
+            else {
+                $.post('/hospital/ajax_exist', {'hospital_number': $('#hos_number').val()},
+                        function (data) {
+                            if (data == 1) {
+                                $('#ltips').html('已存在');
+                                $('#ltips').show();
+                                submitCheck(true);
+                            }
+                            else if (data == 0) {
+                                $('#ltips').hide();
+                                submitCheck(false);
+                            }
+                            else {
+                                submitCheck(true);
+                            }
+
+                        });
+            }
         });
 
-       // submitCheck(true);
-
-//        $('#hos_number').on('blur', function () {
-//            if ($('#hos_number').val().length <= 0) {
-//                $('#ltips').html('必填');
-//                $('#ltips').show();
-//            }
-//            else {
-//                $.post('/hospital/ajax_exist', {'hospital_number': $('#hos_number').val()},
-//                        function (data) {
-//                            if (data == 1) {
-//                                $('#ltips').html('已存在');
-//                                $('#ltips').show();
-//                                submitCheck(true);
-//                            }
-//                            else if (data == 0) {
-//                                $('#ltips').hide();
-//                                submitCheck(false);
-//                            }
-//                            else {
-//                                submitCheck(true);
-//                            }
-//
-//                        });
-//            }
-//        });
-
         $('#btnSubmit').on('click', function () {
-            if(form.valid()){
-                $.post('/hospital/ajax_add',{'hospital_number': $('#hos_number').val(),'hospital_name': $('#hos_name').val(),'zone': $('#zone').val(),'level': $('#level').val(),'logo': $('#logo').val()},function (data) {
-                    if(data==0){
-                        alert('添加成功');
-                        var index = parent.layer.getFrameIndex(window.name);
-                        parent.layer.close(index);
-                    }
-                    else{
-                        alert(data);
-                    }
-                });
-            }
-
+            $.post('/hospital/ajax_add',{'hospital_number': $('#hos_number').val(),'hospital_name': $('#hos_name').val(),'zone': $('#zone').val(),'level': $('#level').val(),'logo': $('#logo').val()},function (data) {
+                if(data==0){
+                    alert('添加成功');
+                    var index = parent.layer.getFrameIndex(window.name);
+                    parent.layer.close(index);
+                }
+                else{
+                    alert(data);
+                }
+            });
         });
 
     });

@@ -29,6 +29,7 @@ class Hospital extends Rest
 
         return (new View())->fetch('/hospital/index',['total_num'=>$total_num]);
     }
+
     public function add() {
 
         return (new View())->fetch('/hospital/add');

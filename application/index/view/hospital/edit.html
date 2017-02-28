@@ -21,26 +21,37 @@
     <script type="text/javascript" src="http://lib.h-ui.net/DD_belatedPNG_0.0.8a-min.js"></script>
     <script>DD_belatedPNG.fix('*');</script>
     <![endif]-->
-    <title>添加医院</title>
+    <title>编辑医院</title>
 </head>
 <body>
 
 <div class="page-container">
     <form class="form form-vertical" id="hos_add" action="/hospital/ajax_add">
         <div class="row cl">
-            <label class="form-label col-xs-4 col-sm-2 col-sm-offset-1"><span class="c-red">*</span>医院编码:</label>
+            <label class="form-label col-xs-4 col-sm-2 col-sm-offset-1">医院编码:</label>
             <div class="formControls col-xs-8 col-sm-6">
-                <input type="text" class="input-text radius" value="" id="hos_number">
+                <input type="text" class="input-text radius" style="color: #7e8795" value="{$hospital_number}" id="hos_number" readonly >
             </div>
-            <div class="row cr">
-                <label id="ltips" class="c-red" style="display:none">已存在</label>
+        </div>
+
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2 col-sm-offset-1">医院编号:</label>
+            <div class="formControls col-xs-8 col-sm-6">
+                <input type="text" class="input-text radius" style="color: #7e8795" value="{$hospital_no}" id="hos_no" readonly>
+            </div>
+        </div>
+
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2 col-sm-offset-1">信息版本:</label>
+            <div class="formControls col-xs-8 col-sm-6">
+                <input type="text" class="input-text radius" style="color: #7e8795" value="{$hospital_ver}" id="hos_ver" readonly>
             </div>
         </div>
 
         <div class="row cl">
             <label class="form-label col-xs-4 col-sm-2 col-sm-offset-1">医院名称:</label>
             <div class="formControls col-xs-8 col-sm-6">
-                <input type="text" class="input-text radius" value="" id="hos_name">
+                <input type="text" class="input-text radius" value="{$hospital_name}" id="hos_name" maxlength="40" autofocus="autofocus">
             </div>
         </div>
 
@@ -48,8 +59,8 @@
             <label class="form-label col-xs-4 col-sm-2 col-sm-offset-1">地区:</label>
             <div class="formControls col-xs-8 col-sm-6">
                 <span class="select-box radius">
-                <select class="select" size="1" id="zone">
-                    <option value="" selected>请选择地区</option>
+                <select class="select" size="1" id="zone" >
+                    <option value="{$zone}" selected>{$zone}</option>
                     <option value="杭州">杭州</option>
                     <option value="大连">大连</option>
                     <option value="大连">上海</option>
@@ -64,7 +75,7 @@
             <div class="formControls col-xs-8 col-sm-6">
                 <span class="select-box radius">
                 <select class="select" size="1" id="level">
-                    <option value="" selected>请选择等级</option>
+                    <option value="{$level}" selected>{$level}</option>
                     <option value="三级甲等">三级甲等</option>
                     <option value="三级乙等">三级乙等</option>
                     <option value="三级丙等">三级丙等</option>
@@ -84,11 +95,11 @@
             <label class="form-label col-xs-4 col-sm-2 col-sm-offset-1">图片:</label>
             <span class="btn-upload col-xs-8 col-sm-6">
                 <input class="input-text upload-url radius" type="text" id="uploadfile" readonly>
-                <a href="javascript:void();" class="btn btn-primary radius"><i
+                <a href="javascript:void(0);" class="btn btn-primary radius"><i
                         class="Hui-iconfont Hui-iconfont-upload"></i>浏览文件</a>
                 <input type="file" multiple name="file" class="input-file">
             </span>
-            <input type="hidden" id="logo" value="">
+            <input type="hidden" id="logo" value="{$logo}">
         </div>
 
 
@@ -110,42 +121,21 @@
 <script type="text/javascript" src="/lib/datatables/1.10.0/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="/static/h-ui/js/H-ui.js"></script>
 <script type="text/javascript" src="/static/h-ui.admin/js/H-ui.admin.js"></script>
+
+<script type="text/javascript" src="/lib/jquery.validation/1.14.0/jquery.validate.js"></script>
+<script type="text/javascript" src="/lib/jquery.validation/1.14.0/validate-methods.js"></script>
+<script type="text/javascript" src="/lib/jquery.validation/1.14.0/messages_zh.js"></script>
+
+
+
 <script type="text/javascript">
-    function submitCheck(b) {
-        $('#btnSubmit').attr('disabled', b);
-    }
+
     $(document).ready(function () {
-        submitCheck(true);
-
-        $('#hos_number').on('blur', function () {
-            if ($('#hos_number').val().length <= 0) {
-                $('#ltips').html('必填');
-                $('#ltips').show();
-            }
-            else {
-                $.post('/hospital/ajax_exist', {'hospital_number': $('#hos_number').val()},
-                        function (data) {
-                            if (data == 1) {
-                                $('#ltips').html('已存在');
-                                $('#ltips').show();
-                                submitCheck(true);
-                            }
-                            else if (data == 0) {
-                                $('#ltips').hide();
-                                submitCheck(false);
-                            }
-                            else {
-                                submitCheck(true);
-                            }
-
-                        });
-            }
-        });
-
+        $('#hos_name').select();
         $('#btnSubmit').on('click', function () {
-            $.post('/hospital/ajax_add',{'hospital_number': $('#hos_number').val(),'hospital_name': $('#hos_name').val(),'zone': $('#zone').val(),'level': $('#level').val(),'logo': $('#logo').val()},function (data) {
+            $.post('/hospital/ajax_set',{'hospital_no': $('#hos_no').val(),'hospital_ver': $('#hos_ver').val(),'hospital_name': $('#hos_name').val(),'zone': $('#zone').val(),'level': $('#level').val(),'logo': $('#logo').val()},function (data) {
                 if(data==0){
-                    alert('添加成功');
+                    alert('修改成功');
                     var index = parent.layer.getFrameIndex(window.name);
                     parent.layer.close(index);
                 }
@@ -153,6 +143,7 @@
                     alert(data);
                 }
             });
+
         });
 
     });

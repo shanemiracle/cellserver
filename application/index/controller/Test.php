@@ -18,6 +18,7 @@ use app\index\api\apiHospital;
 use app\index\api\apiLogin;
 use app\index\tool\Byte;
 use think\Request;
+use think\Session;
 
 class Test
 {
@@ -91,11 +92,16 @@ class Test
                 $pwd = Request::instance()->param('pwd');
 
                 $ret = apiLogin::apiLogin($user_name,$pwd);
+                if($ret){
+                    if($ret['ret_code']==0) {
+                        Session::set('attest',$ret['attest']);
+                    }
+                }
                 break;
 
 
             case 2:
-                $attest = Request::instance()->param('attest');
+                $attest = Session::get('attest');
                 $hospital_name = Request::instance()->param('hospital_name');
                 $hospital_number = Request::instance()->param('hospital_number');
                 $zone = Request::instance()->param('zone');
@@ -106,7 +112,7 @@ class Test
                 break;
 
             case 3:
-                $attest = Request::instance()->param('attest');
+                $attest = Session::get('attest');
                 $hospital_no = Request::instance()->param('hospital_no');
                 $hospital_ver = Request::instance()->param('hospital_ver');
                 $zone = Request::instance()->param('zone');
@@ -118,7 +124,7 @@ class Test
                 break;
 
             case 4:
-                $attest = Request::instance()->param('attest');
+                $attest = Session::get('attest');
                 $hospital_start = Request::instance()->param('hospital_start');
                 $get_num = Request::instance()->param('get_num');
 
@@ -126,21 +132,21 @@ class Test
                 break;
 
             case 5:
-                $attest = Request::instance()->param('attest');
+                $attest = Session::get('attest');
                 $hospital_number = Request::instance()->param('hospital_number');
 
                 $ret = apiHospital::apiHospitalNumberGet(intval($attest),$hospital_number);
                 break;
 
             case 6:
-                $attest = Request::instance()->param('attest');
+                $attest = Session::get('attest');
                 $hospital_no = Request::instance()->param('hospital_no');
 
                 $ret = apiHospital::apiHospitalDrop(intval($attest),intval($hospital_no));
                 break;
 
             case 7:
-                $attest = Request::instance()->param('attest');
+                $attest = Session::get('attest');
                 $doctor_name = Request::instance()->param('doctor_name');
                 $hospital_no = Request::instance()->param('hospital_no');
 
@@ -148,7 +154,7 @@ class Test
                 break;
 
             case 8:
-                $attest = Request::instance()->param('attest');
+                $attest = Session::get('attest');
                 $doctor_name = Request::instance()->param('doctor_name');
                 $pwd = Request::instance()->param('pwd');
                 $hospital_no = Request::instance()->param('hospital_no');
@@ -165,7 +171,7 @@ class Test
                 break;
 
             case 9:
-                $attest = Request::instance()->param('attest');
+                $attest = Session::get('attest');
                 $doctor_no = Request::instance()->param('doctor_no');
                 $pwd = Request::instance()->param('pwd');
                 $doctor_ver = Request::instance()->param('doctor_ver');
@@ -178,18 +184,18 @@ class Test
                 $learn_level = Request::instance()->param('learn_level');
 
                 $ret = apiDoctor::apiDoctorSet(intval($attest),$doctor_no,intval($doctor_ver),$pwd,$level,
-                    $department,$logo,$sign_pic,$mobile_no,intval($role),intval($learn_level));
+                    $department,$logo,$sign_pic,$mobile_no,intval($role),$learn_level);
                 break;
 
             case 10:
-                $attest = Request::instance()->param('attest');
+                $attest = Session::get('attest');
                 $doctor_no = Request::instance()->param('doctor_no');
 
                 $ret = apiDoctor::apiDoctorDrop(intval($attest),$doctor_no);
                 break;
 
             case 11:
-                $attest = Request::instance()->param('attest');
+                $attest = Session::get('attest');
                 $hospital_no = Request::instance()->param('hospital_no');
                 $doctor_start = Request::instance()->param('doctor_start');
                 $get_num = Request::instance()->param('get_num');
@@ -198,7 +204,7 @@ class Test
                 break;
 
             case 12:
-                $attest = Request::instance()->param('attest');
+                $attest = Session::get('attest');
                 $hospital_no = Request::instance()->param('hospital_no');
                 $machine_code = Request::instance()->param('machine_code');
                 $valid_sec = Request::instance()->param('valid_sec');
@@ -207,21 +213,21 @@ class Test
                 break;
 
             case 13:
-                $attest = Request::instance()->param('attest');
+                $attest = Session::get('attest');
                 $hospital_no = Request::instance()->param('hospital_no');
 
                 $ret = apiDevice::apiDeviceHospitalGet(intval($attest),intval($hospital_no));
                 break;
 
             case 14:
-                $attest = Request::instance()->param('attest');
+                $attest = Session::get('attest');
                 $machine_code = Request::instance()->param('machine_code');
 
                 $ret = apiDevice::apiDeviceGet(intval($attest),$machine_code);
                 break;
 
             case 15:
-                $attest = Request::instance()->param('attest');
+                $attest = Session::get('attest');
                 $device_no = Request::instance()->param('device_no');
                 $add_sec = Request::instance()->param('add_sec');
 
@@ -229,21 +235,21 @@ class Test
                 break;
 
             case 16:
-                $attest = Request::instance()->param('attest');
+                $attest = Session::get('attest');
                 $cell_name = Request::instance()->param('cell_name');
 
                 $ret = apiCellType::apiCellTypeAdd(intval($attest),$cell_name);
                 break;
 
             case 17:
-                $attest = Request::instance()->param('attest');
+                $attest = Session::get('attest');
                 $cell_name = Request::instance()->param('cell_name');
 
                 $ret = apiCellType::apiCellTypeDrop(intval($attest),$cell_name);
                 break;
 
             case 18:
-                $attest = Request::instance()->param('attest');
+                $attest = Session::get('attest');
                 $cell_start = Request::instance()->param('cell_start');
                 $get_num = Request::instance()->param('get_num');
 
@@ -251,7 +257,7 @@ class Test
                 break;
 
             case 19:
-                $attest = Request::instance()->param('attest');
+                $attest = Session::get('attest');
                 $cell_start = Request::instance()->param('cell_start');
                 $get_num = Request::instance()->param('get_num');
 
@@ -259,7 +265,7 @@ class Test
                 break;
 
             case 20:
-                $attest = Request::instance()->param('attest');
+                $attest = Session::get('attest');
                 $hospital_no = Request::instance()->param('hospital_no');
                 $check_type = Request::instance()->param('check_type');
 
@@ -267,7 +273,7 @@ class Test
                 break;
 
             case 21:
-                $attest = Request::instance()->param('attest');
+                $attest = Session::get('attest');
                 $hospital_no = Request::instance()->param('hospital_no');
                 $check_type = Request::instance()->param('check_type');
                 $info_ver = Request::instance()->param('info_ver');
@@ -283,10 +289,17 @@ class Test
                 break;
 
             case 22:
-                $attest = Request::instance()->param('attest');
+                $attest = Session::get('attest');
                 $machine_code = Request::instance()->param('machine_code');
 
                 $ret = apiDevice::apiDeviceDrop(intval($attest),$machine_code);
+                break;
+
+            case 43:
+                $attest = Session::get('attest');
+                $hospital_no = Request::instance()->param('hospital_no');
+
+                $ret = apiHospital::apiHospitalOneGet($attest,$hospital_no);
                 break;
 
         }

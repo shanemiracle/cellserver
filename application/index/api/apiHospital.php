@@ -41,7 +41,7 @@ class apiHospital
 
     public static function apiHospitalSet($attest,$hospital_no,$hospital_ver,$zone,$hospital_name,$logo,$level) {
         $sendArray = ['id'=>intval(3),'flag'=>intval(0),'data'=>['attest'=>intval($attest),'hospital_name'=>$hospital_name,
-            'hospital_ver'=>$hospital_ver,'hospital_no'=>$hospital_no,'zone'=>$zone,'logo'=>$logo,'level'=>$level]];
+            'hospital_ver'=>intval($hospital_ver),'hospital_no'=>intval($hospital_no),'zone'=>$zone,'logo'=>$logo,'level'=>$level]];
         $sendData = json_encode($sendArray);
         if($sendData){
             $recvData = Cell::bizSend($sendData);
@@ -94,6 +94,23 @@ class apiHospital
 
     public static function apiHospitalDrop($attest,$hospital_no) {
         $sendArray = ['id'=>intval(6),'flag'=>intval(0),'data'=>['attest'=>intval($attest),'hospital_no'=>intval($hospital_no) ]];
+        $sendData = json_encode($sendArray);
+        if($sendData){
+            $recvData = Cell::bizSend($sendData);
+            if($recvData) {
+                $recvArray = json_decode($recvData,true);
+
+                if($recvArray) {
+                    return $recvArray;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    public static function apiHospitalOneGet($attest,$hospital_no) {
+        $sendArray = ['id'=>intval(43),'flag'=>intval(0),'data'=>['attest'=>intval($attest),'hospital_no'=>intval($hospital_no) ]];
         $sendData = json_encode($sendArray);
         if($sendData){
             $recvData = Cell::bizSend($sendData);

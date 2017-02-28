@@ -10,6 +10,7 @@ use app\index\tool\RawClient;
  */
 class Cell
 {
+    public static $ip = "115.236.69.122";
     private $biz;
     private $downRoot;
     private $downData;
@@ -23,7 +24,7 @@ class Cell
     public static function bizSend($data) {
         $cellOb = self::getCell();
         if( $cellOb->biz == null ) {
-            $cellOb->biz  = new RawClient('192.168.0.56',20000);
+            $cellOb->biz  = new RawClient(Cell::$ip,20000);
         }
         $recv =$cellOb->biz->send($data);
         if( $recv ) {
@@ -35,7 +36,7 @@ class Cell
     public static function downRootSend($data) {
         $cellOb = self::getCell();
         if( $cellOb->downRoot == null ) {
-            $cellOb->downRoot  = new RawClient('192.168.0.56',20001);
+            $cellOb->downRoot  = new RawClient(Cell::$ip,20001);
         }
         $recv =$cellOb->downRoot->send($data);
         if( $recv ) {
@@ -47,7 +48,7 @@ class Cell
     public static function downDataSend($data) {
         $cellOb = self::getCell();
         if( $cellOb->downData == null ) {
-            $cellOb->downData  = new RawClient('192.168.0.56',20002,60);
+            $cellOb->downData  = new RawClient(Cell::$ip,20002,60);
         }
         $recv =$cellOb->downData->send($data);
         if( $recv ) {

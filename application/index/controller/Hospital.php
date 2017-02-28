@@ -18,21 +18,36 @@ use think\View;
 class Hospital extends Rest
 {
     public function index() {
-        $total_num = 0;
-        $attest = Session::get('attest');
-        $retData = apiHospital::apiHospitalGet($attest,0,1);
-        if( $retData ) {
-            if( $retData['ret_code'] == 0 ) {
-                $total_num = $retData['total_num'];
-            }
-        }
-
-        return (new View())->fetch('/hospital/index',['total_num'=>$total_num]);
+        return (new View())->fetch('/hospital/index');
     }
 
     public function add() {
 
         return (new View())->fetch('/hospital/add');
+    }
+
+    public function edit() {
+
+        $attest = Session::get('attest');
+        $hospital_no = Request::instance()->param('hospital_no');
+        $data=[];
+        $retData = apiHospital::apiHospitalOneGet($attest,$hospital_no);
+        if($retData) {
+            if($retData['ret_code']==0) {
+                $data = [
+                    'hospital_no'=>$retData['hospital_no'],
+                    'hospital_ver'=>$retData['hospital_ver'],
+                    'hospital_name'=>$retData['hospital_name'],
+                    'hospital_number'=>$retData['hospital_number'],
+                    'zone'=>$retData['zone'],
+                    'level'=>$retData['level'],
+                    'logo'=>$retData['logo']
+                ];
+            }
+        }
+
+
+        return (new View())->fetch('/hospital/edit',$data);
     }
 
 
@@ -48,6 +63,23 @@ class Hospital extends Rest
         return $this->response(['data'=>$data],'json',200);
     }
 
+//    public  function ajax_get_one() {
+//        $attest = Session::get('attest');
+//        $hospital_no = Request::instance()->param('hospital_no');
+//
+//        $retData = apiHospital::apiHospitalOneGet($attest,$hospital_no);
+//        if( $retData ) {
+//            if( $retData['ret_code'] == 0 ) {
+//                print 0;
+//            }
+//            else {
+//                print $retData['ret_code'];
+//            }
+//        }
+//        else {
+//            print 10000;
+//        }
+//    }
 
     public  function ajax_add() {
         $attest = Session::get('attest');

@@ -31,13 +31,11 @@
 <div class="page-container">
     <div class="cl pd-5 bg-1 bk-gray mt-20">
 		<span class="l">
-            <a href="javascript:void();" id="btnAdd" class="btn btn-primary radius"><i
+            <a href="javascript:void(0);" id="btnAdd" class="btn btn-primary radius"><i
                     class="Hui-iconfont Hui-iconfont-add"></i>添加医院</a>
 		</span>
 
-        <span class="r">
-			共有数据:<strong><span id="hos_count">{$total_num}</span></strong>条
-		</span>
+
     </div>
 
     <div class="mt-20">
@@ -86,7 +84,7 @@
                 {data: 'hospital_number'},
                 {data: 'level'},
                 {data: 'create_time'},
-                {targets: -1, data: null, defaultContent: '<a href="javascript:void();" id="edit" class="btn btn-primary radius"><i class="Hui-iconfont Hui-iconfont-edit"></i>编辑</a>   | <a href="javascript:void();" id="del" class="btn btn-primary radius"><i class="Hui-iconfont Hui-iconfont-del2"></i>删除</a>'}
+                {targets: -1, data: null, defaultContent: '<a href="javascript:void(0);" id="edit" class="btn btn-primary radius"><i class="Hui-iconfont Hui-iconfont-edit"></i>编辑</a>   | <a href="javascript:void(0);" id="del" class="btn btn-primary radius"><i class="Hui-iconfont Hui-iconfont-del2"></i>删除</a>'}
             ],
             language: {
                 'emptyTable': '没有数据',
@@ -119,10 +117,7 @@
                 area: ['800px', '300px'],
                 content: 'hospital/add',
                 end: function () {
-                    hostable.ajax.reload(function () {
-                        var info = hostable.page.info();
-                        $('#hos_count').html(info.recordsTotal);
-                    },false);
+                    hostable.ajax.reload(null,false);
                 }
             });
 
@@ -130,11 +125,36 @@
         }
 
         $('#hos_table tbody').on('click','a#edit',function () {
-           alert('edit');
+            var data = hostable.row($(this).parents('tr')).data();
+//           alert(data['hospital_number']);
+            var index= layer.open({
+                type: 2,
+                maxmin:true,
+                title: '编辑医院',
+                area: ['800px', '300px'],
+                content: 'hospital/edit?'+'hospital_no='+data['hospital_no'],
+                end: function () {
+                    hostable.ajax.reload(null,false);
+                }
+            });
+
+            layer.full(index);
         });
 
         $('#hos_table tbody').on('click','a#del',function () {
-            alert('del');
+//            alert('del');
+            var data = hostable.row($(this).parents('tr')).data();
+            layer.confirm('是否删除?',{icon:3,title:'提示'},function(index){
+                $.post('/hospital/ajax_drop',{'hospital_no':data['hospital_no']},function (d) {
+                    if(d==0){
+                        hostable.ajax.reload(null,false);
+                    }else{
+                        alert(d);
+                    }
+                });
+                layer.close(index);
+            } );
+
         });
 
 

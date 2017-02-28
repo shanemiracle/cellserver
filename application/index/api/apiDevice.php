@@ -21,7 +21,6 @@ class apiDevice
             $recvData = Cell::bizSend($sendData);
             if($recvData) {
                 $recvArray = json_decode($recvData,true);
-
                 if($recvArray) {
                     return $recvArray;
                 }

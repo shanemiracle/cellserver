@@ -105,4 +105,22 @@ class apiDoctor
 
         return false;
     }
+
+    public static function apiSingleDoctorInfo($attest,$doctor_no) {
+        $sendArray = ['id'=>intval(44),'flag'=>intval(0),'data'=>['attest'=>intval($attest),
+            'doctor_no'=>$doctor_no]];
+        $sendData = json_encode($sendArray);
+        if($sendData){
+            $recvData = Cell::bizSend($sendData);
+            if($recvData) {
+                $recvArray = json_decode($recvData,true);
+
+                if($recvArray) {
+                    return $recvArray;
+                }
+            }
+        }
+
+        return false;
+    }
 }

@@ -157,6 +157,9 @@ return [
     'show_error_msg'         => false,
     // 异常处理handle类 留空使用 \think\exception\Handle
     'exception_handle'       => '',
+    'http_exception_template'=>[
+        401=>APP_PATH.'401.html',
+    ],
 
     // +----------------------------------------------------------------------
     // | 日志设置

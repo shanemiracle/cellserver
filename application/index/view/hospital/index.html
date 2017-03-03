@@ -35,6 +35,7 @@
                     class="Hui-iconfont Hui-iconfont-add"></i>添加医院</a>
 		</span>
 
+        <span class="r">共有数据: <strong><span id="total_num">{$total_num}</span></strong>条</span>
 
     </div>
 
@@ -66,6 +67,11 @@
 <script type="text/javascript">
     var hostable;
     $(document).ready(function () {
+
+        $.post('/hospital/ajax_count', null, function (d) {
+            $('#total_num').html(d);
+        });
+
         hostable = $('.table-sort').DataTable({
             ajax: {
                 url: "/hospital/ajax_list",
@@ -84,7 +90,11 @@
                 {data: 'hospital_number'},
                 {data: 'level'},
                 {data: 'create_time'},
-                {targets: -1, data: null, defaultContent: '<a href="javascript:void(0);" id="edit" class="btn btn-primary radius"><i class="Hui-iconfont Hui-iconfont-edit"></i>编辑</a>   | <a href="javascript:void(0);" id="del" class="btn btn-primary radius"><i class="Hui-iconfont Hui-iconfont-del2"></i>删除</a>'}
+                {
+                    targets: -1,
+                    data: null,
+                    defaultContent: '<a href="javascript:void(0);" id="edit" class="btn btn-primary radius"><i class="Hui-iconfont Hui-iconfont-edit"></i>编辑</a>   | <a href="javascript:void(0);" id="del" class="btn btn-primary radius"><i class="Hui-iconfont Hui-iconfont-del2"></i>删除</a>'
+                }
             ],
             language: {
                 'emptyTable': '没有数据',
@@ -99,7 +109,7 @@
                     'next': '后一页',
                     'previous': '前一页'
                 },
-                'info': '第 _PAGE_ 页 / 总 _PAGES_ 页',
+                'info': '第 _PAGE_ 页 / 总 _PAGES_ 页 / 共 _TOTAL_ 条',
                 'infoEmpty': '没有数据',
                 'infoFiltered': '(过滤总件数 _MAX_ 条)'
             }
@@ -110,50 +120,60 @@
         $('#btnAdd').on('click', addRow);
 
         function addRow() {
-            var index= layer.open({
+            var index = layer.open({
                 type: 2,
-                maxmin:true,
+                maxmin: true,
                 title: '添加医院',
                 area: ['800px', '300px'],
                 content: 'hospital/add',
                 end: function () {
-                    hostable.ajax.reload(null,false);
+                    hostable.ajax.reload(function () {
+                        $.post('/hospital/ajax_count', null, function (d) {
+                            $('#total_num').html(d);
+                        });
+                    }, false);
+
                 }
             });
 
             layer.full(index);
         }
 
-        $('#hos_table tbody').on('click','a#edit',function () {
+        $('#hos_table tbody').on('click', 'a#edit', function () {
             var data = hostable.row($(this).parents('tr')).data();
 //           alert(data['hospital_number']);
-            var index= layer.open({
+            var index = layer.open({
                 type: 2,
-                maxmin:true,
+                maxmin: true,
                 title: '编辑医院',
                 area: ['800px', '300px'],
-                content: 'hospital/edit?'+'hospital_no='+data['hospital_no'],
+                content: 'hospital/edit?' + 'hospital_no=' + data['hospital_no'],
                 end: function () {
-                    hostable.ajax.reload(null,false);
+                    hostable.ajax.reload(null, false);
                 }
             });
 
             layer.full(index);
         });
 
-        $('#hos_table tbody').on('click','a#del',function () {
+        $('#hos_table tbody').on('click', 'a#del', function () {
 //            alert('del');
             var data = hostable.row($(this).parents('tr')).data();
-            layer.confirm('是否删除?',{icon:3,title:'提示'},function(index){
-                $.post('/hospital/ajax_drop',{'hospital_no':data['hospital_no']},function (d) {
-                    if(d==0){
-                        hostable.ajax.reload(null,false);
-                    }else{
+            layer.confirm('是否删除?', {icon: 3, title: '提示'}, function (index) {
+                $.post('/hospital/ajax_drop', {'hospital_no': data['hospital_no']}, function (d) {
+                    if (d == 0) {
+                        hostable.ajax.reload(function () {
+                            $.post('/hospital/ajax_count',null, function (d) {
+                                $('#total_num').html(d);
+                            });
+                        }, false);
+                    } else {
                         alert(d);
                     }
                 });
                 layer.close(index);
-            } );
+            });
+
 
         });
 

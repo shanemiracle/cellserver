@@ -12,21 +12,45 @@ namespace app\index\controller;
 use app\index\api\apiHospital;
 use think\controller\Rest;
 use think\Request;
+use think\response\Redirect;
 use think\Session;
 use think\View;
 
 class Hospital extends Rest
 {
+    private function attest(){
+        $attest = Session::get('attest');
+        $retData = apiHospital::apiHospitalGet($attest,0,1);
+        if( $retData ) {
+            if( $retData['ret_code'] == 0 ) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     public function index() {
-        return (new View())->fetch('/hospital/index');
+        if( $this->attest() != true ) {
+            abort(401);
+        }
+
+        return (new View())->fetch('/hospital/index',['total_num'=>0]);
     }
 
     public function add() {
+        if( $this->attest() != true ) {
+            abort(401);
+        }
 
         return (new View())->fetch('/hospital/add');
     }
 
     public function edit() {
+
+        if( $this->attest() != true ) {
+            abort(401);
+        }
 
         $attest = Session::get('attest');
         $hospital_no = Request::instance()->param('hospital_no');
@@ -50,6 +74,21 @@ class Hospital extends Rest
         return (new View())->fetch('/hospital/edit',$data);
     }
 
+    public function ajax_count() {
+        $attest = Session::get('attest');
+        $retData = apiHospital::apiHospitalGet($attest,0,1);
+        if( $retData ) {
+            if( $retData['ret_code'] == 0 ) {
+                print $retData['total_num'];
+            }
+            else{
+                print 0;
+            }
+        }
+        else {
+            print 0;
+        }
+    }
 
     public  function ajax_list() {
         $data = [];
@@ -62,24 +101,6 @@ class Hospital extends Rest
         }
         return $this->response(['data'=>$data],'json',200);
     }
-
-//    public  function ajax_get_one() {
-//        $attest = Session::get('attest');
-//        $hospital_no = Request::instance()->param('hospital_no');
-//
-//        $retData = apiHospital::apiHospitalOneGet($attest,$hospital_no);
-//        if( $retData ) {
-//            if( $retData['ret_code'] == 0 ) {
-//                print 0;
-//            }
-//            else {
-//                print $retData['ret_code'];
-//            }
-//        }
-//        else {
-//            print 10000;
-//        }
-//    }
 
     public  function ajax_add() {
         $attest = Session::get('attest');
@@ -153,6 +174,12 @@ class Hospital extends Rest
         $retData = apiHospital::apiHospitalDrop($attest,$hospital_no);
         if( $retData ) {
             if( $retData['ret_code'] == 0 ) {
+
+                if( $hospital_no == Session::get('default_device_hos_no') ) {
+                    Session::delete('default_device_hos_no');
+                    Session::delete('default_device_hos_name');
+                }
+
                 print 0;
             }
             else {

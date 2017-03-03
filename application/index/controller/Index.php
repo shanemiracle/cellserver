@@ -30,6 +30,9 @@ class Index
                 Session::set('attest',$recv['attest']);
                 return (new View())->fetch('index');
             }
+            if($recv['ret_code'] == 6){
+                abort(401,'未登录');
+            }
         }
 
         return (new View())->fetch('login/index');

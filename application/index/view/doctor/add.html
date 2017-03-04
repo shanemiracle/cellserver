@@ -132,10 +132,14 @@
         </div>
 
         <div class="row cl">
-            <label class="form-label col-xs-4 col-sm-2 col-sm-offset-1">有效期:</label>
+            <label class="form-label col-xs-4 col-sm-2 col-sm-offset-1">角色:</label>
             <div class="formControls col-xs-8 col-sm-6">
-                <input type="text" class="input-text radius" value="" id="valid_sec" name="valid_sec" placeholder="单位(天)">
+                <input type="checkbox" name="role1" id="check1" value="1"><label for="check1" class="text-c">拍摄</label>
+                <input type="checkbox" name="role2" id="check2" value="2"><label for="check2" class="text-c">会诊 </label>
+                <input type="checkbox" name="role3" id="check3" value="4"><label for="check3" class="text-c">审核 </label>
+                <input type="checkbox" name="role4" id="check4" value="8"><label for="check4" class="text-c">观察 </label>&nbsp&nbsp
             </div>
+            <input type="hidden" id="role" value="">
         </div>
 
         <div class="row cl">

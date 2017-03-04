@@ -260,7 +260,7 @@ class Test
                 $ret = apiCellType::apiCellTypeDrop($attest,$check_type,$cell_type);
                 break;
 
-            case 18:
+            case 31:
                 $attest = Session::get('attest');
                 $check_type = Request::instance()->param('check_type');
                 $cell_start = Request::instance()->param('cell_start');
@@ -314,7 +314,7 @@ class Test
 
                 $ret = apiCellType::apiCellTypeSonList($attest,$check_type,$cell_type);
                 break;
-            case 31:
+            case 18:
                 $attest = Session::get('attest');
                 $check_type = Request::instance()->param('check_type');
                 $cell_type = Request::instance()->param('cell_type');

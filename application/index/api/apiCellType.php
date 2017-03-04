@@ -50,7 +50,7 @@ class apiCellType
     }
 
     public static function apiCellTypeList($attest,$check_type,$cell_start,$get_num) {
-        $sendArray = ['id'=>intval(18),'flag'=>intval(0),'data'=>['attest'=>intval($attest),'check_type'=>intval($check_type),'cell_start'=>intval($cell_start),'get_num'=>intval($get_num)] ];
+        $sendArray = ['id'=>intval(31),'flag'=>intval(0),'data'=>['attest'=>intval($attest),'check_type'=>intval($check_type),'cell_start'=>intval($cell_start),'get_num'=>intval($get_num)] ];
         $sendData = json_encode($sendArray);
         if($sendData){
             $recvData = Cell::bizSend($sendData);
@@ -83,7 +83,7 @@ class apiCellType
     }
 
     public static function apiCellTypeGet($attest,$check_type,$cell_type) {
-        $sendArray = ['id'=>intval(31),'flag'=>intval(0),'data'=>['attest'=>intval($attest),'check_type'=>intval($check_type),'cell_type'=>intval($cell_type)] ];
+        $sendArray = ['id'=>intval(18),'flag'=>intval(0),'data'=>['attest'=>intval($attest),'check_type'=>intval($check_type),'cell_type'=>intval($cell_type)] ];
         $sendData = json_encode($sendArray);
         if($sendData){
             $recvData = Cell::bizSend($sendData);

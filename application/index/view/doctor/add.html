@@ -22,9 +22,7 @@
     <script>DD_belatedPNG.fix('*');</script>
     <![endif]-->
 
-
-
-    <title>添加医院</title>
+    <title>添加医生</title>
 </head>
 <body>
 
@@ -45,10 +43,92 @@
         </div>
 
         <div class="row cl">
-            <label class="form-label col-xs-4 col-sm-2 col-sm-offset-1">机器码:</label>
+            <label class="form-label col-xs-4 col-sm-2 col-sm-offset-1">用户姓名:</label>
             <div class="formControls col-xs-8 col-sm-6">
-                <input type="text" class="input-text radius" value="" id="machine_code" name="machine_code" maxlength="32" autofocus required placeholder="使用读取工具在PC上获取">
+                <input type="text" class="input-text radius" value="" id="doctor_name" name="doctor_name" maxlength="21" autofocus required placeholder="同一家医院内用户姓名不能重复">
             </div>
+        </div>
+
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2 col-sm-offset-1">密码:</label>
+            <div class="formControls col-xs-8 col-sm-6">
+                <input type="text" class="input-text radius" value="" id="pwd" name="pwd" maxlength="32" required placeholder="密码只能是数字、字母和下划线,不少于6个字符">
+            </div>
+        </div>
+
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2 col-sm-offset-1">重复密码:</label>
+            <div class="formControls col-xs-8 col-sm-6">
+                <input type="text" class="input-text radius" value="" id="pwd2" name="pwd2" maxlength="32" required placeholder="">
+            </div>
+        </div>
+
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2 col-sm-offset-1">手机号:</label>
+            <div class="formControls col-xs-8 col-sm-6">
+                <input type="text" class="input-text radius" value="" id="mobile" name="mobile" placeholder="">
+            </div>
+        </div>
+
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2 col-sm-offset-1">职称:</label>
+            <div class="formControls col-xs-8 col-sm-6">
+                <span class="select-box radius">
+                    <select class="select" size="1" id="level">
+                        <option value="" selected>选择职称</option>
+                        <option value="见习生">见习生</option>
+                        <option value="住院医师">住院医师</option>
+                        <option value="主治医师">主治医师</option>
+                        <option value="副主任医师">副主任医师</option>
+                        <option value="主任医师">主任医师</option>
+                    </select>
+                </span>
+            </div>
+        </div>
+
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2 col-sm-offset-1">学历:</label>
+            <div class="formControls col-xs-8 col-sm-6">
+                <span class="select-box radius">
+                    <select class="select" size="1" id="learn_level">
+                        <option value="" selected>选择学历</option>
+                        <option value="本科">本科</option>
+                        <option value="研究生">研究生</option>
+                        <option value="博士">博士</option>
+                    </select>
+                </span>
+            </div>
+        </div>
+
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2 col-sm-offset-1">部门:</label>
+            <div class="formControls col-xs-8 col-sm-6">
+                <input type="text" class="input-text radius" value="" id="department" name="department" placeholder="">
+            </div>
+        </div>
+
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2 col-sm-offset-1">头像:</label>
+            <span class="btn-upload col-xs-8 col-sm-6">
+                <input class="input-text upload-url radius" type="text" id="uploadfile" readonly>
+                <a href="javascript:void(0);" class="btn btn-primary radius"><i
+                        class="Hui-iconfont Hui-iconfont-upload"></i>浏览文件</a>
+                <input type="file" multiple name="file" class="input-file">
+            </span>
+            <input type="hidden" id="logo" value="">
+
+        </div>
+
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2 col-sm-offset-1">签名:</label>
+            <span class="btn-upload col-xs-8 col-sm-6">
+                <input class="input-text upload-url radius" type="text" id="uploadfile1" readonly>
+                <a href="javascript:void(0);" class="btn btn-primary radius"><i
+                        class="Hui-iconfont Hui-iconfont-upload"></i>浏览文件</a>
+                <input type="file" multiple name="file" class="input-file">
+            </span>
+            <input type="hidden" id="sign_pic" value="">
+
         </div>
 
         <div class="row cl">

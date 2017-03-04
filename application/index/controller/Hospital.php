@@ -20,7 +20,7 @@ class Hospital extends Rest
 {
     private function attest(){
         $attest = Session::get('attest');
-        $retData = apiHospital::apiHospitalGet($attest,0,1);
+        $retData = apiHospital::apiHospitalGet($attest,0,0);
         if( $retData ) {
             if( $retData['ret_code'] == 0 ) {
                 return true;

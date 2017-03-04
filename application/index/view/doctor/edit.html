@@ -21,40 +21,58 @@
     <script type="text/javascript" src="http://lib.h-ui.net/DD_belatedPNG_0.0.8a-min.js"></script>
     <script>DD_belatedPNG.fix('*');</script>
     <![endif]-->
-
-
-
-    <title>添加医院</title>
+    <title>编辑医院</title>
 </head>
 <body>
 
 <div class="page-container">
-    <form class="form form-vertical" id="form_add" action="/device/ajax_add">
-        <div class="row cl">
-            <label class="form-label col-xs-4 col-sm-2 col-sm-offset-1">医院编号:</label>
-            <div class="formControls col-xs-8 col-sm-6">
-                <input type="text" class="input-text radius" style="color: #7e8795" value="{$hospital_no}" id="hospital_no" readonly>
-            </div>
-        </div>
-
+    <form class="form form-vertical" id="form_edit" action="/device/ajax_edit">
         <div class="row cl">
             <label class="form-label col-xs-4 col-sm-2 col-sm-offset-1">医院名称:</label>
             <div class="formControls col-xs-8 col-sm-6">
-                <input type="text" class="input-text radius" style="color: #7e8795" value="{$hospital_name}" id="hospital_name" readonly>
+                <input type="text" class="input-text radius" style="color: #7e8795" value="{$hospital_name}" id="hospital_name" readonly >
             </div>
         </div>
 
         <div class="row cl">
             <label class="form-label col-xs-4 col-sm-2 col-sm-offset-1">机器码:</label>
             <div class="formControls col-xs-8 col-sm-6">
-                <input type="text" class="input-text radius" value="" id="machine_code" name="machine_code" maxlength="32" autofocus required placeholder="使用读取工具在PC上获取">
+                <input type="text" class="input-text radius" style="color: #7e8795" value="{$machine_code}" id="machine_code" readonly >
             </div>
         </div>
 
         <div class="row cl">
-            <label class="form-label col-xs-4 col-sm-2 col-sm-offset-1">有效期:</label>
+            <label class="form-label col-xs-4 col-sm-2 col-sm-offset-1">设备编号:</label>
             <div class="formControls col-xs-8 col-sm-6">
-                <input type="text" class="input-text radius" value="" id="valid_sec" name="valid_sec" placeholder="单位(天)">
+                <input type="text" class="input-text radius" style="color: #7e8795" value="{$device_no}" id="device_no" readonly>
+            </div>
+        </div>
+
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2 col-sm-offset-1">信息版本:</label>
+            <div class="formControls col-xs-8 col-sm-6">
+                <input type="text" class="input-text radius" style="color: #7e8795" value="{$info_ver}" id="info_ver" readonly>
+            </div>
+        </div>
+
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2 col-sm-offset-1">创建时间:</label>
+            <div class="formControls col-xs-8 col-sm-6">
+                <input type="text" class="input-text radius" style="color: #7e8795" value="{$create_time}" id="create_time" readonly >
+            </div>
+        </div>
+
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2 col-sm-offset-1">原有效期:</label>
+            <div class="formControls col-xs-8 col-sm-6">
+                <input type="text" class="input-text radius" style="color: #7e8795" value="{$end_time}" id="end_time" readonly>
+            </div>
+        </div>
+
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2 col-sm-offset-1">增加期限:</label>
+            <div class="formControls col-xs-8 col-sm-6">
+                <input type="text" class="input-text radius" style="color: #7e8795" value="" id="add_sec" name="add_sec" placeholder="单位(天)" autofocus>
             </div>
         </div>
 
@@ -69,7 +87,6 @@
 
 </div>
 
-</body>
 
 <script type="text/javascript" src="/lib/jquery/1.9.1/jquery.min.js"></script>
 <script type="text/javascript" src="/lib/layer/2.4/layer.js"></script>
@@ -81,49 +98,33 @@
 <script type="text/javascript" src="/lib/jquery.validation/1.14.0/jquery.validate.js"></script>
 <script type="text/javascript" src="/lib/jquery.validation/1.14.0/validate-methods.js"></script>
 <script type="text/javascript" src="/lib/jquery.validation/1.14.0/messages_zh.js"></script>
-<script type="text/javascript" src="/lib/jquery.validation/1.14.0/additional-methods.js"></script>
 
 
 
 <script type="text/javascript">
-    var form = $('#form_add');
+
+    var form = $('#form_edit');
 
     $(document).ready(function () {
         form.validate({
             rules:{
-                machine_code:{
-                    required:true,
-                    maxlength:32,
-                    remote:{
-                        url:'/device/ajax_exist',
-                        type:'post',
-                        data:{
-                            machine_code:function(){
-                                return $('#machine_code').val();
-                            }
-                        }
-                    }
-                },
-                valid_sec:{
+                add_sec:{
                     digits:true
                 }
             },
             messages:{
-                machine_code:{
-                    required:"机器码不能为空",
-                    remote:"机器码已经存在"
-                },
-                valid_sec:{
+                add_sec:{
                     digits:"必须为数字,单位(天)"
                 }
             }
         });
 
+        $('#hos_name').select();
         $('#btnSubmit').on('click', function () {
-            if(form.valid()){
-                $.post('/device/ajax_add',{'machine_code': $('#machine_code').val(),'hospital_no': $('#hospital_no').val(),'valid_sec': $('#valid_sec').val()},function (data) {
+            if(form.valid()) {
+                $.post('/device/ajax_set_time',{'device_no': $('#device_no').val(),'info_ver': $('#info_ver').val(),'add_sec': $('#add_sec').val()},function (data) {
                     if(data==0){
-                        alert('添加成功');
+                        alert('修改成功');
                         var index = parent.layer.getFrameIndex(window.name);
                         parent.layer.close(index);
                     }
@@ -133,11 +134,12 @@
                 });
             }
 
+
         });
 
     });
 
 
 </script>
-
+</body>
 </html>

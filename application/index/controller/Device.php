@@ -20,7 +20,7 @@ class Device extends Rest
 {
         private function attest(){
             $attest = Session::get('attest');
-            $retData = apiHospital::apiHospitalGet($attest,0,1);
+            $retData = apiHospital::apiHospitalGet($attest,0,0);
             if( $retData ) {
                 if( $retData['ret_code'] == 0 ) {
                     return true;
@@ -146,6 +146,22 @@ class Device extends Rest
             }
         }
         return $this->response(['data'=>$data],'json',200);
+    }
+
+    public  function ajax_exist() {
+        $data = [];
+        $attest = Session::get('attest');
+        $machine_code = Request::instance()->param('machine_code');
+        $retData = apiDevice::apiDeviceGet($attest,$machine_code);
+        if( $retData ) {
+            if( $retData['ret_code'] == 0 ) {
+                return false;
+            }
+            else if($retData['ret_code'] == 0x26){
+                return true;
+            }
+        }
+        return false;
     }
 
     public  function ajax_set_time() {

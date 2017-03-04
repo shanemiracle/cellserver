@@ -10,8 +10,11 @@ namespace app\index\controller;
 
 
 use app\index\api\apiCellPer;
+use app\index\api\apiCellPerType;
 use app\index\api\apiCellType;
+use app\index\api\apiCheckType;
 use app\index\api\apiDevice;
+use app\index\api\apiDiagCheck;
 use app\index\api\apiDoctor;
 use app\index\api\apiFile;
 use app\index\api\apiHospital;
@@ -229,31 +232,41 @@ class Test
             case 15:
                 $attest = Session::get('attest');
                 $device_no = Request::instance()->param('device_no');
+                $info_ver = Request::instance()->param('info_ver');
                 $add_sec = Request::instance()->param('add_sec');
 
-                $ret = apiDevice::apiDeviceSetTime(intval($attest),$device_no,intval($add_sec));
+                $ret = apiDevice::apiDeviceSetTime($attest,$device_no,$info_ver,$add_sec);
                 break;
 
             case 16:
                 $attest = Session::get('attest');
-                $cell_name = Request::instance()->param('cell_name');
+                $father_cell_type = Request::instance()->param('father_cell_type');
+                $check_type = Request::instance()->param('check_type');
+                $cn_name = Request::instance()->param('cn_name');
+                $en_name = Request::instance()->param('en_name');
+                $abb_name = Request::instance()->param('abb_name');
+                $size_max = Request::instance()->param('size_max');
+                $size_min = Request::instance()->param('size_min');
+                $remark = Request::instance()->param('remark');
 
-                $ret = apiCellType::apiCellTypeAdd(intval($attest),$cell_name);
+                $ret = apiCellType::apiCellTypeAdd($attest,$check_type,$father_cell_type,$cn_name,$en_name,$abb_name,$size_max,$size_min,$remark);
                 break;
 
             case 17:
                 $attest = Session::get('attest');
-                $cell_name = Request::instance()->param('cell_name');
+                $check_type = Request::instance()->param('check_type');
+                $cell_type = Request::instance()->param('cell_type');
 
-                $ret = apiCellType::apiCellTypeDrop(intval($attest),$cell_name);
+                $ret = apiCellType::apiCellTypeDrop($attest,$check_type,$cell_type);
                 break;
 
             case 18:
                 $attest = Session::get('attest');
+                $check_type = Request::instance()->param('check_type');
                 $cell_start = Request::instance()->param('cell_start');
                 $get_num = Request::instance()->param('get_num');
 
-                $ret = apiCellType::apiCellTypeGet(intval($attest),intval($cell_start),intval($get_num));
+                $ret = apiCellType::apiCellTypeList($attest,$check_type,$cell_start,$get_num);
                 break;
 
             case 19:
@@ -261,7 +274,6 @@ class Test
                 $cell_start = Request::instance()->param('cell_start');
                 $get_num = Request::instance()->param('get_num');
 
-                $ret = apiCellType::apiCellTypeCustomGet(intval($attest),intval($cell_start),intval($get_num));
                 break;
 
             case 20:
@@ -295,14 +307,159 @@ class Test
                 $ret = apiDevice::apiDeviceDrop(intval($attest),$machine_code);
                 break;
 
+            case 30:
+                $attest = Session::get('attest');
+                $check_type = Request::instance()->param('check_type');
+                $cell_type = Request::instance()->param('cell_type');
+
+                $ret = apiCellType::apiCellTypeSonList($attest,$check_type,$cell_type);
+                break;
+            case 31:
+                $attest = Session::get('attest');
+                $check_type = Request::instance()->param('check_type');
+                $cell_type = Request::instance()->param('cell_type');
+
+                $ret = apiCellType::apiCellTypeGet($attest,$check_type,$cell_type);
+                break;
+            case 32:
+                $attest = Session::get('attest');
+                $cell_type = Request::instance()->param('cell_type');
+                $check_type = Request::instance()->param('check_type');
+                $info_ver = Request::instance()->param('info_ver');
+                $cn_name = Request::instance()->param('cn_name');
+                $en_name = Request::instance()->param('en_name');
+                $abb_name = Request::instance()->param('abb_name');
+                $size_max = Request::instance()->param('size_max');
+                $size_min = Request::instance()->param('size_min');
+                $remark = Request::instance()->param('remark');
+
+                $ret = apiCellType::apiCellTypeSet($attest,$check_type,$cell_type,$info_ver,$cn_name,$en_name,$abb_name,$size_max,$size_min,$remark);
+                break;
+            case 33:
+                $attest = Session::get('attest');
+                $check_type = Request::instance()->param('check_type');
+                $per_name = Request::instance()->param('per_name');
+                $expression = Request::instance()->param('expression');
+                $remark = Request::instance()->param('remark');
+
+                $ret = apiCellPerType::apiCellPerTypeAdd($attest,$check_type,$per_name,$expression,$remark);
+                break;
+            case 34:
+                $attest = Session::get('attest');
+                $check_type = Request::instance()->param('check_type');
+                $cell_per_type = Request::instance()->param('cell_per_type');
+                $ret = apiCellPerType::apiCellPerTypeDrop($attest,$check_type,$cell_per_type);
+                break;
+
+            case 35:
+                $attest = Session::get('attest');
+                $check_type = Request::instance()->param('check_type');
+                $cell_per_start = Request::instance()->param('cell_per_start');
+                $get_num = Request::instance()->param('get_num');
+                $ret = apiCellPerType::apiCellPerTypeList($attest,$check_type,$cell_per_start,$get_num);
+                break;
+            case 36:
+                $attest = Session::get('attest');
+                $check_type = Request::instance()->param('check_type');
+                $cell_per_type = Request::instance()->param('cell_per_type');
+                $ret = apiCellPerType::apiCellPerTypeGet($attest,$check_type,$cell_per_type);
+                break;
+
+            case 37:
+                $attest = Session::get('attest');
+                $check_type = Request::instance()->param('check_type');
+                $cell_per_type = Request::instance()->param('cell_per_type');
+                $info_ver = Request::instance()->param('info_ver');
+                $per_name = Request::instance()->param('per_name');
+                $expression = Request::instance()->param('expression');
+                $remark = Request::instance()->param('remark');
+
+                $ret = apiCellPerType::apiCellPerTypeSet($attest,$check_type,$cell_per_type,$info_ver,$per_name,$expression,$remark);
+                break;
+
+            case 38:
+                $attest = Session::get('attest');
+                $check_type = Request::instance()->param('check_type');
+                $cn_name= Request::instance()->param('cn_name');
+                $en_name= Request::instance()->param('en_name');
+                $expression = Request::instance()->param('expression');
+                $remark = Request::instance()->param('remark');
+
+                $ret = apiDiagCheck::apiDiagCheckAdd($attest,$check_type,$cn_name,$en_name,$expression,$remark);
+                break;
+            case 39:
+                $attest = Session::get('attest');
+                $check_type = Request::instance()->param('check_type');
+                $diag_check_type= Request::instance()->param('diag_check_type');
+
+                $ret = apiDiagCheck::apiDiagCheckDrop($attest,$check_type,$diag_check_type);
+                break;
+
+            case 40:
+                $attest = Session::get('attest');
+                $check_type = Request::instance()->param('check_type');
+                $diag_check_start= Request::instance()->param('diag_check_start');
+                $get_num= Request::instance()->param('get_num');
+
+                $ret = apiDiagCheck::apiDiagCheckList($attest,$check_type,$diag_check_start,$get_num);
+                break;
+            case 41:
+                $attest = Session::get('attest');
+                $check_type = Request::instance()->param('check_type');
+                $diag_check_type= Request::instance()->param('diag_check_type');
+                $ret = apiDiagCheck::apiDiagCheckGet($attest,$check_type,$diag_check_type);
+                break;
+            case 42:
+                $attest = Session::get('attest');
+                $check_type = Request::instance()->param('check_type');
+                $diag_check_type = Request::instance()->param('diag_check_type');
+                $info_ver = Request::instance()->param('info_ver');
+                $cn_name= Request::instance()->param('cn_name');
+                $en_name= Request::instance()->param('en_name');
+                $expression = Request::instance()->param('expression');
+                $remark = Request::instance()->param('remark');
+                $ret = apiDiagCheck::apiDiagCheckSet($attest,$check_type,$diag_check_type,$info_ver,$cn_name,$en_name,$expression,$remark);
+                break;
+
             case 43:
                 $attest = Session::get('attest');
                 $hospital_no = Request::instance()->param('hospital_no');
 
                 $ret = apiHospital::apiHospitalOneGet($attest,$hospital_no);
                 break;
+            case 45:
+                $attest = Session::get('attest');
+                $desc = Request::instance()->param('desc');
+                $ret = apiCheckType::apiCheckTypeAdd($attest,$desc) ;
+                break;
+            case 46:
+                $attest = Session::get('attest');
+                $check_type = Request::instance()->param('check_type');
+                $ret = apiCheckType::apiCheckTypeDrop($attest,$check_type) ;
+                break;
+            case 47:
+                $attest = Session::get('attest');
+                $check_type = Request::instance()->param('check_type');
+                $info_ver = Request::instance()->param('info_ver');
+                $desc = Request::instance()->param('desc');
 
+                $ret = apiCheckType::apiCheckTypeSet($attest,$check_type,$info_ver,$desc) ;
+                break;
+
+            case 48:
+                $attest = Session::get('attest');
+                $ret = apiCheckType::apiCheckTypeList($attest) ;
+                break;
+            case 49:
+                $attest = Session::get('attest');
+                $check_type = Request::instance()->param('check_type');
+                $ret = apiCheckType::apiCheckTypeGet($attest,$check_type) ;
+                break;
         }
+
+
+
+
         return json_encode($ret);
     }
 

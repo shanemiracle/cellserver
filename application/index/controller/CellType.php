@@ -146,5 +146,22 @@ class CellType
         }
     }
 
+    public  function ajax_father_list() {
+        $attest = Session::get('attest');
+        $check_type = Request::instance()->param('check_type');
+        $cell_type = Request::instance()->param('cell_type');
+        $retData = apiCellType::apiCellTypeFacherList($attest,$check_type,$cell_type);
+        if( $retData ) {
+            if( $retData['ret_code'] == 0 ) {
+                print 0;
+            }
+            else{
+                print $retData['ret_code'];
+            }
 
+        }
+        else {
+            print 10000;
+        }
+    }
 }

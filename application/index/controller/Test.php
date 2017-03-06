@@ -455,6 +455,13 @@ class Test
                 $check_type = Request::instance()->param('check_type');
                 $ret = apiCheckType::apiCheckTypeGet($attest,$check_type) ;
                 break;
+
+            case 59:
+                $attest = Session::get('attest');
+                $check_type = Request::instance()->param('check_type');
+                $cell_type = Request::instance()->param('cell_type');
+                $ret = apiCellType::apiCellTypeFacherList($attest,$check_type,$cell_type);
+                break;
         }
 
 

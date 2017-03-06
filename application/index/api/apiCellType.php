@@ -118,4 +118,21 @@ class apiCellType
         return false;
     }
 
+
+    public static function apiCellTypeFacherList($attest,$check_type,$cell_type) {
+        $sendArray = ['id'=>intval(59),'flag'=>intval(0),'data'=>['attest'=>intval($attest),'check_type'=>intval($check_type),'cell_type'=>intval($cell_type)] ];
+        $sendData = json_encode($sendArray);
+        if($sendData){
+            $recvData = Cell::bizSend($sendData);
+            if($recvData) {
+                $recvArray = json_decode($recvData,true);
+
+                if($recvArray) {
+                    return $recvArray;
+                }
+            }
+        }
+        return false;
+    }
+
 }

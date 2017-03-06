@@ -135,19 +135,6 @@ class Device extends Rest
         return $this->response(['data'=>$data],'json',200);
     }
 
-    public  function ajax_device_get() {
-        $data = [];
-        $attest = Session::get('attest');
-        $machine_code = Request::instance()->param('machine_code');
-        $retData = apiDevice::apiDeviceGet($attest,$machine_code);
-        if( $retData ) {
-            if( $retData['ret_code'] == 0 ) {
-                $data = $retData['data'];
-            }
-        }
-        return $this->response(['data'=>$data],'json',200);
-    }
-
     public  function ajax_exist() {
         $data = [];
         $attest = Session::get('attest');

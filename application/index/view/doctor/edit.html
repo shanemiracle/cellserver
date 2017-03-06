@@ -17,64 +17,178 @@
     <link rel="stylesheet" type="text/css" href="/lib/Hui-iconfont/1.0.8/iconfont.css"/>
     <link rel="stylesheet" type="text/css" href="/static/h-ui.admin/skin/default/skin.css" id="skin"/>
     <link rel="stylesheet" type="text/css" href="/static/h-ui.admin/css/style.css"/>
+    <link rel="stylesheet" type="text/css" href="/static/css/bootstrap-switch.min.css"/>
+
     <!--[if IE 6]>
     <script type="text/javascript" src="http://lib.h-ui.net/DD_belatedPNG_0.0.8a-min.js"></script>
     <script>DD_belatedPNG.fix('*');</script>
     <![endif]-->
-    <title>编辑医院</title>
+
+    <title>编辑医生</title>
+
 </head>
 <body>
 
 <div class="page-container">
-    <form class="form form-vertical" id="form_edit" action="/device/ajax_edit">
+    <form class="form form-vertical" id="form_add" action="/device/ajax_edit">
+
+
         <div class="row cl">
             <label class="form-label col-xs-4 col-sm-2 col-sm-offset-1">医院名称:</label>
             <div class="formControls col-xs-8 col-sm-6">
-                <input type="text" class="input-text radius" style="color: #7e8795" value="{$hospital_name}" id="hospital_name" readonly >
+                <input type="text" class="input-text radius" style="color: #7e8795" value="{$hospital_name}"
+                       id="hospital_name" readonly>
             </div>
         </div>
 
         <div class="row cl">
-            <label class="form-label col-xs-4 col-sm-2 col-sm-offset-1">机器码:</label>
+            <label class="form-label col-xs-4 col-sm-2 col-sm-offset-1">用户编号:</label>
             <div class="formControls col-xs-8 col-sm-6">
-                <input type="text" class="input-text radius" style="color: #7e8795" value="{$machine_code}" id="machine_code" readonly >
-            </div>
-        </div>
-
-        <div class="row cl">
-            <label class="form-label col-xs-4 col-sm-2 col-sm-offset-1">设备编号:</label>
-            <div class="formControls col-xs-8 col-sm-6">
-                <input type="text" class="input-text radius" style="color: #7e8795" value="{$device_no}" id="device_no" readonly>
+                <input type="text" class="input-text radius" style="color: #7e8795" value="{$doctor_no}"
+                       id="doctor_no" readonly>
             </div>
         </div>
 
         <div class="row cl">
             <label class="form-label col-xs-4 col-sm-2 col-sm-offset-1">信息版本:</label>
             <div class="formControls col-xs-8 col-sm-6">
-                <input type="text" class="input-text radius" style="color: #7e8795" value="{$info_ver}" id="info_ver" readonly>
+                <input type="text" class="input-text radius" style="color: #7e8795" value="{$doctor_ver}"
+                       id="doctor_ver" readonly>
             </div>
         </div>
 
         <div class="row cl">
-            <label class="form-label col-xs-4 col-sm-2 col-sm-offset-1">创建时间:</label>
+            <label class="form-label col-xs-4 col-sm-2 col-sm-offset-1">用户姓名:</label>
             <div class="formControls col-xs-8 col-sm-6">
-                <input type="text" class="input-text radius" style="color: #7e8795" value="{$create_time}" id="create_time" readonly >
+                <input type="text" class="input-text radius" value="{$doctor_name}" id="doctor_name" readonly >
             </div>
         </div>
 
         <div class="row cl">
-            <label class="form-label col-xs-4 col-sm-2 col-sm-offset-1">原有效期:</label>
+            <label class="form-label col-xs-4 col-sm-2 col-sm-offset-1">密码:</label>
             <div class="formControls col-xs-8 col-sm-6">
-                <input type="text" class="input-text radius" style="color: #7e8795" value="{$end_time}" id="end_time" readonly>
+                <input type="text" class="input-text radius" value="{$pwd}" id="pwd" name="pwd" required maxlength="32" minlength="6"
+                        placeholder="不少于6个字符" autofocus>
             </div>
         </div>
 
         <div class="row cl">
-            <label class="form-label col-xs-4 col-sm-2 col-sm-offset-1">增加期限:</label>
+            <label class="form-label col-xs-4 col-sm-2 col-sm-offset-1">手机号:</label>
             <div class="formControls col-xs-8 col-sm-6">
-                <input type="text" class="input-text radius" style="color: #7e8795" value="" id="add_sec" name="add_sec" placeholder="单位(天)" autofocus>
+                <input type="text" class="input-text radius" value="{$mobile}" id="mobile" name="mobile" placeholder="">
             </div>
         </div>
+
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2 col-sm-offset-1">职称:</label>
+            <div class="formControls col-xs-8 col-sm-6">
+                <span class="select-box radius">
+                    <select class="select" size="1" id="level">
+                        <option value="{$level}" selected>{$level}</option>
+                        <option value="见习生">见习生</option>
+                        <option value="住院医师">住院医师</option>
+                        <option value="主治医师">主治医师</option>
+                        <option value="副主任医师">副主任医师</option>
+                        <option value="主任医师">主任医师</option>
+                    </select>
+                </span>
+            </div>
+        </div>
+
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2 col-sm-offset-1">学历:</label>
+            <div class="formControls col-xs-8 col-sm-6">
+                <span class="select-box radius">
+                    <select class="select" size="1" id="learn_level">
+                        <option value="{$learn_level}" selected>{$learn_level}</option>
+                        <option value="本科">本科</option>
+                        <option value="研究生">研究生</option>
+                        <option value="博士">博士</option>
+                    </select>
+                </span>
+            </div>
+        </div>
+
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2 col-sm-offset-1">部门:</label>
+            <div class="formControls col-xs-8 col-sm-6">
+                <input type="text" class="input-text radius" value="{$department}" id="department" name="department" placeholder="">
+            </div>
+        </div>
+
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2 col-sm-offset-1">头像:</label>
+            <span class="btn-upload col-xs-8 col-sm-6">
+                <input class="input-text upload-url radius" type="text" id="uploadfile" readonly>
+                <a href="javascript:void(0);" class="btn btn-primary radius"><i
+                        class="Hui-iconfont Hui-iconfont-upload"></i>浏览文件</a>
+                <input type="file" multiple name="file" class="input-file">
+            </span>
+            <input type="hidden" id="logo" value="{$logo}">
+
+        </div>
+
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2 col-sm-offset-1">签名:</label>
+            <span class="btn-upload col-xs-8 col-sm-6">
+                <input class="input-text upload-url radius" type="text" id="uploadfile1" readonly>
+                <a href="javascript:void(0);" class="btn btn-primary radius"><i
+                        class="Hui-iconfont Hui-iconfont-upload"></i>浏览文件</a>
+                <input type="file" multiple name="file" class="input-file">
+            </span>
+            <input type="hidden" id="sign_pic" value="{$sign_pic}">
+
+        </div>
+
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2 col-sm-offset-1">角色:</label>
+            <input type="hidden" id="role" value="{$role}">
+            <div class="formControls col-xs-8 col-sm-9">
+
+                <div class="col-sm-3">
+                    <span>拍摄</span>
+                    <input type="checkbox" checked id="role1" value="1" name="role">
+                </div>
+
+                <div class="col-sm-3">
+                    <span>会诊</span>
+                    <input type="checkbox" checked id="role2" value="2" name="role">
+                </div>
+
+                <br>
+
+                <div class="col-sm-3">
+                    <span>审核</span>
+                    <input type="checkbox" checked id="role3" value="4" name="role">
+                </div>
+
+                <div class="col-sm-3">
+                    <span>观察</span>
+                    <input type="checkbox" id="role4" value="8" name="role">
+                </div>
+                <!--<div class="col-xs-1 col-sm-3">-->
+
+                <!--<label >拍摄</label>-->
+                <!--<input type="checkbox" checked id="role1" value="1" name="role">-->
+                <!--</div>-->
+
+                <!--<div class="col-xs-1 col-sm-3">-->
+                <!--<label >会诊</label>-->
+                <!--<input type="checkbox" checked id="role2" value="2" name="role">-->
+                <!--</div>-->
+
+                <!--<div class="col-xs-1 col-sm-3">-->
+                <!--<label >审核</label>-->
+                <!--<input type="checkbox" checked id="role3" value="4" name="role">-->
+                <!--</div>-->
+
+                <!--<div class="col-xs-1 col-sm-3">-->
+                <!--<label >观察</label>-->
+                <!--<input type="checkbox" checked id="role4" value="8" name="role">-->
+                <!--</div>-->
+            </div>
+        </div>
+
 
         <div class="row cl">
             <div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-3">
@@ -87,6 +201,7 @@
 
 </div>
 
+</body>
 
 <script type="text/javascript" src="/lib/jquery/1.9.1/jquery.min.js"></script>
 <script type="text/javascript" src="/lib/layer/2.4/layer.js"></script>
@@ -98,42 +213,100 @@
 <script type="text/javascript" src="/lib/jquery.validation/1.14.0/jquery.validate.js"></script>
 <script type="text/javascript" src="/lib/jquery.validation/1.14.0/validate-methods.js"></script>
 <script type="text/javascript" src="/lib/jquery.validation/1.14.0/messages_zh.js"></script>
-
+<script type="text/javascript" src="/lib/jquery.validation/1.14.0/additional-methods.js"></script>
+<script type="text/javascript" src="/lib/js/bootstrap-switch.min.js"></script>
 
 
 <script type="text/javascript">
+    var form = $('#form_add');
+    var role = document.getElementById('role');
+    var role1 = document.getElementById('role1');
+    var role2 = document.getElementById('role2');
+    var role3 = document.getElementById('role3');
+    var role4 = document.getElementById('role4');
 
-    var form = $('#form_edit');
+
+    $('#role1').attr('checked',(role.value&1==1)?true:false);
+    $('#role2').attr('checked',((role.value&2)>>1==1)?true:false);
+    $('#role3').attr('checked',((role.value&4)>>2==1)?true:false);
+    $('#role4').attr('checked',((role.value&8)>>3==1)?true:false);
+
+    // 手机号码验证
+    jQuery.validator.addMethod("isMobile", function (value, element) {
+        var length = value.length;
+        var mobile = /^(13[0-9]{9})|(18[0-9]{9})|(14[0-9]{9})|(17[0-9]{9})|(15[0-9]{9})$/;
+        return this.optional(element) || (length == 11 && mobile.test(value));
+    }, "请正确填写您的手机号码");
 
     $(document).ready(function () {
-        form.validate({
-            rules:{
-                add_sec:{
-                    digits:true
-                }
-            },
-            messages:{
-                add_sec:{
-                    digits:"必须为数字,单位(天)"
+
+        role.value = (role1.checked?role1.value:0)|(role2.checked?role2.value:0)|(role3.checked?role3.value:0)|(role4.checked?role4.value:0)
+
+        $('[name="role"]').bootstrapSwitch({
+            onText: "已开启",
+            offText: "已停用",
+            onColor: "primary",
+//            offColor:"info",
+            size: "mini",
+            onSwitchChange: function (event, state) {
+                if (state == true) {
+                    role.value |= $(this).val();
+//                    alert(role.value);
+                } else {
+                    role.value -= $(this).val();
+//                    alert(role.value);
                 }
             }
         });
 
-        $('#hos_name').select();
+        form.validate({
+            rules: {
+                pwd: {
+                    required: true,
+                    minlength: 6
+                },
+                mobile: {
+                    minlength: 11,
+                    isMobile: true
+                }
+
+            },
+            messages: {
+                pwd: {
+                    required: "密码不能为空",
+                },
+                mobile: {
+                    isMobile: "请输入正确的手机号"
+                }
+
+            }
+        });
+
         $('#btnSubmit').on('click', function () {
-            if(form.valid()) {
-                $.post('/device/ajax_set_time',{'device_no': $('#device_no').val(),'info_ver': $('#info_ver').val(),'add_sec': $('#add_sec').val()},function (data) {
-                    if(data==0){
+            if (form.valid()) {
+                $.post('/doctor/ajax_edit', {
+                    'doctor_no': $('#doctor_no').val(),
+                    'doctor_ver': $('#doctor_ver').val(),
+                    'pwd': $('#pwd').val(),
+                    'hospital_no': $('#hospital_no').val(),
+                    'level': $('#level').val(),
+                    'department': $('#department').val(),
+                    'logo': $('#logo').val(),
+                    'sign_pic': $('#sign_pic').val(),
+                    'mobile_no': $('#mobile').val(),
+                    'role': $('#role').val(),
+                    'learn_level': $('#learn_level').val()
+                }, function (data) {
+                    if (data == 0) {
                         alert('修改成功');
                         var index = parent.layer.getFrameIndex(window.name);
                         parent.layer.close(index);
                     }
-                    else{
+                    else {
                         alert(data);
                     }
                 });
             }
-
 
         });
 
@@ -141,5 +314,5 @@
 
 
 </script>
-</body>
+
 </html>

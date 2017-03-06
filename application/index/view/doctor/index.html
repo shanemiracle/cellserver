@@ -159,7 +159,8 @@
             layer.full(index);
         }
 
-        $('#hos_table tbody').on('click', 'a#edit', function () {
+        $('#doc_table tbody').on('click', 'a#edit', function () {
+//            alert('edit');
             var data = table.row($(this).parents('tr')).data();
 //           alert(data['hospital_number']);
             var index = layer.open({
@@ -176,7 +177,7 @@
             layer.full(index);
         });
 
-        $('#hos_table tbody').on('click', 'a#del', function () {
+        $('#doc_table tbody').on('click', 'a#del', function () {
 //            alert('del');
             var data = table.row($(this).parents('tr')).data();
             layer.confirm('是否删除?', {icon: 3, title: '提示'}, function (index) {

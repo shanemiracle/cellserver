@@ -12,9 +12,14 @@ namespace app\index\controller;
 use app\index\api\apiCellType;
 use think\Request;
 use think\Session;
+use think\View;
 
 class CellType
 {
+    public function index(){
+        return (new View())->fetch('/celltype/index');
+    }
+
     public  function ajax_add() {
         $attest = Session::get('attest');
         $check_type = Request::instance()->param('check_type');

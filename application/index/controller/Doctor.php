@@ -121,7 +121,7 @@ class Doctor extends Rest
             } else if ($retData['ret_code'] == 0x23) {
                 print 1;//表示这个医生名不存在
             } else {
-                print $retData['ret_code'];
+                print $retData['err_desc'];
             }
 
         } else {
@@ -165,7 +165,7 @@ class Doctor extends Rest
             if ($retData['ret_code'] == 0) {
                 print 0;
             } else {
-                print $retData['ret_code'];
+                print $retData['err_desc'];
             }
 
         } else {
@@ -192,7 +192,7 @@ class Doctor extends Rest
             if ($retData['ret_code'] == 0) {
                 print 0;
             } else {
-                print $retData['ret_code'];
+                print $retData['err_desc'];
             }
 
         } else {
@@ -209,7 +209,7 @@ class Doctor extends Rest
             if ($retData['ret_code'] == 0) {
                 print 0;
             } else {
-                print $retData['ret_code'];
+                print $retData['err_desc'];
             }
 
         } else {

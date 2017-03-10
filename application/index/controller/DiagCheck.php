@@ -28,7 +28,7 @@ class DiagCheck
                 print 0;
             }
             else{
-                print $retData['ret_code'];
+                print $retData['err_desc'];
             }
 
         }
@@ -47,7 +47,7 @@ class DiagCheck
                 print 0;
             }
             else{
-                print $retData['ret_code'];
+                print $retData['err_desc'];
             }
 
         }
@@ -67,7 +67,7 @@ class DiagCheck
                 print 0;
             }
             else{
-                print $retData['ret_code'];
+                print $retData['err_desc'];
             }
 
         }
@@ -87,7 +87,7 @@ class DiagCheck
                 print 0;
             }
             else{
-                print $retData['ret_code'];
+                print $retData['err_desc'];
             }
 
         }
@@ -111,7 +111,7 @@ class DiagCheck
                 print 0;
             }
             else{
-                print $retData['ret_code'];
+                print $retData['err_desc'];
             }
 
         }

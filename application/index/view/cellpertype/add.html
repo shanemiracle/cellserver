@@ -1,0 +1,143 @@
+﻿<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="/lib/html5.js"></script>
+    <script type="text/javascript" src="/lib/respond.min.js"></script>
+    <script type="text/javascript" src="/lib/PIE_IE678.js"></script>
+    <![endif]-->
+    <link rel="stylesheet" type="text/css" href="/static/h-ui/css/H-ui.min.css"/>
+    <link rel="stylesheet" type="text/css" href="/static/h-ui.admin/css/H-ui.admin.css"/>
+    <link rel="stylesheet" type="text/css" href="/lib/Hui-iconfont/1.0.8/iconfont.css"/>
+    <link rel="stylesheet" type="text/css" href="/static/h-ui.admin/skin/default/skin.css" id="skin"/>
+    <link rel="stylesheet" type="text/css" href="/static/h-ui.admin/css/style.css"/>
+    <!--[if IE 6]>
+    <script type="text/javascript" src="http://lib.h-ui.net/DD_belatedPNG_0.0.8a-min.js"></script>
+    <script>DD_belatedPNG.fix('*');</script>
+    <![endif]-->
+
+
+
+    <title>添加医院</title>
+</head>
+<body>
+
+<div class="page-container">
+    <form class="form form-vertical" id="form_add" action="/device/ajax_add">
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2 col-sm-offset-1">医院编号:</label>
+            <div class="formControls col-xs-8 col-sm-6">
+                <input type="text" class="input-text radius" style="color: #7e8795" value="{$hospital_no}" id="hospital_no" readonly>
+            </div>
+        </div>
+
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2 col-sm-offset-1">医院名称:</label>
+            <div class="formControls col-xs-8 col-sm-6">
+                <input type="text" class="input-text radius" style="color: #7e8795" value="{$hospital_name}" id="hospital_name" readonly>
+            </div>
+        </div>
+
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2 col-sm-offset-1">机器码:</label>
+            <div class="formControls col-xs-8 col-sm-6">
+                <input type="text" class="input-text radius" value="" id="machine_code" name="machine_code" maxlength="32" autofocus required placeholder="使用读取工具在PC上获取">
+            </div>
+        </div>
+
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2 col-sm-offset-1">有效期:</label>
+            <div class="formControls col-xs-8 col-sm-6">
+                <input type="text" class="input-text radius" value="" id="valid_sec" name="valid_sec" placeholder="单位(天)">
+            </div>
+        </div>
+
+        <div class="row cl">
+            <div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-3">
+                <input type="button" id="btnSubmit" class="btn btn-primary radius text-c" value="提交">
+            </div>
+        </div>
+
+    </form>
+
+
+</div>
+
+</body>
+
+<script type="text/javascript" src="/lib/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript" src="/lib/layer/2.4/layer.js"></script>
+<script type="text/javascript" src="/lib/My97DatePicker/4.8/WdatePicker.js"></script>
+<script type="text/javascript" src="/lib/datatables/1.10.0/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="/static/h-ui/js/H-ui.js"></script>
+<script type="text/javascript" src="/static/h-ui.admin/js/H-ui.admin.js"></script>
+
+<script type="text/javascript" src="/lib/jquery.validation/1.14.0/jquery.validate.js"></script>
+<script type="text/javascript" src="/lib/jquery.validation/1.14.0/validate-methods.js"></script>
+<script type="text/javascript" src="/lib/jquery.validation/1.14.0/messages_zh.js"></script>
+<script type="text/javascript" src="/lib/jquery.validation/1.14.0/additional-methods.js"></script>
+
+
+
+<script type="text/javascript">
+    var form = $('#form_add');
+
+    $(document).ready(function () {
+        form.validate({
+            rules:{
+                machine_code:{
+                    required:true,
+                    maxlength:32,
+                    remote:{
+                        url:'/device/ajax_exist',
+                        type:'post',
+                        data:{
+                            machine_code:function(){
+                                return $('#machine_code').val();
+                            }
+                        }
+                    }
+                },
+                valid_sec:{
+                    digits:true
+                }
+            },
+            messages:{
+                machine_code:{
+                    required:"机器码不能为空",
+                    remote:"机器码已经存在"
+                },
+                valid_sec:{
+                    digits:"必须为数字,单位(天)"
+                }
+            }
+        });
+
+        $('#btnSubmit').on('click', function () {
+            if(form.valid()){
+                $.post('/device/ajax_add',{'machine_code': $('#machine_code').val(),'hospital_no': $('#hospital_no').val(),'valid_sec': $('#valid_sec').val()},function (data) {
+                    if(data==0){
+                        alert('添加成功');
+                        var index = parent.layer.getFrameIndex(window.name);
+                        parent.layer.close(index);
+                    }
+                    else{
+                        alert(data);
+                    }
+                });
+            }
+
+        });
+
+    });
+
+
+</script>
+
+</html>

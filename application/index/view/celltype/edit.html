@@ -1,0 +1,271 @@
+﻿<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="/lib/html5.js"></script>
+    <script type="text/javascript" src="/lib/respond.min.js"></script>
+    <script type="text/javascript" src="/lib/PIE_IE678.js"></script>
+    <![endif]-->
+    <link rel="stylesheet" type="text/css" href="/static/h-ui/css/H-ui.min.css"/>
+    <link rel="stylesheet" type="text/css" href="/static/h-ui.admin/css/H-ui.admin.css"/>
+    <link rel="stylesheet" type="text/css" href="/lib/Hui-iconfont/1.0.8/iconfont.css"/>
+    <link rel="stylesheet" type="text/css" href="/static/h-ui.admin/skin/default/skin.css" id="skin"/>
+    <link rel="stylesheet" type="text/css" href="/static/h-ui.admin/css/style.css"/>
+    <link rel="stylesheet" type="text/css" href="/static/css/bootstrap-switch.min.css"/>
+    <link rel="stylesheet" type="text/css" href="/static/css/bootstrap.min.css"/>
+
+    <!--[if IE 6]>
+    <script type="text/javascript" src="http://lib.h-ui.net/DD_belatedPNG_0.0.8a-min.js"></script>
+    <script>DD_belatedPNG.fix('*');</script>
+    <![endif]-->
+
+    <title>编辑细胞类型</title>
+
+</head>
+<body>
+
+<div class="page-container">
+    <form class="form form-vertical" id="form_add" action="">
+
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2 col-sm-offset-1">父级细胞名称:</label>
+            <div class="formControls col-xs-8 col-sm-6">
+                <input type="text" class="input-text radius" style="color: #7e8795" value="{$father_cell_name}"
+                       id="father_cell_name" readonly>
+            </div>
+        </div>
+
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2 col-sm-offset-1">本细胞编号:</label>
+            <div class="formControls col-xs-8 col-sm-6">
+                <input type="text" class="input-text radius" style="color: #7e8795" value="{$cell_type}"
+                       id="cell_type" readonly>
+            </div>
+        </div>
+
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2 col-sm-offset-1">信息版本:</label>
+            <div class="formControls col-xs-8 col-sm-6">
+                <input type="text" class="input-text radius" style="color: #7e8795" id="info_ver" value="{$info_ver}" readonly >
+            </div>
+        </div>
+
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2 col-sm-offset-1">中文名:</label>
+            <div class="formControls col-xs-8 col-sm-6">
+                <input type="text" class="input-text radius" id="cn_name" value="{$cn_name}" maxlength="21"
+                       autofocus required >
+            </div>
+        </div>
+
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2 col-sm-offset-1">英文名:</label>
+            <div class="formControls col-xs-8 col-sm-6">
+                <input type="text" class="input-text radius" id="en_name" value="{$en_name}" maxlength="64">
+            </div>
+        </div>
+
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2 col-sm-offset-1">缩写:</label>
+            <div class="formControls col-xs-8 col-sm-3">
+                <input type="text" class="input-text radius" id="abb_name" value="{$abb_name}" maxlength="7">
+            </div>
+        </div>
+
+        <div class="row cl" >
+            <label class="form-label col-xs-4 col-sm-2 col-sm-offset-1">最小尺寸:</label>
+            <div class="formControls col-xs-3 col-sm-3" >
+                <div class="input-group">
+                    <input type="text" class="input-text " id="size_min" maxlength="8" value="{$size_min}" name="size_min" >
+                    <span class="input-group-addon">um(微米)</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="row cl" >
+            <label class="form-label col-xs-4 col-sm-2 col-sm-offset-1">最大尺寸:</label>
+            <div class="formControls col-xs-3 col-sm-3" >
+                <div class="input-group">
+                    <input type="text" class="input-text " id="size_max" maxlength="8" value="{$size_max}" name="size_max" >
+                    <span class="input-group-addon">um(微米)</span>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2 col-sm-offset-1">详情:</label>
+            <div class="formControls col-xs-8 col-sm-6">
+                <!--<input type="text" class="textarea radius  text-left" value="" id="desc" placeholder="详情描述..." autofocus >-->
+                <textarea id="remark" cols rows class="textarea" placeholder="详情描述..." datatype="*10-680"
+                          maxlength="680"
+                          onkeypress="$.Huitextarealength(this,680)" onkeyup="$.Huitextarealength(this,680)">{$remark}</textarea>
+                <p class="textarea-numberbar">
+                    <em class="textarea-length">*</em>/680
+                </p>
+            </div>
+        </div>
+
+
+        <div class="row cl">
+            <div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-3">
+                <input type="button" id="btnSubmit" class="btn btn-primary radius text-c" value="提交">
+            </div>
+        </div>
+
+    </form>
+
+
+</div>
+
+</body>
+
+<script type="text/javascript" src="/lib/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript" src="/lib/layer/2.4/layer.js"></script>
+<script type="text/javascript" src="/lib/My97DatePicker/4.8/WdatePicker.js"></script>
+<script type="text/javascript" src="/lib/datatables/1.10.0/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="/static/h-ui/js/H-ui.js"></script>
+<script type="text/javascript" src="/static/h-ui.admin/js/H-ui.admin.js"></script>
+
+<script type="text/javascript" src="/lib/jquery.validation/1.14.0/jquery.validate.js"></script>
+<script type="text/javascript" src="/lib/jquery.validation/1.14.0/validate-methods.js"></script>
+<script type="text/javascript" src="/lib/jquery.validation/1.14.0/messages_zh.js"></script>
+<script type="text/javascript" src="/lib/jquery.validation/1.14.0/additional-methods.js"></script>
+<script type="text/javascript" src="/lib/js/bootstrap-switch.min.js"></script>
+<script type="text/javascript" src="/lib/js/bootstrap.min.js"></script>
+
+<script type="text/javascript">
+
+//    function checkFloat(o) {
+//        var _value = o.value;
+//        var reg = /^(?!0*$)[0-9]+(\\.(?=.*[1-9])[0-9]{1,2})?$/;
+//        if (!reg.test(_value)) {
+//
+//            o.value = o.value.substring(0,o.value.length-1);
+//        }
+//    }
+
+/**
+ * 根据用户输入的字符获取相关的正则表达式
+ * @param  {string} sCharCode 用户输入的字符，如 'a'，'1'，'.' 等等
+ * @return {regexp} patt 正则表达式
+ */
+function __getRegex (sCharCode) {
+    var patt;
+    if (/[]/g.test(sCharCode)) {
+        // 判断是否为空
+        patt = /^$/g;
+    } else if (/[.]/g.test(sCharCode)) {
+        // 判断是否已经包含 . 字符或者为空
+        patt = /((\.)|(^$))/g;
+    } else if (/[1-9]/g.test(sCharCode)) {
+        // 判断是否已经到达小数点后两位
+        patt = /\.\d{1}$/g;
+    }
+    return patt;
+}
+
+$('#size_min').on('keypress',function (e) {
+    var sCharCode = String.fromCharCode(e.charCode);
+    var sValue = this.value;
+
+    if (/[^0-9.]/g.test(sCharCode) || __getRegex(sCharCode).test(sValue)) {
+        return false;
+    }
+});
+
+$('#size_min').on('keyup paste',function (e) {
+    var patt = /^((?!0)\d+(\.\d{0,1})?)$/g;
+
+    if (!patt.test(this.value)) {
+        // 错误提示相关代码，边框变红、气泡提示什么的
+        console.log('输入格式不正确！');
+    }
+});
+
+$('#size_max').on('keypress',function (e) {
+    var sCharCode = String.fromCharCode(e.charCode);
+    var sValue = this.value;
+
+    if (/[^0-9.]/g.test(sCharCode) || __getRegex(sCharCode).test(sValue)) {
+        return false;
+    }
+});
+
+$('#size_max').on('keyup paste',function (e) {
+    var patt = /^((?!0)\d+(\.\d{0,1})?)$/g;
+
+    if (!patt.test(this.value)) {
+        // 错误提示相关代码，边框变红、气泡提示什么的
+        console.log('输入格式不正确！');
+    }
+});
+
+
+    var form = $('#form_add');
+    // 手机号码验证
+    jQuery.validator.addMethod("isFloat", function (value, element) {
+        var length = value.length;
+        var floatstr = /^[0-9]+(.[0-9]{1})?$/;
+        return this.optional(element) || ( floatstr.test(value));
+    }, "格式为保留一位小数点的浮点数,如 3.5");
+
+    $(document).ready(function () {
+
+        form.validate({
+            rules: {
+                size_min: {
+                    isFloat:true
+                },
+                size_max: {
+                    isFloat:true
+                }
+            },
+            messages: {
+                size_min: {
+                    isFloat:"最多一位小数的浮点数"
+                },
+                size_max: {
+                    isFloat:"最多一位小数的浮点数"
+                }
+
+            }
+        });
+
+        $('#btnSubmit').on('click', function () {
+            if (form.valid()) {
+                $.post('/celltype/ajax_edit', {
+                    'cell_type': $('#cell_type').val(),
+                    'info_ver': $('#info_ver').val(),
+                    'cn_name': $('#cn_name').val(),
+                    'en_name': $('#en_name').val(),
+                    'abb_name': $('#abb_name').val(),
+                    'size_min': $('#size_min').val(),
+                    'size_max': $('#size_max').val(),
+                    'remark': $('#remark').val()
+                }, function (data) {
+                    if (data == 0) {
+                        alert('修改成功');
+                        var index = parent.layer.getFrameIndex(window.name);
+                        parent.layer.close(index);
+                    }
+                    else {
+                        alert(data);
+                    }
+                });
+            }
+
+        });
+
+    });
+
+
+</script>
+
+</html>

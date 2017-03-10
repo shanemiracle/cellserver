@@ -113,7 +113,7 @@ class Device extends Rest
                 print 0;
             }
             else{
-                print $retData['ret_code'];
+                print $retData['err_desc'];
             }
 
         }
@@ -163,7 +163,7 @@ class Device extends Rest
                 print 0;
             }
             else{
-                print $retData['ret_code'];
+                print $retData['err_desc'];
             }
 
         }
@@ -182,7 +182,7 @@ class Device extends Rest
                 print 0;
             }
             else{
-                print $retData['ret_code'];
+                print $retData['err_desc'];
             }
 
         }

@@ -27,7 +27,7 @@ class CellPerType
                 print 0;
             }
             else{
-                print $retData['ret_code'];
+                print $retData['err_desc'];
             }
 
         }
@@ -46,7 +46,7 @@ class CellPerType
                 print 0;
             }
             else{
-                print $retData['ret_code'];
+                print $retData['err_desc'];
             }
 
         }
@@ -66,7 +66,7 @@ class CellPerType
                 print 0;
             }
             else{
-                print $retData['ret_code'];
+                print $retData['err_desc'];
             }
 
         }
@@ -85,7 +85,7 @@ class CellPerType
                 print 0;
             }
             else{
-                print $retData['ret_code'];
+                print $retData['err_desc'];
             }
 
         }
@@ -108,7 +108,7 @@ class CellPerType
                 print 0;
             }
             else{
-                print $retData['ret_code'];
+                print $retData['err_desc'];
             }
 
         }

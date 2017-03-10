@@ -118,7 +118,7 @@ class Hospital extends Rest
                 print 0;
             }
             else {
-                print $retData['ret_code'];
+                print $retData['err_desc'];
             }
         }
         else {
@@ -141,7 +141,7 @@ class Hospital extends Rest
                 print 0;
             }
             else {
-                print $retData['ret_code'];
+                print $retData['err_desc'];
             }
         }
         else {
@@ -183,7 +183,7 @@ class Hospital extends Rest
                 print 0;
             }
             else {
-                print $retData['ret_code'];
+                print $retData['err_desc'];
             }
         }        else {
             print 10000;

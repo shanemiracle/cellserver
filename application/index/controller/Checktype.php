@@ -16,7 +16,7 @@ use think\Request;
 use think\Session;
 use think\View;
 
-class CheckType extends Rest
+class Checktype extends Rest
 {
     private function attest()
     {

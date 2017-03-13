@@ -13,9 +13,9 @@ use app\index\cell\Cell;
 
 class apiCellPerType
 {
-    public static function apiCellPerTypeAdd($attest,$check_type,$per_name,$expression,$remark) {
+    public static function apiCellPerTypeAdd($attest,$check_type,$per_name,$en_name,$expression,$remark) {
         $sendArray = ['id'=>intval(33),'flag'=>intval(0),'data'=>['attest'=>intval($attest),'check_type'=>intval($check_type),
-           'per_name'=>$per_name,'expression'=>$expression,'remark'=>$remark] ];
+           'per_name'=>$per_name,'en_name'=>$en_name,'expression'=>$expression,'remark'=>$remark] ];
         $sendData = json_encode($sendArray);
         if($sendData){
             $recvData = Cell::bizSend($sendData);
@@ -82,9 +82,9 @@ class apiCellPerType
         return false;
     }
 
-    public static function apiCellPerTypeSet($attest,$check_type,$cell_per_type,$info_ver,$per_name,$expression,$remark) {
+    public static function apiCellPerTypeSet($attest,$check_type,$cell_per_type,$info_ver,$per_name,$en_name,$expression,$remark) {
         $sendArray = ['id'=>intval(37),'flag'=>intval(0),'data'=>['attest'=>intval($attest),'check_type'=>intval($check_type),
-            'cell_per_type'=>intval($cell_per_type),'info_ver'=>intval($info_ver),'per_name'=>$per_name,'expression'=>$expression,'remark'=>$remark] ];
+            'cell_per_type'=>intval($cell_per_type),'info_ver'=>intval($info_ver),'per_name'=>$per_name,'en_name'=>$en_name,'expression'=>$expression,'remark'=>$remark] ];
         $sendData = json_encode($sendArray);
         if($sendData){
             $recvData = Cell::bizSend($sendData);

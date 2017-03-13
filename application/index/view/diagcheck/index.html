@@ -25,7 +25,7 @@
     <script>DD_belatedPNG.fix('*');</script>
     <![endif]-->
 
-    <title>机器码列表</title>
+    <title>诊断列表</title>
     <script type="text/javascript" src="/lib/jquery/1.9.1/jquery.min.js"></script>
     <script type="text/javascript" src="/lib/layer/2.4/layer.js"></script>
     <script type="text/javascript" src="/lib/My97DatePicker/4.8/WdatePicker.js"></script>
@@ -36,8 +36,8 @@
 
 </head>
 <body>
-<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 细胞比例管理 <span
-        class="c-gray en">&gt;</span> 骨髓细胞比例列表 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px"
+<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 诊断比例管理 <span
+        class="c-gray en">&gt;</span> 诊断比例列表 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px"
                                               href="javascript:location.replace(location.href);" title="刷新"><i
         class="Hui-iconfont">&#xe68f;</i></a></nav>
 <div class="page-container">
@@ -45,7 +45,7 @@
     <div class="cl pd-5 bg-1 bk-gray mt-20">
 		<span class="l">
             <a href="javascript:void(0);" id="btnAdd" class="btn btn-primary radius"><i
-                    class="Hui-iconfont Hui-iconfont-add">添加细胞比例</i></a>
+                    class="Hui-iconfont Hui-iconfont-add">添加诊断比例</i></a>
 		</span>
 
 
@@ -54,7 +54,7 @@
     <div class="mt-20">
         <table id='hos_table' class="table table-border table-bordered table-bg th radius table-hover table-sort">
             <thead class="text-c">
-            <th>比例编号</th>
+            <th>诊断编号</th>
             <th>信息版本</th>
             <th>中文名</th>
             <th>操作</th>
@@ -74,7 +74,7 @@
     $(document).ready(function () {
         table = $('.table-sort').DataTable({
             ajax: {
-                url: "/cellpertype/ajax_list"
+                url: "/diagcheck/ajax_list"
             },
             aaSorting: [[0, "desc"]],//默认第几个排序
             bStateSave: true,//状态保存
@@ -83,9 +83,9 @@
                 {"orderable": false, "aTargets": [1,2,3]}// 不参与排序的列
             ],
             columns: [
-                {data: 'cell_per_type'},
+                {data: 'diag_check_type'},
                 {data: 'info_ver'},
-                {data: 'per_name'},
+                {data: 'cn_name'},
                 {targets: -1, data: null, defaultContent: '<a href="javascript:void(0);" id="edit" class="btn btn-primary radius"><i class="Hui-iconfont Hui-iconfont-edit"></i>编辑</a>   | <a href="javascript:void(0);" id="del" class="btn btn-primary radius"><i class="Hui-iconfont Hui-iconfont-del2"></i>删除</a>'}
             ],
             language: {
@@ -116,9 +116,9 @@
             var index= layer.open({
                 type: 2,
                 maxmin:true,
-                title: '添加细胞比例',
+                title: '添加诊断比例',
                 area: ['800px', '480px'],
-                content: '/cellpertype/add',
+                content: '/diagcheck/add',
                 end: function () {
                     table.ajax.reload(null,false);
                 }
@@ -132,9 +132,9 @@
             var index= layer.open({
                 type: 2,
                 maxmin:true,
-                title: '编辑细胞比例',
+                title: '编辑诊断比例',
                 area: ['800px', '480px'],
-                content: '/cellpertype/edit?'+'cell_per_type='+data['cell_per_type'],
+                content: '/diagcheck/edit?'+'diag_check_type='+data['diag_check_type'],
                 end: function () {
                     table.ajax.reload(null,false);
                 }
@@ -147,7 +147,7 @@
 //            alert('del');
             var data = table.row($(this).parents('tr')).data();
             layer.confirm('是否删除?',{icon:3,title:'提示'},function(index){
-                $.post('/cellpertype/ajax_drop',{'cell_per_type':data['cell_per_type']},function (d) {
+                $.post('/diagcheck/ajax_drop',{'diag_check_type':data['diag_check_type']},function (d) {
                     if(d==0){
                         table.ajax.reload(null,false);
                     }else{

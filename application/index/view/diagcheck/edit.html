@@ -24,24 +24,37 @@
 
 
 
-    <title>添加细胞比例</title>
+    <title>编辑诊断比例</title>
 </head>
 <body>
 
 <div class="page-container">
-    <form class="form form-vertical" id="form_add" action="/cellpertype/ajax_add">
+    <form class="form form-vertical" id="form_add" action="">
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2 col-sm-offset-1">诊断比例编号:</label>
+            <div class="formControls col-xs-8 col-sm-6">
+                <input type="text" class="input-text radius" value="{$diag_check_type}" id="diag_check_type" name="diag_check_type" readonly>
+            </div>
+        </div>
 
         <div class="row cl">
-            <label class="form-label col-xs-4 col-sm-2 col-sm-offset-1">细胞比例中文名:</label>
+            <label class="form-label col-xs-4 col-sm-2 col-sm-offset-1">信息版本:</label>
             <div class="formControls col-xs-8 col-sm-6">
-                <input type="text" class="input-text radius" value="" id="per_name" name="per_name" maxlength="42" required>
+                <input type="text" class="input-text radius" value="{$info_ver}" id="info_ver" name="info_ver" readonly>
+            </div>
+        </div>
+
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2 col-sm-offset-1">诊断比例中文名:</label>
+            <div class="formControls col-xs-8 col-sm-6">
+                <input type="text" class="input-text radius" value="{$cn_name}" id="cn_name" name="cn_name" maxlength="42" required autofocus>
             </div>
         </div>
 
         <div class="row cl">
             <label class="form-label col-xs-4 col-sm-2 col-sm-offset-1">细胞比例英文名:</label>
             <div class="formControls col-xs-8 col-sm-6">
-                <input type="text" class="input-text radius" value="" id="en_name" name="en_name" maxlength="120">
+                <input type="text" class="input-text radius" value="{$en_name}" id="en_name" name="en_name" maxlength="120">
             </div>
         </div>
 
@@ -50,7 +63,7 @@
             <div class="formControls col-xs-8 col-sm-6">
                  <textarea id="expression" name="expression" cols rows class="textarea" placeholder="..." datatype="*10-510"
                           maxlength="510"
-                          onkeypress="$.Huitextarealength(this,510)" onkeyup="$.Huitextarealength(this,510)"></textarea>
+                          onkeypress="$.Huitextarealength(this,510)" onkeyup="$.Huitextarealength(this,510)">{$expression}</textarea>
                 <p class="textarea-numberbar">
                     <em class="textarea-length">*</em>/510
                 </p>
@@ -62,7 +75,7 @@
             <div class="formControls col-xs-8 col-sm-6">
                  <textarea id="remark" name="remark" cols rows class="textarea" placeholder="..." datatype="*10-340"
                            maxlength="510"
-                           onkeypress="$.Huitextarealength(this,340)" onkeyup="$.Huitextarealength(this,340)"></textarea>
+                           onkeypress="$.Huitextarealength(this,340)" onkeyup="$.Huitextarealength(this,340)">{$remark}</textarea>
                 <p class="textarea-numberbar">
                     <em class="textarea-length">*</em>/340
                 </p>
@@ -128,9 +141,9 @@
 
         $('#btnSubmit').on('click', function () {
             if(form.valid()){
-                $.post('/cellpertype/ajax_add',{'per_name': $('#per_name').val(),'en_name': $('#en_name').val(),'expression': $('#expression').val(),'remark': $('#remark').val()},function (data) {
+                $.post('/diagcheck/ajax_edit',{'diag_check_type': $('#diag_check_type').val(),'info_ver': $('#info_ver').val(),'cn_name': $('#cn_name').val(),'en_name': $('#en_name').val(),'expression': $('#expression').val(),'remark': $('#remark').val()},function (data) {
                     if(data==0){
-                        alert('添加成功');
+                        alert('修改成功');
                         var index = parent.layer.getFrameIndex(window.name);
                         parent.layer.close(index);
                     }

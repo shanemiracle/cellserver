@@ -21,60 +21,68 @@
     <script type="text/javascript" src="http://lib.h-ui.net/DD_belatedPNG_0.0.8a-min.js"></script>
     <script>DD_belatedPNG.fix('*');</script>
     <![endif]-->
-    <title>编辑医院</title>
+
+
+
+    <title>编辑细胞比例</title>
 </head>
 <body>
 
 <div class="page-container">
-    <form class="form form-vertical" id="form_edit" action="/device/ajax_edit">
+    <form class="form form-vertical" id="form_add" action="/cellpertype/ajax_add">
         <div class="row cl">
-            <label class="form-label col-xs-4 col-sm-2 col-sm-offset-1">医院名称:</label>
+            <label class="form-label col-xs-4 col-sm-2 col-sm-offset-1">细胞比例编号:</label>
             <div class="formControls col-xs-8 col-sm-6">
-                <input type="text" class="input-text radius" style="color: #7e8795" value="{$hospital_name}" id="hospital_name" readonly >
-            </div>
-        </div>
-
-        <div class="row cl">
-            <label class="form-label col-xs-4 col-sm-2 col-sm-offset-1">机器码:</label>
-            <div class="formControls col-xs-8 col-sm-6">
-                <input type="text" class="input-text radius" style="color: #7e8795" value="{$machine_code}" id="machine_code" readonly >
-            </div>
-        </div>
-
-        <div class="row cl">
-            <label class="form-label col-xs-4 col-sm-2 col-sm-offset-1">设备编号:</label>
-            <div class="formControls col-xs-8 col-sm-6">
-                <input type="text" class="input-text radius" style="color: #7e8795" value="{$device_no}" id="device_no" readonly>
+                <input type="text" class="input-text radius" value="{$cell_per_type}" id="cell_per_type" name="cell_per_type" readonly>
             </div>
         </div>
 
         <div class="row cl">
             <label class="form-label col-xs-4 col-sm-2 col-sm-offset-1">信息版本:</label>
             <div class="formControls col-xs-8 col-sm-6">
-                <input type="text" class="input-text radius" style="color: #7e8795" value="{$info_ver}" id="info_ver" readonly>
+                <input type="text" class="input-text radius" value="{$info_ver}" id="info_ver" name="info_ver" readonly>
             </div>
         </div>
 
         <div class="row cl">
-            <label class="form-label col-xs-4 col-sm-2 col-sm-offset-1">创建时间:</label>
+            <label class="form-label col-xs-4 col-sm-2 col-sm-offset-1">细胞比例中文名:</label>
             <div class="formControls col-xs-8 col-sm-6">
-                <input type="text" class="input-text radius" style="color: #7e8795" value="{$create_time}" id="create_time" readonly >
+                <input type="text" class="input-text radius" value="{$per_name}" id="per_name" name="per_name" maxlength="42" required autofocus>
             </div>
         </div>
 
         <div class="row cl">
-            <label class="form-label col-xs-4 col-sm-2 col-sm-offset-1">原有效期:</label>
+            <label class="form-label col-xs-4 col-sm-2 col-sm-offset-1">细胞比例英文名:</label>
             <div class="formControls col-xs-8 col-sm-6">
-                <input type="text" class="input-text radius" style="color: #7e8795" value="{$end_time}" id="end_time" readonly>
+                <input type="text" class="input-text radius" value="{$en_name}" id="en_name" name="en_name" maxlength="120">
             </div>
         </div>
 
         <div class="row cl">
-            <label class="form-label col-xs-4 col-sm-2 col-sm-offset-1">增加期限:</label>
+            <label class="form-label col-xs-4 col-sm-2 col-sm-offset-1">表达式:</label>
             <div class="formControls col-xs-8 col-sm-6">
-                <input type="text" class="input-text radius" style="color: #7e8795" value="" id="add_sec" name="add_sec" placeholder="单位(天)" autofocus>
+                 <textarea id="expression" name="expression"  cols rows class="textarea" placeholder="..." datatype="*10-510"
+                          maxlength="510"
+                          onkeypress="$.Huitextarealength(this,510)" onkeyup="$.Huitextarealength(this,510)">{$expression}</textarea>
+                <p class="textarea-numberbar">
+                    <em class="textarea-length">*</em>/510
+                </p>
             </div>
         </div>
+
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2 col-sm-offset-1">描述:</label>
+            <div class="formControls col-xs-8 col-sm-6">
+                 <textarea id="remark" name="remark" cols rows class="textarea" placeholder="..." datatype="*10-340"
+                           maxlength="510"
+                           onkeypress="$.Huitextarealength(this,340)" onkeyup="$.Huitextarealength(this,340)">{$remark}</textarea>
+                <p class="textarea-numberbar">
+                    <em class="textarea-length">*</em>/340
+                </p>
+            </div>
+        </div>
+
+
 
         <div class="row cl">
             <div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-3">
@@ -87,6 +95,7 @@
 
 </div>
 
+</body>
 
 <script type="text/javascript" src="/lib/jquery/1.9.1/jquery.min.js"></script>
 <script type="text/javascript" src="/lib/layer/2.4/layer.js"></script>
@@ -98,31 +107,41 @@
 <script type="text/javascript" src="/lib/jquery.validation/1.14.0/jquery.validate.js"></script>
 <script type="text/javascript" src="/lib/jquery.validation/1.14.0/validate-methods.js"></script>
 <script type="text/javascript" src="/lib/jquery.validation/1.14.0/messages_zh.js"></script>
+<script type="text/javascript" src="/lib/jquery.validation/1.14.0/additional-methods.js"></script>
 
 
 
 <script type="text/javascript">
+    var form = $('#form_add');
 
-    var form = $('#form_edit');
+    jQuery.validator.addMethod("isChines", function (value, element) {
+        var chn = /[\u4E00-\u9FA5]/;
+        return !chn.test(value);
+    }, "表达式不能包含中文");
 
     $(document).ready(function () {
         form.validate({
             rules:{
-                add_sec:{
-                    digits:true
+                expression:{
+                    isChines:true
+                },
+                en_name:{
+                    isChines:true
                 }
             },
             messages:{
-                add_sec:{
-                    digits:"必须为数字,单位(天)"
+                expression:{
+                    isChines:"表达式不能包含中文"
+                },
+                en_name:{
+                    isChines:"不能包含中文"
                 }
             }
         });
 
-        $('#hos_name').select();
         $('#btnSubmit').on('click', function () {
-            if(form.valid()) {
-                $.post('/device/ajax_set_time',{'device_no': $('#device_no').val(),'info_ver': $('#info_ver').val(),'add_sec': $('#add_sec').val()},function (data) {
+            if(form.valid()){
+                $.post('/cellpertype/ajax_edit',{'cell_per_type': $('#cell_per_type').val(),'info_ver': $('#info_ver').val(),'per_name': $('#per_name').val(),'en_name': $('#en_name').val(),'expression': $('#expression').val(),'remark': $('#remark').val()},function (data) {
                     if(data==0){
                         alert('修改成功');
                         var index = parent.layer.getFrameIndex(window.name);
@@ -134,12 +153,11 @@
                 });
             }
 
-
         });
 
     });
 
 
 </script>
-</body>
+
 </html>

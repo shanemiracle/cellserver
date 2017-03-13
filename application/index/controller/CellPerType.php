@@ -10,11 +10,28 @@ namespace app\index\controller;
 
 
 use app\index\api\apiCellPerType;
+use app\index\api\apiHospital;
 use think\Request;
 use think\Session;
 
 class CellPerType
 {
+    private function attest()
+    {
+        $attest = Session::get('attest');
+        $retData = apiHospital::apiHospitalGet($attest, 0, 0);
+        if ($retData) {
+            if ($retData['ret_code'] == 0) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+
+
+
     public  function ajax_add() {
         $attest = Session::get('attest');
         $check_type = Request::instance()->param('check_type');

@@ -10,6 +10,7 @@ namespace app\index\controller;
 
 
 use app\index\api\apiCellType;
+use app\index\api\apiHospital;
 use think\controller\Rest;
 use think\Request;
 use think\Session;
@@ -17,8 +18,25 @@ use think\View;
 
 class CellType extends Rest
 {
+    private function attest()
+    {
+        $attest = Session::get('attest');
+        $retData = apiHospital::apiHospitalGet($attest, 0, 0);
+        if ($retData) {
+            if ($retData['ret_code'] == 0) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     public function add()
     {
+        if ($this->attest() != true) {
+            abort(401);
+        }
+
         $father_cell_type = Request::instance()->param('father_cell_type');
         $father_cell_name = Request::instance()->param('father_cell_name');
 
@@ -27,6 +45,10 @@ class CellType extends Rest
 
     public function edit()
     {
+        if ($this->attest() != true) {
+            abort(401);
+        }
+
         $father_cell_type = Request::instance()->param('father_cell_type');
         $father_cell_name = Request::instance()->param('father_cell_name');
         $cell_type = Request::instance()->param('cell_type');
@@ -48,6 +70,10 @@ class CellType extends Rest
 
     public function index()
     {
+        if ($this->attest() != true) {
+            abort(401);
+        }
+
         $cur_cell_type = Request::instance()->param('cur_cell_type');
         $cur_cell_name = Request::instance()->param('cur_cell_name');
 
@@ -56,7 +82,7 @@ class CellType extends Rest
 
         if ($cur_cell_type == null) {
             $cur_cell_type = 0;
-            $cur_cell_name = '骨髓有核细胞检测';
+            $cur_cell_name = '骨髓细胞检测';
         }
 
         $retData = apiCellType::apiCellTypeFacherList(Session::get('attest'), 1, $cur_cell_type);

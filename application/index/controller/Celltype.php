@@ -16,7 +16,7 @@ use think\Request;
 use think\Session;
 use think\View;
 
-class CellType extends Rest
+class Celltype extends Rest
 {
     private function attest()
     {

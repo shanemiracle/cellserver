@@ -17,7 +17,7 @@ use think\Request;
 use think\Session;
 use think\View;
 
-class DiagCheck extends Rest
+class Diagcheck extends Rest
 {
     private function attest()
     {

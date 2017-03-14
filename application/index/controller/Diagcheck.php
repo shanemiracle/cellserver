@@ -38,7 +38,7 @@ class Diagcheck extends Rest
             abort(401);
         }
 
-        return (new View())->fetch('/Diagcheck/index');
+        return (new View())->fetch('/diagcheck/index');
     }
 
     public function add() {
@@ -46,7 +46,7 @@ class Diagcheck extends Rest
             abort(401);
         }
 
-        return (new View())->fetch('/Diagcheck/add');
+        return (new View())->fetch('/diagcheck/add');
     }
 
     public function edit() {
@@ -66,7 +66,7 @@ class Diagcheck extends Rest
             }
         }
 
-        return (new View())->fetch('/Diagcheck/edit', $data);
+        return (new View())->fetch('/diagcheck/edit', $data);
     }
 
     public  function ajax_add() {

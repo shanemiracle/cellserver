@@ -19,6 +19,10 @@
     <link rel="stylesheet" type="text/css" href="/static/h-ui.admin/css/style.css"/>
     <link rel="stylesheet" type="text/css" href="/static/css/bootstrap-switch.min.css"/>
 
+    <link rel="stylesheet" type="text/css" href="/static/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/static/css/fileinput.min.css">
+
+
     <!--[if IE 6]>
     <script type="text/javascript" src="http://lib.h-ui.net/DD_belatedPNG_0.0.8a-min.js"></script>
     <script>DD_belatedPNG.fix('*');</script>
@@ -26,11 +30,12 @@
 
     <title>添加医生</title>
 
+
 </head>
 <body>
 
 <div class="page-container">
-    <form class="form form-vertical" id="form_add" action="/device/ajax_add">
+    <form class="form form-vertical" id="form_add" action="">
         <div class="row cl">
             <label class="form-label col-xs-4 col-sm-2 col-sm-offset-1">医院编号:</label>
             <div class="formControls col-xs-8 col-sm-6">
@@ -117,11 +122,8 @@
 
         <div class="row cl">
             <label class="form-label col-xs-4 col-sm-2 col-sm-offset-1">头像:</label>
-            <span class="btn-upload col-xs-8 col-sm-6">
-                <input class="input-text upload-url radius" type="text" id="uploadfile" readonly>
-                <a href="javascript:void(0);" class="btn btn-primary radius"><i
-                        class="Hui-iconfont Hui-iconfont-upload"></i>浏览文件</a>
-                <input type="file" multiple name="file" class="input-file">
+            <span class=" col-xs-8 col-sm-6">
+                <input id="input-id" name="file" type="file" class="file-input"  >
             </span>
             <input type="hidden" id="logo" value="">
 
@@ -129,11 +131,8 @@
 
         <div class="row cl">
             <label class="form-label col-xs-4 col-sm-2 col-sm-offset-1">签名:</label>
-            <span class="btn-upload col-xs-8 col-sm-6">
-                <input class="input-text upload-url radius" type="text" id="uploadfile1" readonly>
-                <a href="javascript:void(0);" class="btn btn-primary radius"><i
-                        class="Hui-iconfont Hui-iconfont-upload"></i>浏览文件</a>
-                <input type="file" multiple name="file" class="input-file">
+            <span class=" col-xs-8 col-sm-6">
+                <input id="input-id2" name="file" type="file" class="file-input"  >
             </span>
             <input type="hidden" id="sign_pic" value="">
 
@@ -165,26 +164,7 @@
                     <span>观察</span>
                     <input type="checkbox" id="role4" value="8" name="role">
                 </div>
-                <!--<div class="col-xs-1 col-sm-3">-->
 
-                <!--<label >拍摄</label>-->
-                <!--<input type="checkbox" checked id="role1" value="1" name="role">-->
-                <!--</div>-->
-
-                <!--<div class="col-xs-1 col-sm-3">-->
-                <!--<label >会诊</label>-->
-                <!--<input type="checkbox" checked id="role2" value="2" name="role">-->
-                <!--</div>-->
-
-                <!--<div class="col-xs-1 col-sm-3">-->
-                <!--<label >审核</label>-->
-                <!--<input type="checkbox" checked id="role3" value="4" name="role">-->
-                <!--</div>-->
-
-                <!--<div class="col-xs-1 col-sm-3">-->
-                <!--<label >观察</label>-->
-                <!--<input type="checkbox" checked id="role4" value="8" name="role">-->
-                <!--</div>-->
             </div>
         </div>
 
@@ -204,7 +184,6 @@
 
 <script type="text/javascript" src="/lib/jquery/1.9.1/jquery.min.js"></script>
 <script type="text/javascript" src="/lib/layer/2.4/layer.js"></script>
-<script type="text/javascript" src="/lib/My97DatePicker/4.8/WdatePicker.js"></script>
 <script type="text/javascript" src="/lib/datatables/1.10.0/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="/static/h-ui/js/H-ui.js"></script>
 <script type="text/javascript" src="/static/h-ui.admin/js/H-ui.admin.js"></script>
@@ -215,8 +194,19 @@
 <script type="text/javascript" src="/lib/jquery.validation/1.14.0/additional-methods.js"></script>
 <script type="text/javascript" src="/lib/js/bootstrap-switch.min.js"></script>
 
+<script type="text/javascript" src="/lib/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="/lib/js/plugins/canvas-to-blob.min.js"></script>
+<script type="text/javascript" src="/lib/js/plugins/sortable.min.js"></script>
+<script type="text/javascript" src="/lib/js/plugins/purify.min.js"></script>
+<script type="text/javascript" src="/lib/js/fileinput.min.js"></script>
+<script type="text/javascript" src="/static/themes/fa/theme.js"></script>
+<script type="text/javascript" src="/lib/js/locales/zh.js"></script>
+
+
+
 
 <script type="text/javascript">
+
     var form = $('#form_add');
     var role = document.getElementById('role');
     var role1 = document.getElementById('role1');
@@ -230,7 +220,80 @@
         return this.optional(element) || (length == 11 && mobile.test(value));
     }, "请正确填写您的手机号码");
 
+
+
     $(document).ready(function () {
+
+        var logo = $('#input-id');
+        var sign = $('#input-id2');
+
+
+        logo.fileinput({
+            uploadUrl:"/fileup/ajax_up",
+            allowedPreviewTypes:['image'],
+            allowedFileExtensions:['bmp','png','jpg','jpeg'],
+            uploadAsync:false,
+            language:'zh',
+            showUpload:false,
+            showRemove:false,
+            showCaption:false,
+            browseOnZoneClick:false,
+            removeFromPreviewOnError:false,
+            fileActionSettings:{
+                showRemove:true,
+                showUpload:true
+            }
+        });
+
+        sign.fileinput({
+            uploadUrl:"/fileup/ajax_up",
+            allowedPreviewTypes:['image'],
+            allowedFileExtensions:['bmp','png','jpg','jpeg'],
+            uploadAsync:false,
+            language:'zh',
+            showUpload:false,
+            showRemove:false,
+            showCaption:false,
+            browseOnZoneClick:false,
+            removeFromPreviewOnError:false,
+            fileActionSettings:{
+                showRemove:true,
+                showUpload:true
+            }
+        });
+
+
+        logo.on('fileuploaded',function (event,data,previewId,index) {
+            console.log(data.response);
+            var obj = eval(data.response);
+            if( obj ) {
+                if(obj.ret == 0 ) {
+                    $('#logo').val(obj.logo) ;
+
+                }
+                else{
+                    alert(obj.ret);
+                }
+            }
+
+        });
+
+
+        sign.on('fileuploaded',function (event,data,msg) {
+            console.log(data.response);
+            var obj = eval(data.response);
+            if( obj ) {
+                if(obj.ret == 0 ) {
+                    $('#sign_pic').val(obj.logo) ;
+
+                }
+                else{
+                    alert(obj.ret);
+                }
+            }
+        });
+
+
 
         role.value = (role1.checked?role1.value:0)|(role2.checked?role2.value:0)|(role3.checked?role3.value:0)|(role4.checked?role4.value:0)
 
@@ -303,7 +366,8 @@
         });
 
         $('#btnSubmit').on('click', function () {
-            if (form.valid()) {
+            if (form.valid())
+            {
                 $.post('/doctor/ajax_add', {
                     'doctor_name': $('#doctor_name').val(),
                     'pwd': $('#pwd').val(),

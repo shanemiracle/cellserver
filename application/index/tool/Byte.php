@@ -17,12 +17,15 @@ class Byte{
     public function setBytePrev($content){
         $this->byte=$content.$this->byte;
     }
+
     public function getByte(){
         return $this->byte;
     }
+
     public function getLength(){
         return $this->length;
     }
+
     public function writeChar($string){
         $this->length+=strlen($string);
         $str=array_map('ord',str_split($string));
@@ -30,6 +33,7 @@ class Byte{
             $this->byte.=pack('c',$vo);
         }
     }
+
     public function writeU8($u8){
 
         $hex = '';
@@ -43,6 +47,7 @@ class Byte{
         $this->length+=4;
         $this->byte.=pack('L',$str);
     }
+
     public function writeShortInt($interge){
         $this->length+=2;
         $this->byte.=pack('n',$interge);
@@ -52,7 +57,6 @@ class Byte{
         return unpack('n',$data);
     }
 
-    
 }
 
 /*$client = new swoole_client(SWOOLE_SOCK_TCP);

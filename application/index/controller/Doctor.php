@@ -11,6 +11,7 @@ namespace app\index\controller;
 
 use app\index\api\apiDoctor;
 use app\index\api\apiHospital;
+use app\index\tool\Ext;
 use think\controller\Rest;
 use think\Request;
 use think\Session;
@@ -43,9 +44,12 @@ class Doctor extends Rest
         $retData = apiDoctor::apiSingleDoctorInfo(Session::get('attest'), $doctor_no);
         if ($retData) {
             if ($retData['ret_code'] == 0) {
+                $logUrl = '/file/'.substr( $retData['logo'],10,2).'/'.substr( $retData['logo'],12,30).Ext::typeToName(substr( $retData['logo'],42,2));
+                $signUrl = '/file/'.substr( $retData['sign_pic'],10,2).'/'.substr( $retData['sign_pic'],12,30).Ext::typeToName(substr( $retData['sign_pic'],42,2));
+
                 $data = ['hospital_name'=>$hospital_name,'doctor_no'=>$doctor_no,'doctor_ver' => $retData['doctor_ver'], 'doctor_name' => $retData['doctor_name'],
                     'pwd' => $retData['pwd'], 'level' => $retData['level'], 'department' => $retData['department'],
-                    'logo' => $retData['logo'], 'sign_pic' => $retData['sign_pic'],
+                    'logo' => $retData['logo'], 'sign_pic' => $retData['sign_pic'], 'logourl'=>$logUrl, 'signurl'=>$signUrl,
                     'mobile' => $retData['mobile_no'], 'role' => $retData['role'],
                     'learn_level' => $retData['learn_level']];
             }

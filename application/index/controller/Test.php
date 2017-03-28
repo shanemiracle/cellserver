@@ -16,12 +16,11 @@ use app\index\api\apiCheckType;
 use app\index\api\apiDevice;
 use app\index\api\apiDiagCheck;
 use app\index\api\apiDoctor;
-use app\index\api\apiFile;
 use app\index\api\apiHospital;
 use app\index\api\apiLogin;
-use app\index\tool\Byte;
 use think\Request;
 use think\Session;
+use think\View;
 
 class Test
 {
@@ -32,56 +31,63 @@ class Test
                 </form>';
     }
 
+    public function test() {
+        return (new View())->fetch('/test/test');
+    }
+
+
+
     public function up(){
         $file = Request::instance()->file('file');
-        $info = $file->rule('md5')->move(ROOT_PATH.'public'.DS.'file');
-        if($info){
-            $tpye = $info->getExtension();
-            echo '<br>';
-            echo $info->getSaveName();
-            echo '<br>';
-            echo $info->getFilename();
-            echo '<br>';
-            $md5 = $info->md5();
-            $size = $info->getSize();
-
-
-           $retArray = apiFile::apiFileUp($md5,$size,$tpye);
-            if($retArray){
-                print_r($retArray);
-                echo '1111111<br>';
-                if( $retArray['ret_code'] != 0) {
-                    echo '1111111<br>';
-                    return json_encode($retArray);
-                }
-
-                $retArray1 = apiFile::apiFileDataUp($md5,$size,$tpye,$retArray['web_name'],$retArray['server_id'],$retArray['flag_index']);
-
-                if($retArray1) {
-                    print_r($retArray1);
-                    echo '22222222<br>';
-                    if ($retArray1['ret_code'] != 0) {
-                        echo '2222222222222<br>';
-                        return json_encode($retArray1);
-                    }
-
-                    $retArray2 = apiFile::apiFileUpOk($md5,$size,$tpye);
-                    if($retArray2){
-                        print_r($retArray2);
-                        echo '333333333333<br>';
-                        return json_encode($retArray2);
-                    }
-
-                }
-
-            }
-
-            return 'error';
-
-        }
-        else {
-            echo $file->getError();
-        }
+        print_r($file);
+//        $info = $file->rule('md5')->move(ROOT_PATH.'public'.DS.'file');
+//        if($info){
+//            $tpye = $info->getExtension();
+//            echo '<br>';
+//            echo $info->getSaveName();
+//            echo '<br>';
+//            echo $info->getFilename();
+//            echo '<br>';
+//            $md5 = $info->md5();
+//            $size = $info->getSize();
+//
+//
+//           $retArray = apiFile::apiFileUp($md5,$size,$tpye);
+//            if($retArray){
+//                print_r($retArray);
+//                echo '1111111<br>';
+//                if( $retArray['ret_code'] != 0) {
+//                    echo '1111111<br>';
+//                    return json_encode($retArray);
+//                }
+//
+//                $retArray1 = apiFile::apiFileDataUp($md5,$size,$tpye,$retArray['web_name'],$retArray['server_id'],$retArray['flag_index']);
+//
+//                if($retArray1) {
+//                    print_r($retArray1);
+//                    echo '22222222<br>';
+//                    if ($retArray1['ret_code'] != 0) {
+//                        echo '2222222222222<br>';
+//                        return json_encode($retArray1);
+//                    }
+//
+//                    $retArray2 = apiFile::apiFileUpOk($md5,$size,$tpye);
+//                    if($retArray2){
+//                        print_r($retArray2);
+//                        echo '333333333333<br>';
+//                        return json_encode($retArray2);
+//                    }
+//
+//                }
+//
+//            }
+//
+//            return 'error';
+//
+//        }
+//        else {
+//            echo $file->getError();
+//        }
     }
 
     public function index() {

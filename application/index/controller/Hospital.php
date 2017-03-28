@@ -10,6 +10,7 @@ namespace app\index\controller;
 
 
 use app\index\api\apiHospital;
+use app\index\tool\Ext;
 use think\controller\Rest;
 use think\Request;
 use think\response\Redirect;
@@ -58,6 +59,8 @@ class Hospital extends Rest
         $retData = apiHospital::apiHospitalOneGet($attest,$hospital_no);
         if($retData) {
             if($retData['ret_code']==0) {
+                $logUrl = '/file/'.substr( $retData['logo'],10,2).'/'.substr( $retData['logo'],12,30).Ext::typeToName(substr( $retData['logo'],42,2));
+
                 $data = [
                     'hospital_no'=>$retData['hospital_no'],
                     'hospital_ver'=>$retData['hospital_ver'],
@@ -65,7 +68,8 @@ class Hospital extends Rest
                     'hospital_number'=>$retData['hospital_number'],
                     'zone'=>$retData['zone'],
                     'level'=>$retData['level'],
-                    'logo'=>$retData['logo']
+                    'logo'=>$retData['logo'],
+                    'logourl'=>$logUrl
                 ];
             }
         }

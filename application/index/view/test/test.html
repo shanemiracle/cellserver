@@ -40,15 +40,16 @@ hello world!
         file.fileinput({
             uploadUrl:"/fileup/ajax_up",
             allowedPreviewTypes:['image','html','text','video','flash'],
-            uploadAsync:false,
+            uploadAsync:true,
             language:'zh',
-            showUpload:false,
+            showUpload:true,
             showRemove:false,
             showCaption:false,
             showPreview:true,
             browseOnZoneClick:false,
             overwriteInitial:true,
             removeFromPreviewOnError:false,
+            maxFileCount:2,
 //            fileActionSettings:{
 //                showRemove:true,
 //                showUpload:true
@@ -68,9 +69,10 @@ hello world!
         });
 
 
-        file.on('fileuploaded',function (event,data,msg) {
+        file.on('fileuploaded',function (event,data,previewId,index) {
 //            alert("222");
-            console.log(data.response);
+//            alert(previewId);
+            console.log('fileuploaded'+data.response+ ' '+index);
         });
 
         file.on('fileclear',function (event) {

@@ -11,6 +11,7 @@ namespace app\index\controller;
 
 use app\index\api\apiCellType;
 use app\index\api\apiHospital;
+use app\index\tool\Ext;
 use think\controller\Rest;
 use think\Request;
 use think\Session;
@@ -57,11 +58,17 @@ class Celltype extends Rest
         $retData = apiCellType::apiCellTypeGet(Session::get('attest'), 1, $cell_type);
         if ($retData) {
             if ($retData['ret_code'] == 0) {
+                $bigUrl = '/file/'.substr( $retData['file_id_big'],10,2).'/'.substr( $retData['file_id_big'],12,30).Ext::typeToName(substr( $retData['file_id_big'],42,2));
+                $smallUrl = '/file/'.substr( $retData['file_id_small'],10,2).'/'.substr( $retData['file_id_small'],12,30).Ext::typeToName(substr( $retData['file_id_small'],42,2));
+
+
                 $data = ['father_cell_type' => $father_cell_type, 'father_cell_name' => $father_cell_name,
                     'cell_type'=>$cell_type,'info_ver'=>$retData['info_ver'],
                     'cn_name'=>$retData['cn_name'],'en_name'=>$retData['en_name'],
                     'abb_name'=>$retData['abb_name'],'size_max'=>$retData['size_max']/10,
-                    'size_min'=>$retData['size_min']/10,'remark'=>$retData['remark']];
+                    'size_min'=>$retData['size_min']/10,'remark'=>$retData['remark'],
+                    'file_id_big'=>$retData['file_id_big'],'file_id_small'=>$retData['file_id_small'],
+                    'bigUrl'=>$bigUrl,'smallUrl'=>$smallUrl];
             }
         }
 
@@ -108,7 +115,9 @@ class Celltype extends Rest
         $size_max = Request::instance()->param('size_max');
         $size_min = Request::instance()->param('size_min');
         $remark = Request::instance()->param('remark');
-        $retData = apiCellType::apiCellTypeAdd($attest, 1, $father_cell_type, $cn_name, $en_name, $abb_name, $size_max * 10, $size_min * 10, $remark);
+        $file_id_big = Request::instance()->param('file_id_big');
+        $file_id_small = Request::instance()->param('file_id_small');
+        $retData = apiCellType::apiCellTypeAdd($attest, 1, $father_cell_type, $cn_name, $en_name, $abb_name, $size_max * 10, $size_min * 10, $remark, $file_id_big,$file_id_small);
         if ($retData) {
             if ($retData['ret_code'] == 0) {
                 print 0;
@@ -207,7 +216,9 @@ class Celltype extends Rest
         $size_max = Request::instance()->param('size_max');
         $size_min = Request::instance()->param('size_min');
         $remark = Request::instance()->param('remark');
-        $retData = apiCellType::apiCellTypeSet($attest, 1, $cell_type, $info_ver, $cn_name, $en_name, $abb_name, $size_max * 10, $size_min * 10, $remark);
+        $file_id_big = Request::instance()->param('file_id_big');
+        $file_id_small = Request::instance()->param('file_id_small');
+        $retData = apiCellType::apiCellTypeSet($attest, 1, $cell_type, $info_ver, $cn_name, $en_name, $abb_name, $size_max * 10, $size_min * 10, $remark,$file_id_big,$file_id_small);
         if ($retData) {
             if ($retData['ret_code'] == 0) {
                 print 0;

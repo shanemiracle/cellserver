@@ -17,6 +17,10 @@
     <link rel="stylesheet" type="text/css" href="/lib/Hui-iconfont/1.0.8/iconfont.css"/>
     <link rel="stylesheet" type="text/css" href="/static/h-ui.admin/skin/default/skin.css" id="skin"/>
     <link rel="stylesheet" type="text/css" href="/static/h-ui.admin/css/style.css"/>
+
+    <link rel="stylesheet" type="text/css" href="/static/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/static/css/fileinput.min.css">
+
     <!--[if IE 6]>
     <script type="text/javascript" src="http://lib.h-ui.net/DD_belatedPNG_0.0.8a-min.js"></script>
     <script>DD_belatedPNG.fix('*');</script>
@@ -93,11 +97,8 @@
 
         <div class="row cl">
             <label class="form-label col-xs-4 col-sm-2 col-sm-offset-1">图片:</label>
-            <span class="btn-upload col-xs-8 col-sm-6">
-                <input class="input-text upload-url radius" type="text" id="uploadfile" readonly>
-                <a href="javascript:void(0);" class="btn btn-primary radius"><i
-                        class="Hui-iconfont Hui-iconfont-upload"></i>浏览文件</a>
-                <input type="file" multiple name="file" class="input-file">
+            <span class=" col-xs-8 col-sm-6">
+                <input id="input-id" name="file" type="file" class="file-input"  >
             </span>
             <input type="hidden" id="logo" value="{$logo}">
         </div>
@@ -126,11 +127,62 @@
 <script type="text/javascript" src="/lib/jquery.validation/1.14.0/validate-methods.js"></script>
 <script type="text/javascript" src="/lib/jquery.validation/1.14.0/messages_zh.js"></script>
 
-
+<script type="text/javascript" src="/lib/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="/lib/js/plugins/canvas-to-blob.min.js"></script>
+<script type="text/javascript" src="/lib/js/plugins/sortable.min.js"></script>
+<script type="text/javascript" src="/lib/js/plugins/purify.min.js"></script>
+<script type="text/javascript" src="/lib/js/fileinput.min.js"></script>
+<script type="text/javascript" src="/static/themes/fa/theme.js"></script>
+<script type="text/javascript" src="/lib/js/locales/zh.js"></script>
 
 <script type="text/javascript">
 
     $(document).ready(function () {
+
+        var logo = $('#input-id');
+
+        logo.fileinput({
+            uploadUrl:"/fileup/ajax_up",
+            allowedPreviewTypes:['image'],
+            allowedFileExtensions:['bmp','png','jpg','jpeg'],
+            uploadAsync:true,
+            language:'zh',
+            showUpload:true,
+            showRemove:false,
+            showCaption:false,
+            browseOnZoneClick:false,
+            removeFromPreviewOnError:false,
+            initialPreview: [
+                "{$logourl}"
+            ],
+            initialPreviewAsData:true,
+//            fileActionSettings:{
+//                showRemove:false,
+//                showUpload:false
+//            },
+            initialPreviewConfig:[
+                {caption:"{$logourl}",width:'120px',url:'#',key:1}
+            ]
+        });
+
+        logo.on('fileuploaded',function (event,data,previewId,index) {
+            console.log(data.response);
+            var obj = eval(data.response);
+            if( obj ) {
+                if(obj.ret == 0 ) {
+                    $('#logo').val(obj.logo);
+                }
+                else{
+                    alert(obj.ret);
+                }
+            }
+
+        });
+
+        logo.on('filedeleted',function (event,id) {
+            $('#logo').val('') ;
+        });
+
         $('#hos_name').select();
         $('#btnSubmit').on('click', function () {
             $.post('/hospital/ajax_set',{'hospital_no': $('#hos_no').val(),'hospital_ver': $('#hos_ver').val(),'hospital_name': $('#hos_name').val(),'zone': $('#zone').val(),'level': $('#level').val(),'logo': $('#logo').val()},function (data) {

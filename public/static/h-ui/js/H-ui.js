@@ -4271,7 +4271,7 @@ $(function() {
 		var uTmpLen = 0;
 		var l = v.length;
 		for(var i = 0;i<l;i++){
-			uTmpLen = v.charCodeAt(i)>255?3:1;
+			uTmpLen = (v.charCodeAt(i)>=0 && v.charCodeAt(i)<=128)?3:1;
 			// allLen += v.charCodeAt(i)>255?3:1;
 			if (allLen+uTmpLen > maxlength) {
 				v = v.substring(0, i);

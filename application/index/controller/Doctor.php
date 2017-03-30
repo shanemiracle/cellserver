@@ -44,8 +44,21 @@ class Doctor extends Rest
         $retData = apiDoctor::apiSingleDoctorInfo(Session::get('attest'), $doctor_no);
         if ($retData) {
             if ($retData['ret_code'] == 0) {
-                $logUrl = '/file/'.substr( $retData['logo'],10,2).'/'.substr( $retData['logo'],12,30).Ext::typeToName(substr( $retData['logo'],42,2));
-                $signUrl = '/file/'.substr( $retData['sign_pic'],10,2).'/'.substr( $retData['sign_pic'],12,30).Ext::typeToName(substr( $retData['sign_pic'],42,2));
+
+                if(substr( $retData['logo'],10,2)!='00'){
+                    $logUrl = '/file/'.substr( $retData['logo'],10,2).'/'.substr( $retData['logo'],12,30).Ext::typeToName(substr( $retData['logo'],42,2));
+                }
+                else{
+                    $logUrl = '';
+                }
+
+                if(substr( $retData['sign_pic'],10,2)!='00'){
+                    $signUrl = '/file/'.substr( $retData['sign_pic'],10,2).'/'.substr( $retData['sign_pic'],12,30).Ext::typeToName(substr( $retData['sign_pic'],42,2));
+                }
+                else{
+                    $signUrl = '';
+                }
+
 
                 $data = ['hospital_name'=>$hospital_name,'doctor_no'=>$doctor_no,'doctor_ver' => $retData['doctor_ver'], 'doctor_name' => $retData['doctor_name'],
                     'pwd' => $retData['pwd'], 'level' => $retData['level'], 'department' => $retData['department'],

@@ -55,10 +55,13 @@ hello world!
 //                showUpload:true
 //            },
             initialPreview:[
-                    "http://localhost:8888/file/08/6184a0fb4397d010e1fdb54516dfd6.png"
+                "http://localhost:8888/file/08/6184a0fb4397d010e1fdb54516dfd6.png",
+                "{$logourl}"
+
             ],
             initialPreviewAsData:true,
             initialPreviewConfig:[
+                {caption:"",width:'120px',url:'#',key:0},
                 {caption:"",width:'120px',url:'#',key:1}
             ]
         });
@@ -88,7 +91,7 @@ hello world!
         });
 
         file.on('filedeleted',function (event,key) {
-            console.log('filedeleted');
+            console.log('filedeleted '+key);
         });
 
         file.on('filesuccessremove',function (event,id) {

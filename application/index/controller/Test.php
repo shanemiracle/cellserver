@@ -32,7 +32,7 @@ class Test
     }
 
     public function test() {
-        return (new View())->fetch('/test/test');
+        return (new View())->fetch('/test/test',['logourl'=>'']);
     }
 
 

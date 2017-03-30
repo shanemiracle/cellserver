@@ -58,8 +58,19 @@ class Celltype extends Rest
         $retData = apiCellType::apiCellTypeGet(Session::get('attest'), 1, $cell_type);
         if ($retData) {
             if ($retData['ret_code'] == 0) {
-                $bigUrl = '/file/'.substr( $retData['file_id_big'],10,2).'/'.substr( $retData['file_id_big'],12,30).Ext::typeToName(substr( $retData['file_id_big'],42,2));
-                $smallUrl = '/file/'.substr( $retData['file_id_small'],10,2).'/'.substr( $retData['file_id_small'],12,30).Ext::typeToName(substr( $retData['file_id_small'],42,2));
+                if(substr( $retData['file_id_big'],10,2)!='00'){
+                    $bigUrl = '/file/'.substr( $retData['file_id_big'],10,2).'/'.substr( $retData['file_id_big'],12,30).Ext::typeToName(substr( $retData['file_id_big'],42,2));
+                }
+                else{
+                    $bigUrl = '';
+                }
+
+                if(substr( $retData['file_id_small'],10,2) != '00'){
+                    $smallUrl = '/file/'.substr( $retData['file_id_small'],10,2).'/'.substr( $retData['file_id_small'],12,30).Ext::typeToName(substr( $retData['file_id_small'],42,2));
+                }
+                else{
+                    $smallUrl = '';
+                }
 
 
                 $data = ['father_cell_type' => $father_cell_type, 'father_cell_name' => $father_cell_name,

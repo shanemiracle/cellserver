@@ -19,6 +19,7 @@
     <link rel="stylesheet" type="text/css" href="/static/h-ui.admin/css/style.css"/>
     <link rel="stylesheet" type="text/css" href="/static/css/bootstrap-switch.min.css"/>
     <link rel="stylesheet" type="text/css" href="/static/css/bootstrap.min.css"/>
+    <link rel="stylesheet" type="text/css" href="/static/css/fileinput.min.css">
 
     <!--[if IE 6]>
     <script type="text/javascript" src="http://lib.h-ui.net/DD_belatedPNG_0.0.8a-min.js"></script>
@@ -90,6 +91,15 @@
             </div>
         </div>
 
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2 col-sm-offset-1">图片:</label>
+            <span class=" col-xs-8 col-sm-6">
+                <input id="input-id" name="file" type="file" multiple class="file-input"  >
+            </span>
+            <input type="hidden" id="file_id_big" value="">
+            <input type="hidden" id="file_id_small" value="">
+        </div>
+
 
         <div class="row cl">
             <label class="form-label col-xs-4 col-sm-2 col-sm-offset-1">详情:</label>
@@ -130,74 +140,73 @@
 <script type="text/javascript" src="/lib/jquery.validation/1.14.0/messages_zh.js"></script>
 <script type="text/javascript" src="/lib/jquery.validation/1.14.0/additional-methods.js"></script>
 <script type="text/javascript" src="/lib/js/bootstrap-switch.min.js"></script>
+
 <script type="text/javascript" src="/lib/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="/lib/js/plugins/canvas-to-blob.min.js"></script>
+<script type="text/javascript" src="/lib/js/plugins/sortable.min.js"></script>
+<script type="text/javascript" src="/lib/js/plugins/purify.min.js"></script>
+<script type="text/javascript" src="/lib/js/fileinput.min.js"></script>
+<script type="text/javascript" src="/static/themes/fa/theme.js"></script>
+<script type="text/javascript" src="/lib/js/locales/zh.js"></script>
 
 <script type="text/javascript">
 
-//    function checkFloat(o) {
-//        var _value = o.value;
-//        var reg = /^(?!0*$)[0-9]+(\\.(?=.*[1-9])[0-9]{1,2})?$/;
-//        if (!reg.test(_value)) {
-//
-//            o.value = o.value.substring(0,o.value.length-1);
-//        }
-//    }
 
-/**
- * 根据用户输入的字符获取相关的正则表达式
- * @param  {string} sCharCode 用户输入的字符，如 'a'，'1'，'.' 等等
- * @return {regexp} patt 正则表达式
- */
-function __getRegex (sCharCode) {
-    var patt;
-    if (/[]/g.test(sCharCode)) {
-        // 判断是否为空
-        patt = /^$/g;
-    } else if (/[.]/g.test(sCharCode)) {
-        // 判断是否已经包含 . 字符或者为空
-        patt = /((\.)|(^$))/g;
-    } else if (/[1-9]/g.test(sCharCode)) {
-        // 判断是否已经到达小数点后两位
-        patt = /\.\d{1}$/g;
+    /**
+     * 根据用户输入的字符获取相关的正则表达式
+     * @param  {string} sCharCode 用户输入的字符，如 'a'，'1'，'.' 等等
+     * @return {regexp} patt 正则表达式
+     */
+    function __getRegex (sCharCode) {
+        var patt;
+        if (/[]/g.test(sCharCode)) {
+            // 判断是否为空
+            patt = /^$/g;
+        } else if (/[.]/g.test(sCharCode)) {
+            // 判断是否已经包含 . 字符或者为空
+            patt = /((\.)|(^$))/g;
+        } else if (/[1-9]/g.test(sCharCode)) {
+            // 判断是否已经到达小数点后两位
+            patt = /\.\d{1}$/g;
+        }
+        return patt;
     }
-    return patt;
-}
 
-$('#size_min').on('keypress',function (e) {
-    var sCharCode = String.fromCharCode(e.charCode);
-    var sValue = this.value;
+    $('#size_min').on('keypress',function (e) {
+        var sCharCode = String.fromCharCode(e.charCode);
+        var sValue = this.value;
 
-    if (/[^0-9.]/g.test(sCharCode) || __getRegex(sCharCode).test(sValue)) {
-        return false;
-    }
-});
+        if (/[^0-9.]/g.test(sCharCode) || __getRegex(sCharCode).test(sValue)) {
+            return false;
+        }
+    });
 
-$('#size_min').on('keyup paste',function (e) {
-    var patt = /^((?!0)\d+(\.\d{0,1})?)$/g;
+    $('#size_min').on('keyup paste',function (e) {
+        var patt = /^((?!0)\d+(\.\d{0,1})?)$/g;
 
-    if (!patt.test(this.value)) {
-        // 错误提示相关代码，边框变红、气泡提示什么的
-        console.log('输入格式不正确！');
-    }
-});
+        if (!patt.test(this.value)) {
+            // 错误提示相关代码，边框变红、气泡提示什么的
+            console.log('输入格式不正确！');
+        }
+    });
 
-$('#size_max').on('keypress',function (e) {
-    var sCharCode = String.fromCharCode(e.charCode);
-    var sValue = this.value;
+    $('#size_max').on('keypress',function (e) {
+        var sCharCode = String.fromCharCode(e.charCode);
+        var sValue = this.value;
 
-    if (/[^0-9.]/g.test(sCharCode) || __getRegex(sCharCode).test(sValue)) {
-        return false;
-    }
-});
+        if (/[^0-9.]/g.test(sCharCode) || __getRegex(sCharCode).test(sValue)) {
+            return false;
+        }
+    });
 
-$('#size_max').on('keyup paste',function (e) {
-    var patt = /^((?!0)\d+(\.\d{0,1})?)$/g;
+    $('#size_max').on('keyup paste',function (e) {
+        var patt = /^((?!0)\d+(\.\d{0,1})?)$/g;
 
-    if (!patt.test(this.value)) {
-        // 错误提示相关代码，边框变红、气泡提示什么的
-        console.log('输入格式不正确！');
-    }
-});
+        if (!patt.test(this.value)) {
+            // 错误提示相关代码，边框变红、气泡提示什么的
+            console.log('输入格式不正确！');
+        }
+    });
 
 
     var form = $('#form_add');
@@ -209,6 +218,71 @@ $('#size_max').on('keyup paste',function (e) {
     }, "格式为保留一位小数点的浮点数,如 3.5");
 
     $(document).ready(function () {
+
+
+        var logo = $('#input-id');
+
+        logo.fileinput({
+            uploadUrl:"/fileup/ajax_up",
+            allowedPreviewTypes:['image'],
+            allowedFileExtensions:['bmp','png','jpg','jpeg'],
+            uploadAsync:true,
+            language:'zh',
+            showUpload:true,
+            showRemove:false,
+            showCaption:false,
+            browseOnZoneClick:false,
+            removeFromPreviewOnError:false,
+            maxFileCount:2,
+            fileActionSettings:{
+                showRemove:true,
+                showUpload:true
+            }
+        });
+
+        logo.on('fileuploaded',function (event,data,previewId,index) {
+//            console.log(data.response);
+//            console.log(previewId);
+//            console.log(index);
+
+            var obj = eval(data.response);
+            if( obj ) {
+                if(obj.ret == 0 ) {
+                    if(index == '0'){
+                        $('#file_id_big').val(obj.logo);
+                        console.log(index);
+                    }
+                    else if(index == '1'){
+                        $('#file_id_small').val(obj.logo);
+                        console.log(index);
+                    }
+                }
+                else{
+                    alert(obj.ret);
+                }
+            }
+
+        });
+
+        logo.on('filedeleted',function (event,id) {
+            console.log('deleted'+id);
+//            $('#logo').val('') ;
+        });
+
+        logo.on('filesuccessremove',function (event,id) {
+            var index = id.charAt(id.length-1);
+
+            if(index == '0'){
+                $('#file_id_big').val('');
+                console.log(index);
+            }
+            else if(index == '1'){
+                $('#file_id_small').val('');
+                console.log(index);
+            }
+
+            console.log('filesuccessremove '+index);
+        });
 
         form.validate({
             rules: {
@@ -239,7 +313,9 @@ $('#size_max').on('keyup paste',function (e) {
                     'abb_name': $('#abb_name').val(),
                     'size_min': $('#size_min').val(),
                     'size_max': $('#size_max').val(),
-                    'remark': $('#remark').val()
+                    'remark': $('#remark').val(),
+                    'file_id_big':$('#file_id_big').val(),
+                    'file_id_small':$('#file_id_small').val()
                 }, function (data) {
                     if (data == 0) {
                         alert('添加成功');

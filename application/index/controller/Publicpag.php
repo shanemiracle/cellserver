@@ -83,6 +83,29 @@ class Publicpag extends Rest
         }
     }
 
+    public  function ajax_add() {
+        $attest = Session::get('attest');
+        $app_vercode = Request::instance()->param('app_vercode');
+        $app_ver = Request::instance()->param('app_ver');
+        $mid_ver = Request::instance()->param('mid_ver');
+        $upgrade_file_id = Request::instance()->param('upgrade_file_id');
+        $upgrade_remark = Request::instance()->param('upgrade_remark');
+        $hard_ver = Request::instance()->param('hard_ver');
+        
+        $retData = apiPublicpag::apiPublicpagAdd($attest,$app_vercode,$app_ver,$mid_ver,$upgrade_file_id,$upgrade_remark,$hard_ver);
+        if( $retData ) {
+            if( $retData['ret_code'] == 0 ) {
+                print 0;
+            }
+            else {
+                print $retData['err_desc'];
+            }
+        }
+        else {
+            print 10000;
+        }
+    }
+
     public function ajax_hard_ver(){
         $hard_ver = Request::instance()->param('hard_ver');
 

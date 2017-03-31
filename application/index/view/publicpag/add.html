@@ -175,6 +175,9 @@
             }
 
         });
+        logo.on('filesuccessremove',function (event,id) {
+            $('#upgrade_file_id').val('') ;
+        });
 
         logo.on('filedeleted',function (event,id) {
             $('#upgrade_file_id').val('') ;

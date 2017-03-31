@@ -91,7 +91,7 @@ class Publicpag extends Rest
         $upgrade_file_id = Request::instance()->param('upgrade_file_id');
         $upgrade_remark = Request::instance()->param('upgrade_remark');
         $hard_ver = Request::instance()->param('hard_ver');
-        
+
         $retData = apiPublicpag::apiPublicpagAdd($attest,$app_vercode,$app_ver,$mid_ver,$upgrade_file_id,$upgrade_remark,$hard_ver);
         if( $retData ) {
             if( $retData['ret_code'] == 0 ) {

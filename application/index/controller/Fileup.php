@@ -70,6 +70,7 @@ class Fileup
     {
         $retObj = null;
         $file = Request::instance()->file('file');
+
         if($file){
             $info = $file->rule('md5')->move(ROOT_PATH . 'public' . DS . 'file');
 
@@ -77,6 +78,7 @@ class Fileup
                 $tpye = $info->getExtension();
                 $md5 = $info->md5();
                 $size = $info->getSize();
+//                $name = $info->getFilename();
 
 
                 $retArray = apiFile::apiFileUp($md5, $size, $tpye);

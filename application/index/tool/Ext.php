@@ -28,6 +28,12 @@ class Ext
         else if( $file_type == 'txt'){
             $file_type = 5;
         }
+        else if( $file_type == 'lz'){
+            $file_type = 6;
+        }
+        else if( $file_type == 'upf'){
+            $file_type = 7;
+        }
         else {
             $file_type = 0;
         }
@@ -51,6 +57,15 @@ class Ext
             }
             else if($fileType == '05') {
                 return '.txt';
+            }
+            else if($fileType == '06') {
+                return '.lz';
+            }
+            else if($fileType == '07') {
+                return '.upf';
+            }
+            else{
+                return '';
             }
         }
         else{

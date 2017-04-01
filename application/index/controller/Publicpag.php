@@ -49,7 +49,9 @@ class Publicpag extends Rest
             $hard_name = "会诊端程序";
         }
         else{
-            $hard_name = "包管理"+$hard_ver;
+            $hard_ver = 1;
+            $hard_name = "采集端程序";
+//            $hard_name = "包管理"+$hard_ver;
         }
 
         return (new View())->fetch('/publicpag/add',['hard_name'=>$hard_name, 'hard_ver'=>$hard_ver]);

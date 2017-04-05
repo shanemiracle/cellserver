@@ -11,11 +11,12 @@ namespace app\index\api;
 
 use app\index\cell\Cell;
 
-class apiPublicpag
+class apiPrivatepag
 {
-    public static function apiPublicpagList($attest,$hard_ver,$upgrade_index_start,$get_num) {
-        $sendArray = ['id'=>intval(62),'flag'=>intval(0),'data'=>['attest'=>intval($attest),'hard_ver'=>intval($hard_ver),
-            'upgrade_index_start'=>intval($upgrade_index_start),'get_num'=>intval($get_num)] ];
+    public static function apiPrivatepagList($attest,$hospital_no,$file_ver_start,$get_num,$hard_ver) {
+        $sendArray = ['id'=>intval(61),'flag'=>intval(0),'data'=>['attest'=>intval($attest),
+            'hospital_no'=>intval($hospital_no),'hard_ver'=>intval($hard_ver),
+            'file_ver_start'=>intval($file_ver_start),'get_num'=>intval($get_num)] ];
         $sendData = json_encode($sendArray);
         if($sendData){
             $recvData = Cell::bizSend($sendData);
@@ -30,11 +31,9 @@ class apiPublicpag
         return false;
     }
 
-    public static function apiPublicpagAdd($attest,$app_vercode,$app_ver,$mid_ver,
-        $upgrade_file_id,$upgrade_remark,$hard_ver) {
-        $sendArray = ['id'=>intval(63),'flag'=>intval(0),'data'=>['attest'=>intval($attest),'hard_ver'=>intval($hard_ver),
-            'app_vercode'=>$app_vercode,'app_ver'=>intval($app_ver),'mid_ver'=>intval($mid_ver),
-            'upgrade_file_id'=>$upgrade_file_id, 'upgrade_remark'=>$upgrade_remark] ];
+    public static function apiPrivatepagAdd($attest,$hospital_no,$file_id,$remark,$hard_ver) {
+        $sendArray = ['id'=>intval(60),'flag'=>intval(0),'data'=>['attest'=>intval($attest),'hospital_no'=>intval($hospital_no),
+            'hard_ver'=>intval($hard_ver),'file_id'=>$file_id,'remark'=>$remark] ];
         $sendData = json_encode($sendArray);
         if($sendData){
             $recvData = Cell::bizSend($sendData);

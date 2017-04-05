@@ -11,13 +11,12 @@ namespace app\index\controller;
 
 use app\index\api\apiHospital;
 use app\index\api\apiPrivatepag;
-use app\index\api\apiPublicpag;
 use think\controller\Rest;
 use think\Request;
 use think\Session;
 use think\View;
 
-class Publicpag extends Rest
+class Privatepag extends Rest
 {
     private function attest(){
         $attest = Session::get('attest');
@@ -37,6 +36,8 @@ class Publicpag extends Rest
         }
 
         $hard_ver = Request::instance()->param('hard_ver');
+        $hospital_no = Request::instance()->param('hospital_no');
+        $hospital_name = Request::instance()->param('hospital_name');
         if( $hard_ver == 1){
             $hard_name = "采集端程序";
         }
@@ -52,10 +53,10 @@ class Publicpag extends Rest
         else{
             $hard_ver = 1;
             $hard_name = "采集端程序";
-//            $hard_name = "包管理"+$hard_ver;
         }
 
-        return (new View())->fetch('/publicpag/add',['hard_name'=>$hard_name, 'hard_ver'=>$hard_ver]);
+        return (new View())->fetch('/privatepag/add',['hard_name'=>$hard_name, 'hard_ver'=>$hard_ver,
+            'hospital_no'=>$hospital_no,'hospital_name'=>$hospital_name]);
 
     }
 
@@ -63,16 +64,37 @@ class Publicpag extends Rest
         if( $this->attest() != true ) {
             abort(401);
         }
+        $data_list = [];
+        $hard_ver = Session::get('private_hard_ver');
+        $d_ho_no = Session::get('default_device_hos_no');
+        $d_ho_name = Session::get('default_device_hos_name');
+        $retData = apiHospital::apiHospitalGet(Session::get('attest'), 0, 100);
+        if ($retData) {
+            if ($retData['ret_code'] == 0) {
+                $num = count($retData['data']);
+                for ($i = 0; $i < $num; $i++) {
+                    if ($retData['data'][$i]['hospital_no'] == $d_ho_no) {
+                        continue;
+                    }
+                    array_push($data_list, [
+                        'hospital_no' => $retData['data'][$i]['hospital_no'],
+                        'hospital_name' => $retData['data'][$i]['hospital_name'],
+                    ]);
+                }
+            }
+        }
 
-        $hard_ver = Session::get('public_hard_ver');
-
-        return (new View())->fetch('/publicpag/index',['total_num'=>0,'hard_ver'=>$hard_ver]);
+        $data = ['default_value' => ($d_ho_no ? $d_ho_no : '-1'), 'default_name' => ($d_ho_name ? $d_ho_name : ''),
+            'count' => count($data_list), 'data' => $data_list,
+        'total_num'=>0,'hard_ver'=>$hard_ver];
+        return (new View())->fetch('/privatepag/index', $data);
     }
 
     public function ajax_count() {
         $attest = Session::get('attest');
         $hard_ver = Request::instance()->param('hard_ver');
-        $retData = apiPublicpag::apiPublicpagList($attest,$hard_ver,0,0);
+        $hospital_no = Request::instance()->param('hospital_no');
+        $retData = apiPrivatepag::apiPrivatepagList($attest,$hospital_no,0,0,$hard_ver);
         if( $retData ) {
             if( $retData['ret_code'] == 0 ) {
                 print $retData['total_num'];
@@ -88,14 +110,12 @@ class Publicpag extends Rest
 
     public  function ajax_add() {
         $attest = Session::get('attest');
-        $app_vercode = Request::instance()->param('app_vercode');
-        $app_ver = Request::instance()->param('app_ver');
-        $mid_ver = Request::instance()->param('mid_ver');
-        $upgrade_file_id = Request::instance()->param('upgrade_file_id');
-        $upgrade_remark = Request::instance()->param('upgrade_remark');
         $hard_ver = Request::instance()->param('hard_ver');
+        $hospital_no = Request::instance()->param('hospital_no');
+        $file_id = Request::instance()->param('file_id');
+        $remark = Request::instance()->param('remark');
 
-        $retData = apiPublicpag::apiPublicpagAdd($attest,$app_vercode,$app_ver,$mid_ver,$upgrade_file_id,$upgrade_remark,$hard_ver);
+        $retData = apiPrivatepag::apiPrivatepagAdd($attest,$hospital_no,$file_id,$remark,$hard_ver);
         if( $retData ) {
             if( $retData['ret_code'] == 0 ) {
                 print 0;
@@ -112,18 +132,20 @@ class Publicpag extends Rest
     public function ajax_hard_ver(){
         $hard_ver = Request::instance()->param('hard_ver');
 
-        Session::set('public_hard_ver',$hard_ver);
+        Session::set('private_hard_ver',$hard_ver);
     }
+
 
     public  function ajax_list() {
         $attest = Session::get('attest');
         $hard_ver = Request::instance()->param('hard_ver');
+        $hospital_no = Request::instance()->param('hospital_no');
         $allData = [];
         $get_num = 0;
 
         $start = 0xFFFFFFFF;
         for($i=0;$i<1000;$i++){
-            $retData = apiPublicpag::apiPublicpagList($attest,$hard_ver,$start,10);
+            $retData = apiPrivatepag::apiPrivatepagList($attest,$hospital_no,$start,10,$hard_ver);
             if ($retData) {
                 if ($retData['ret_code'] == 0) {
                     $total_num = $retData['total_num'];
@@ -134,7 +156,7 @@ class Publicpag extends Rest
 
                     $allData = array_merge($allData,$data);
                     if( $this_num != 0 ) {
-                        $start = $data[count($data)-1]['upgrade_index'];
+                        $start = $data[count($data)-1]['file_ver'];
                     }
                     else {
                         break;

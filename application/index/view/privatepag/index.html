@@ -17,18 +17,22 @@
     <link rel="stylesheet" type="text/css" href="/lib/Hui-iconfont/1.0.8/iconfont.css"/>
     <link rel="stylesheet" type="text/css" href="/static/h-ui.admin/skin/default/skin.css" id="skin"/>
     <link rel="stylesheet" type="text/css" href="/static/h-ui.admin/css/style.css"/>
+    <link rel="stylesheet" type="text/css" href="/static/css/chosen.css"/>
+
     <!--[if IE 6]>
     <script type="text/javascript" src="http://lib.h-ui.net/DD_belatedPNG_0.0.8a-min.js"></script>
     <script>DD_belatedPNG.fix('*');</script>
     <![endif]-->
-    <title>公共包列表</title>
+    <title>私有包列表</title>
 </head>
 <body>
-<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 公共包管理 <span
-        class="c-gray en">&gt;</span> 公共包列表 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px"
+<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 私有包管理 <span
+        class="c-gray en">&gt;</span> 私有包列表 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px"
                                               href="javascript:location.replace(location.href);" title="刷新"><i
         class="Hui-iconfont">&#xe68f;</i></a></nav>
 <div class="page-container">
+
+
     <div id="tab_demo" class="HuiTab">
         <div class="tabBar cl"><span>采集端程序</span><span>审核端程序</span><span>观察者端程序</span><span>会诊端程序</span></div>
         <div class="tabCon">1</div>
@@ -38,11 +42,22 @@
 
     </div>
 
+    <div class="cl pd-5 bg-1 bk-gray mt-20 text-c">
+
+        <i class="Hui-iconfont Hui-iconfont-search">选择医院</i>
+        <select id="hospital" data-placeholder="请选择医院(支持搜索)" style="width:420px;">
+            <option value="{$default_value}" selected>{$default_name}</option>
+            <?php for($i=0;$i<$count;$i++){ ?>
+            <option value="{$data[$i]['hospital_no']}">{$data[$i]['hospital_name']}</option>
+            <?php }?>
+        </select>
+    </div>
+
     <div class="cl pd-5 bg-1 bk-gray mt-20">
 
 		<span class="l">
             <a href="javascript:void(0);" id="btnAdd" class="btn btn-primary radius"><i
-                    class="Hui-iconfont Hui-iconfont-add"></i>新增公共包</a>
+                    class="Hui-iconfont Hui-iconfont-add"></i>新增私有包</a>
 		</span>
 
         <span class="r">共有数据: <strong><span id="total_num">{$total_num}</span></strong>条</span>
@@ -52,11 +67,7 @@
     <div class="mt-20">
         <table id='hos_table' class="table table-border table-bordered table-bg th radius table-hover table-sort">
             <thead class="text-c">
-            <th>序号版本</th>
-            <th>显示版本</th>
             <th>软件版本</th>
-            <th>app版本</th>
-            <th>mid版本</th>
             <th>版本描述</th>
             <th>创建时间</th>
             </thead>
@@ -72,9 +83,20 @@
 <script type="text/javascript" src="/lib/datatables/1.10.0/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="/static/h-ui/js/H-ui.js"></script>
 <script type="text/javascript" src="/static/h-ui.admin/js/H-ui.admin.js"></script>
+<script type="text/javascript" src="/lib/js/chosen.jquery.js"></script>
+
+
 <script type="text/javascript">
     var table;
     var hard_ver = "{$hard_ver}";
+
+    var hos = $('#hospital');
+    hos.chosen({
+        no_results_text: '没有数据',
+        search_contains: true,
+        allow_single_deselect: true,
+        display_disabled_options: false
+    });
 
     jQuery.Huitab =function(tabBar,tabCon,class_name,tabEvent,i){
         var $tab_menu=$(tabBar);
@@ -106,7 +128,7 @@
                 hard_ver = 0;
             }
 
-            $.post('/publicpag/ajax_hard_ver?hard_ver='+hard_ver, null, null);
+            $.post('/privatepag/ajax_hard_ver?hard_ver='+hard_ver, null, null);
 
             table.ajax.reload(function () {
                 var info = table.page.info();
@@ -119,30 +141,27 @@
 
         $.Huitab("#tab_demo .tabBar span","#tab_demo .tabCon","current","click","{$hard_ver}"-1);
 
-        $.post('/publicpag/ajax_count?hard_ver='+hard_ver, null, function (d) {
+        $.post('/privatepag/ajax_count?hard_ver='+hard_ver+'&hospital_no='+hos.val(), null, function (d) {
             $('#total_num').html(d);
         });
 
 
         table = $('.table-sort').DataTable({
             ajax: {
-                url: "/publicpag/ajax_list",
+                url: "/privatepag/ajax_list",
                 data:function (d) {
                     d.hard_ver = hard_ver;
+                    d.hospital_no = hos.val();
                 }
             },
             aaSorting: [[0, "desc"]],//默认第几个排序
             bStateSave: true,//状态保存
             aoColumnDefs: [
-                {"orderable": false, "aTargets": [2,3,4]}// 不参与排序的列
+                {"orderable": false, "aTargets": [1]}// 不参与排序的列
             ],
             columns: [
-                {data: 'upgrade_index'},
-                {data: 'app_vercode'},
-                {data: 'soft_ver'},
-                {data: 'app_ver'},
-                {data: 'mid_ver'},
-                {data: 'upgrade_remark'},
+                {data: 'file_ver'},
+                {data: 'remark'},
                 {data: 'create_time'}
             ],
             language: {
@@ -168,15 +187,20 @@
         $('#btnAdd').on('click', addRow);
 
         function addRow() {
+            if (hos.val() == -1) {
+                layer.msg('请选择要添加私有包的医院', {icon: 7, time: 1500}, null);
+                return;
+            }
+
             var index = layer.open({
                 type: 2,
                 maxmin: true,
                 title: '添加公共包',
                 area: ['800px', '480px'],
-                content: '/publicpag/add?hard_ver='+hard_ver,
+                content: '/privatepag/add?hard_ver='+hard_ver+'&hospital_no='+hos.val()+'&hospital_name='+hos.find('option:selected').text(),
                 end: function () {
                     table.ajax.reload(function () {
-                        $.post('/publicpag/ajax_count', null, function (d) {
+                        $.post('/privatepag/ajax_count?hard_ver='+hard_ver+'&hospital_no='+hos.val(), null, function (d) {
                             $('#total_num').html(d);
                         });
                     }, false);
@@ -186,6 +210,19 @@
 
             layer.full(index);
         }
+
+        hos.change(function () {
+            table.ajax.reload(function () {
+                $.post('/privatepag/ajax_count?hard_ver='+hard_ver+'&hospital_no='+hos.val(), null, function (d) {
+                    $('#total_num').html(d);
+                });
+            }, false);
+
+            $.post('/device/ajax_default_set', {
+                'hospital_no': hos.val(),
+                'hospital_name': hos.find('option:selected').text()
+            });
+        });
 
 
     });

@@ -1,0 +1,223 @@
+﻿<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="/lib/html5.js"></script>
+    <script type="text/javascript" src="/lib/respond.min.js"></script>
+    <script type="text/javascript" src="/lib/PIE_IE678.js"></script>
+    <![endif]-->
+    <link rel="stylesheet" type="text/css" href="/static/h-ui/css/H-ui.min.css"/>
+    <link rel="stylesheet" type="text/css" href="/static/h-ui.admin/css/H-ui.admin.css"/>
+    <link rel="stylesheet" type="text/css" href="/lib/Hui-iconfont/1.0.8/iconfont.css"/>
+    <link rel="stylesheet" type="text/css" href="/static/h-ui.admin/skin/default/skin.css" id="skin"/>
+    <link rel="stylesheet" type="text/css" href="/static/h-ui.admin/css/style.css"/>
+
+    <link rel="stylesheet" type="text/css" href="/static/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/static/css/fileinput.min.css">
+
+    <!--[if IE 6]>
+    <script type="text/javascript" src="http://lib.h-ui.net/DD_belatedPNG_0.0.8a-min.js"></script>
+    <script>DD_belatedPNG.fix('*');</script>
+    <![endif]-->
+    <title>添加私有包</title>
+</head>
+<body>
+
+<div class="page-container">
+    <form class="form form-vertical" id="form_add" action="">
+        <div class="row cl ">
+            <div class="text-c ">
+                <h1>{$hospital_name}</h1>
+                <h2>{$hard_name}</h2>
+            </div>
+            <input type="hidden" id="hard_ver" value="{$hard_ver}">
+            <input type="hidden" id="hospital_no" value="{$hospital_no}">
+        </div>
+
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2 col-sm-offset-1">升级描述:</label>
+            <div class="formControls col-xs-8 col-sm-6">
+                <!--<input type="text" class="textarea radius  text-left" value="" id="desc" placeholder="详情描述..." autofocus >-->
+                <textarea id="remark" name="remark" cols rows class="textarea" placeholder="升级描述..." datatype="*10-1000"
+                          maxlength="1000"
+                          onkeypress="$.Huitextarealength(this,1000)" onkeyup="$.Huitextarealength(this,1000)"></textarea>
+                <p class="textarea-numberbar">
+                    <em class="textarea-length">*</em>/1000
+                </p>
+            </div>
+        </div>
+
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2 col-sm-offset-1">配置文件:</label>
+            <span class=" col-xs-8 col-sm-6">
+                <input id="input-id" name="file" type="file" class="file-input"  >
+            </span>
+
+            <input type="hidden" id="up_file_id" name="up_file_id" value="" required>
+
+
+        </div>
+
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2 col-sm-offset-1">文件清单:</label>
+            <span class=" col-xs-8 col-sm-6">
+                <input id="input-id2" name="file" type="file" multiple class="file-input"  >
+            </span>
+        </div>
+
+
+        <div class="row cl">
+            <div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-3">
+                <input type="button" id="btnSubmit" name="btnSubmit" class="btn btn-primary radius text-c" value="提交">
+            </div>
+        </div>
+
+    </form>
+
+
+</div>
+
+
+<script type="text/javascript" src="/lib/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript" src="/lib/layer/2.4/layer.js"></script>
+<script type="text/javascript" src="/lib/My97DatePicker/4.8/WdatePicker.js"></script>
+<script type="text/javascript" src="/lib/datatables/1.10.0/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="/static/h-ui/js/H-ui.js"></script>
+<script type="text/javascript" src="/static/h-ui.admin/js/H-ui.admin.js"></script>
+
+<script type="text/javascript" src="/lib/jquery.validation/1.14.0/jquery.validate.js"></script>
+<script type="text/javascript" src="/lib/jquery.validation/1.14.0/validate-methods.js"></script>
+<script type="text/javascript" src="/lib/jquery.validation/1.14.0/messages_zh.js"></script>
+
+<script type="text/javascript" src="/lib/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="/lib/js/plugins/canvas-to-blob.min.js"></script>
+<script type="text/javascript" src="/lib/js/plugins/sortable.min.js"></script>
+<script type="text/javascript" src="/lib/js/plugins/purify.min.js"></script>
+<script type="text/javascript" src="/lib/js/fileinput.min.js"></script>
+<script type="text/javascript" src="/static/themes/fa/theme.js"></script>
+<script type="text/javascript" src="/lib/js/locales/zh.js"></script>
+
+<script type="text/javascript">
+
+    jQuery.validator.addMethod("isChines", function (value, element) {
+        var chn = /[\u4E00-\u9FA5]/;
+        return !chn.test(value);
+    }, "表达式不能包含中文");
+
+    jQuery.validator.addMethod("cfgNull", function (value, element) {
+        return !($('#up_file_id').val()=='');
+    }, "表配置清单不能为空");
+
+    var form = $('#form_add');
+    var upFile = $('#up_file_id');
+
+
+    $(document).ready(function () {
+
+        var logo = $('#input-id');
+        var list = $('#input-id2');
+
+        logo.fileinput({
+            uploadUrl:"/fileup/ajax_up",
+            allowedPreviewTypes:['image','html','text','video','flash'],
+            allowedFileExtensions:['upf'],
+            uploadAsync:true,
+            language:'zh',
+            showUpload:true,
+            showRemove:false,
+            showCaption:false,
+            showPreview:true,
+            browseOnZoneClick:false,
+            overwriteInitial:true,
+            removeFromPreviewOnError:false,
+            fileActionSettings:{
+                showRemove:true,
+                showUpload:true
+            }
+        });
+
+        logo.on('fileuploaded',function (event,data,previewId,index) {
+            console.log(data.response);
+            var obj = eval(data.response);
+            if( obj ) {
+                if(obj.ret == 0 ) {
+                    upFile.val(obj.logo);
+                }
+                else{
+                    alert(obj.ret);
+                }
+            }
+
+        });
+        logo.on('filesuccessremove',function (event,id) {
+            upFile.val('') ;
+        });
+
+        logo.on('filedeleted',function (event,id) {
+            upFile.val('') ;
+        });
+
+        list.fileinput({
+            uploadUrl:"/fileup/ajax_up",
+            allowedPreviewTypes:[],
+            allowedFileExtensions:['lz'],
+            uploadAsync:true,
+            language:'zh',
+            showUpload:true,
+            showRemove:true,
+            showCaption:false,
+            showPreview:true,
+            browseOnZoneClick:false,
+            removeFromPreviewOnError:false,
+            fileActionSettings:{
+                showRemove:true,
+                showUpload:true
+            }
+        });
+
+
+
+        form.validate({
+
+        });
+
+
+        $('#btnSubmit').on('click', function () {
+            if(form.valid()){
+
+                if(upFile.val()==''){
+                    alert('配置文件必须上传');
+                    return;
+                }
+
+                $.post('/privatepag/ajax_add',{
+                    'hospital_no': $('#hospital_no').val(),
+                    'hard_ver': $('#hard_ver').val(),
+                    'file_id': upFile.val(),
+                    'remark': $('#remark').val()
+                },function (data) {
+                    if(data==0){
+                        alert('添加成功');
+                        var index = parent.layer.getFrameIndex(window.name);
+                        parent.layer.close(index);
+                    }
+                    else{
+                        alert(data);
+                    }
+                });
+            }
+
+        });
+
+    });
+
+
+</script>
+</body>
+</html>

@@ -99,6 +99,31 @@
             </div>
         </div>
 
+        <div class="row cl" >
+            <label class="form-label col-xs-4 col-sm-2 col-sm-offset-1">颜色:</label>
+            <div class="formControls col-xs-3 col-sm-3" >
+
+                <div class="input-group">
+                    <input type="color" class="color" id="c-r" value="#{$color_r}" >
+                    <span class="input-group-addon">#</span>
+                    <input type="text" class="input-text " id="color-r" value="{$color_r}" minlength="6" maxlength="6">
+                </div>
+
+                <div class="input-group">
+                    <input type="color" class="color" id="c-g" value="#{$color_g}" >
+                    <span class="input-group-addon">#</span>
+                    <input type="text" class="input-text " id="color-g" value="{$color_g}" minlength="6" maxlength="6">
+                </div>
+
+                <div class="input-group">
+                    <input type="color" class="color" id="c-b" value="#{$color_b}" >
+                    <span class="input-group-addon">#</span>
+                    <input type="text" class="input-text " id="color-b" value="{$color_b}" minlength="6" maxlength="6">
+                </div>
+
+            </div>
+        </div>
+
         <div class="row cl">
             <label class="form-label col-xs-4 col-sm-2 col-sm-offset-1">图片:</label>
             <span class=" col-xs-8 col-sm-6">
@@ -214,6 +239,45 @@
             // 错误提示相关代码，边框变红、气泡提示什么的
             console.log('输入格式不正确！');
         }
+    });
+
+    var c_r = $('#c-r');
+    var color_r = $('#color-r');
+
+    c_r.on('change',function () {
+        var c = c_r.val();
+        color_r.val(c.substring(1,c.length));
+    });
+
+    color_r.on('keyup',function () {
+        this.value = this.value.replace(/[^0-9a-fA-F]/g,'');
+        c_r.val('#'+this.value.toString(16));
+    });
+
+    var c_g = $('#c-g');
+    var color_g = $('#color-g');
+
+    c_g.on('change',function () {
+        var c = c_g.val();
+        color_g.val(c.substring(1,c.length));
+    });
+
+    color_g.on('keyup',function () {
+        this.value = this.value.replace(/[^0-9a-fA-F]/g,'');
+        c_g.val('#'+this.value.toString(16));
+    });
+
+    var c_b = $('#c-b');
+    var color_b = $('#color-b');
+
+    c_b.on('change',function () {
+        var c = c_b.val();
+        color_b.val(c.substring(1,c.length));
+    });
+
+    color_b.on('keyup',function () {
+        this.value = this.value.replace(/[^0-9a-fA-F]/g,'');
+        c_b.val('#'+this.value.toString(16));
     });
 
 
@@ -338,7 +402,10 @@
                     'size_max': $('#size_max').val(),
                     'remark': $('#remark').val(),
                     'file_id_big':$('#file_id_big').val(),
-                    'file_id_small':$('#file_id_small').val()
+                    'file_id_small':$('#file_id_small').val(),
+                    'color_r':parseInt($('#color-r').val(),16),
+                    'color_g':parseInt($('#color-g').val(),16),
+                    'color_b':parseInt($('#color-b').val(),16)
                 }, function (data) {
                     if (data == 0) {
                         alert('修改成功');

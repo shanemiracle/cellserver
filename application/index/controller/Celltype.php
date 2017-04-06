@@ -79,7 +79,8 @@ class Celltype extends Rest
                     'abb_name'=>$retData['abb_name'],'size_max'=>$retData['size_max']/10,
                     'size_min'=>$retData['size_min']/10,'remark'=>$retData['remark'],
                     'file_id_big'=>$retData['file_id_big'],'file_id_small'=>$retData['file_id_small'],
-                    'bigUrl'=>$bigUrl,'smallUrl'=>$smallUrl];
+                    'bigUrl'=>$bigUrl,'smallUrl'=>$smallUrl,'color_r'=>sprintf('%06x',$retData['color_r']),
+                    'color_g'=>sprintf('%06x',$retData['color_g']),'color_b'=>sprintf('%06x',$retData['color_b'])];
             }
         }
 
@@ -128,7 +129,11 @@ class Celltype extends Rest
         $remark = Request::instance()->param('remark');
         $file_id_big = Request::instance()->param('file_id_big');
         $file_id_small = Request::instance()->param('file_id_small');
-        $retData = apiCellType::apiCellTypeAdd($attest, 1, $father_cell_type, $cn_name, $en_name, $abb_name, $size_max * 10, $size_min * 10, $remark, $file_id_big,$file_id_small);
+        $color_r = Request::instance()->param('color_r');
+        $color_g = Request::instance()->param('color_g');
+        $color_b = Request::instance()->param('color_b');
+        $retData = apiCellType::apiCellTypeAdd($attest, 1, $father_cell_type, $cn_name, $en_name, $abb_name, $size_max * 10, $size_min * 10, $remark, $file_id_big,$file_id_small,
+            $color_r,$color_g,$color_b);
         if ($retData) {
             if ($retData['ret_code'] == 0) {
                 print 0;
@@ -229,7 +234,12 @@ class Celltype extends Rest
         $remark = Request::instance()->param('remark');
         $file_id_big = Request::instance()->param('file_id_big');
         $file_id_small = Request::instance()->param('file_id_small');
-        $retData = apiCellType::apiCellTypeSet($attest, 1, $cell_type, $info_ver, $cn_name, $en_name, $abb_name, $size_max * 10, $size_min * 10, $remark,$file_id_big,$file_id_small);
+        $color_r = Request::instance()->param('color_r');
+        $color_g = Request::instance()->param('color_g');
+        $color_b = Request::instance()->param('color_b');
+
+        $retData = apiCellType::apiCellTypeSet($attest, 1, $cell_type, $info_ver, $cn_name, $en_name, $abb_name, $size_max * 10, $size_min * 10, $remark,$file_id_big,$file_id_small,
+            $color_r,$color_g,$color_b);
         if ($retData) {
             if ($retData['ret_code'] == 0) {
                 print 0;

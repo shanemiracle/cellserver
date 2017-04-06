@@ -31,8 +31,9 @@ class apiPrivatepag
         return false;
     }
 
-    public static function apiPrivatepagAdd($attest,$hospital_no,$file_id,$remark,$hard_ver) {
-        $sendArray = ['id'=>intval(60),'flag'=>intval(0),'data'=>['attest'=>intval($attest),'hospital_no'=>intval($hospital_no),
+    public static function apiPrivatepagAdd($attest,$hospital_no,$file_id,$remark,$hard_ver,$mid_ver,$app_ver) {
+        $sendArray = ['id'=>intval(60),'flag'=>intval(0),'data'=>['attest'=>intval($attest),
+            'hospital_no'=>intval($hospital_no),'mid_ver'=>intval($mid_ver),'app_ver'=>intval($app_ver),
             'hard_ver'=>intval($hard_ver),'file_id'=>$file_id,'remark'=>$remark] ];
         $sendData = json_encode($sendArray);
         if($sendData){

@@ -111,11 +111,13 @@ class Privatepag extends Rest
     public  function ajax_add() {
         $attest = Session::get('attest');
         $hard_ver = Request::instance()->param('hard_ver');
+        $app_ver = Request::instance()->param('app_ver');
+        $mid_ver = Request::instance()->param('mid_ver');
         $hospital_no = Request::instance()->param('hospital_no');
         $file_id = Request::instance()->param('file_id');
         $remark = Request::instance()->param('remark');
 
-        $retData = apiPrivatepag::apiPrivatepagAdd($attest,$hospital_no,$file_id,$remark,$hard_ver);
+        $retData = apiPrivatepag::apiPrivatepagAdd($attest,$hospital_no,$file_id,$remark,$hard_ver,$mid_ver,$app_ver);
         if( $retData ) {
             if( $retData['ret_code'] == 0 ) {
                 print 0;

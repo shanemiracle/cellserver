@@ -40,6 +40,20 @@
             <input type="hidden" id="hospital_no" value="{$hospital_no}">
         </div>
 
+        <div class="row cl ">
+            <label class="form-label col-xs-4 col-sm-2 col-sm-offset-1">app版本:</label>
+            <div class="formControls col-xs-8 col-sm-6">
+                <input type="text" class="input-text radius" value="" id="app_ver" name="app_ver" >
+            </div>
+        </div>
+
+        <div class="row cl ">
+            <label class="form-label col-xs-4 col-sm-2 col-sm-offset-1">mid版本:</label>
+            <div class="formControls col-xs-8 col-sm-6">
+                <input type="text" class="input-text radius" value="" id="mid_ver" name="mid_ver" >
+            </div>
+        </div>
+
         <div class="row cl">
             <label class="form-label col-xs-4 col-sm-2 col-sm-offset-1">升级描述:</label>
             <div class="formControls col-xs-8 col-sm-6">
@@ -199,6 +213,8 @@
                 $.post('/privatepag/ajax_add',{
                     'hospital_no': $('#hospital_no').val(),
                     'hard_ver': $('#hard_ver').val(),
+                    'app_ver': $('#app_ver').val(),
+                    'mid_ver': $('#mid_ver').val(),
                     'file_id': upFile.val(),
                     'remark': $('#remark').val()
                 },function (data) {

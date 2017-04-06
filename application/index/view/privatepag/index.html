@@ -68,6 +68,8 @@
         <table id='hos_table' class="table table-border table-bordered table-bg th radius table-hover table-sort">
             <thead class="text-c">
             <th>软件版本</th>
+            <th>app版本</th>
+            <th>mid版本</th>
             <th>版本描述</th>
             <th>创建时间</th>
             </thead>
@@ -157,10 +159,12 @@
             aaSorting: [[0, "desc"]],//默认第几个排序
             bStateSave: true,//状态保存
             aoColumnDefs: [
-                {"orderable": false, "aTargets": [1]}// 不参与排序的列
+                {"orderable": false, "aTargets": [1,2,3]}// 不参与排序的列
             ],
             columns: [
                 {data: 'file_ver'},
+                {data: 'app_ver'},
+                {data: 'mid_ver'},
                 {data: 'remark'},
                 {data: 'create_time'}
             ],

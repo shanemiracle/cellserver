@@ -64,7 +64,7 @@ class Doctor extends Rest
                     'pwd' => $retData['pwd'], 'level' => $retData['level'], 'department' => $retData['department'],
                     'logo' => $retData['logo'], 'sign_pic' => $retData['sign_pic'], 'logourl'=>$logUrl, 'signurl'=>$signUrl,
                     'mobile' => $retData['mobile_no'], 'role' => $retData['role'],
-                    'learn_level' => $retData['learn_level']];
+                    'learn_level' => $retData['learn_level'],'info_data'=>$retData['info_data']];
             }
         }
 
@@ -176,8 +176,9 @@ class Doctor extends Rest
         $mobile_no = Request::instance()->param('mobile_no');
         $role = Request::instance()->param('role');
         $learn_level = Request::instance()->param('learn_level');
+        $info_data = Request::instance()->param('info_data');
         $retData = apiDoctor::apiDoctorAdd($attest, $doctor_name, $pwd, $hospital_no, $level,
-            $department, $logo, $sign_pic, $mobile_no, $role, $learn_level);
+            $department, $logo, $sign_pic, $mobile_no, $role, $learn_level, $info_data);
         if ($retData) {
             if ($retData['ret_code'] == 0) {
                 print 0;
@@ -203,8 +204,9 @@ class Doctor extends Rest
         $mobile_no = Request::instance()->param('mobile_no');
         $role = Request::instance()->param('role');
         $learn_level = Request::instance()->param('learn_level');
+        $info_data = Request::instance()->param('info_data');
         $retData = apiDoctor::apiDoctorSet($attest, $doctor_no, $doctor_ver, $pwd, $level,
-            $department, $logo, $sign_pic, $mobile_no, $role, $learn_level);
+            $department, $logo, $sign_pic, $mobile_no, $role, $learn_level, $info_data);
         if ($retData) {
             if ($retData['ret_code'] == 0) {
                 print 0;

@@ -121,24 +121,6 @@
         </div>
 
         <div class="row cl">
-            <label class="form-label col-xs-4 col-sm-2 col-sm-offset-1">头像:</label>
-            <span class=" col-xs-8 col-sm-6">
-                <input id="input-id" name="file" type="file" class="file-input"  >
-            </span>
-            <input type="hidden" id="logo" value="">
-
-        </div>
-
-        <div class="row cl">
-            <label class="form-label col-xs-4 col-sm-2 col-sm-offset-1">签名:</label>
-            <span class=" col-xs-8 col-sm-6">
-                <input id="input-id2" name="file" type="file" class="file-input"  >
-            </span>
-            <input type="hidden" id="sign_pic" value="">
-
-        </div>
-
-        <div class="row cl">
             <label class="form-label col-xs-4 col-sm-2 col-sm-offset-1">角色:</label>
             <input type="hidden" id="role" value="">
             <div class="formControls col-xs-8 col-sm-9">
@@ -165,6 +147,36 @@
                     <input type="checkbox" id="role4" value="8" name="role">
                 </div>
 
+            </div>
+        </div>
+
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2 col-sm-offset-1">头像:</label>
+            <span class=" col-xs-8 col-sm-6">
+                <input id="input-id" name="file" type="file" class="file-input"  >
+            </span>
+            <input type="hidden" id="logo" value="">
+
+        </div>
+
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2 col-sm-offset-1">签名:</label>
+            <span class=" col-xs-8 col-sm-6">
+                <input id="input-id2" name="file" type="file" class="file-input"  >
+            </span>
+            <input type="hidden" id="sign_pic" value="">
+
+        </div>
+
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2 col-sm-offset-1">描述:</label>
+            <div class="formControls col-xs-8 col-sm-6">
+                 <textarea id="info_data" name="info_data" cols rows class="textarea" placeholder="..." datatype="*10-999"
+                           maxlength="999"
+                           onkeypress="$.Huitextarealength(this,999)" onkeyup="$.Huitextarealength(this,999)"></textarea>
+                <p class="textarea-numberbar">
+                    <em class="textarea-length">*</em>/999
+                </p>
             </div>
         </div>
 
@@ -379,6 +391,7 @@
                     'mobile_no': $('#mobile').val(),
                     'role': $('#role').val(),
                     'learn_level': $('#learn_level').val(),
+                    'info_data': $('#info_data').val()
                 }, function (data) {
                     if (data == 0) {
                         alert('添加成功');

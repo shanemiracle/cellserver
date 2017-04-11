@@ -59,7 +59,13 @@ class Hospital extends Rest
         $retData = apiHospital::apiHospitalOneGet($attest,$hospital_no);
         if($retData) {
             if($retData['ret_code']==0) {
-                $logUrl = '/file/'.substr( $retData['logo'],10,2).'/'.substr( $retData['logo'],12,30).Ext::typeToName(substr( $retData['logo'],42,2));
+                if(substr( $retData['logo'],10,2)!='00'){
+                    $logUrl = '/file/'.substr( $retData['logo'],10,2).'/'.substr( $retData['logo'],12,30).Ext::typeToName(substr( $retData['logo'],42,2));
+                }
+                else{
+                    $logUrl = '';
+                }
+//                $logUrl = '/file/'.substr( $retData['logo'],10,2).'/'.substr( $retData['logo'],12,30).Ext::typeToName(substr( $retData['logo'],42,2));
 
                 $data = [
                     'hospital_no'=>$retData['hospital_no'],

@@ -65,6 +65,16 @@
         </div>
 
         <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2 col-sm-offset-1">是否典型细胞:</label>
+            <div class="formControls col-xs-8 col-sm-6">
+                <div class="" >
+                    <input type="checkbox"  id="is_special" value="0" name="is_special">
+                </div>
+            </div>
+
+        </div>
+
+        <div class="row cl">
             <label class="form-label col-xs-4 col-sm-2 col-sm-offset-1">缩写:</label>
             <div class="formControls col-xs-8 col-sm-3">
                 <input type="text" class="input-text radius" id="abb_name" name="abb_name" maxlength="7">
@@ -96,21 +106,21 @@
             <div class="formControls col-xs-3 col-sm-3" >
 
                 <div class="input-group">
-                    <input type="color" class="color" id="c-r" value="#ff0000" >
+                    <input type="color" class="color" id="c-r" value="#{$color_r}" >
                     <span class="input-group-addon">#</span>
-                    <input type="text" class="input-text " id="color-r" value="ff0000" minlength="6" maxlength="6">
+                    <input type="text" class="input-text " id="color-r" value="{$color_r}" minlength="1" maxlength="6">
                 </div>
 
                 <div class="input-group">
-                    <input type="color" class="color" id="c-g" value="#00ff00" >
+                    <input type="color" class="color" id="c-g" value="#{$color_g}" >
                     <span class="input-group-addon">#</span>
-                    <input type="text" class="input-text " id="color-g" value="00ff00" minlength="6" maxlength="6">
+                    <input type="text" class="input-text " id="color-g" value="{$color_g}" minlength="1" maxlength="6">
                 </div>
 
                 <div class="input-group">
-                    <input type="color" class="color" id="c-b" value="#0000ff" >
+                    <input type="color" class="color" id="c-b" value="#{$color_b}" >
                     <span class="input-group-addon">#</span>
-                    <input type="text" class="input-text " id="color-b" value="0000ff" minlength="6" maxlength="6">
+                    <input type="text" class="input-text " id="color-b" value="{$color_b}" minlength="1" maxlength="6">
                 </div>
 
             </div>
@@ -196,7 +206,6 @@
         }
         return patt;
     }
-
 
     var c_r = $('#c-r');
     var color_r = $('#color-r');
@@ -284,6 +293,27 @@
 
     $(document).ready(function () {
 
+        $('[name="is_special"]').bootstrapSwitch({
+            onText: "YES",
+            offText: "NO",
+            onColor: "primary",
+//            offColor:"info",
+            size: "mini",
+            onSwitchChange: function (event, state) {
+                if (state == true) {
+//                    role.value |= $(this).val();
+//                    alert(role.value);
+                    $(this).val(1);
+                } else {
+//                    role.value -= $(this).val();
+//                    alert(role.value);
+                    $(this).val(0);
+                }
+
+//                alert($(this).val());
+            }
+        });
+
 
         var logo = $('#input-id');
 
@@ -370,7 +400,17 @@
         });
 
         $('#btnSubmit').on('click', function () {
+//            alert($('#is_special').val());
             if (form.valid()) {
+                var c_r = ($('#color-r').val().length == 6)? ('ff'+$('#color-r').val()):0;
+                var c_g = ($('#color-g').val().length == 6)? ('ff'+$('#color-g').val()):0;
+                var c_b = ($('#color-b').val().length == 6)? ('ff'+$('#color-b').val()):0;
+
+//                alert(c_r);
+//                alert(c_g);
+//                alert(c_b);
+
+
                 $.post('/celltype/ajax_add', {
                     'father_cell_type': $('#father_cell_type').val(),
                     'cn_name': $('#cn_name').val(),
@@ -381,9 +421,10 @@
                     'remark': $('#remark').val(),
                     'file_id_big':$('#file_id_big').val(),
                     'file_id_small':$('#file_id_small').val(),
-                    'color_r':parseInt($('#color-r').val(),16),
-                    'color_g':parseInt($('#color-g').val(),16),
-                    'color_b':parseInt($('#color-b').val(),16)
+                    'color_r':parseInt(c_r,16),
+                    'color_g':parseInt(c_g,16),
+                    'color_b':parseInt(c_b,16),
+                    'is_special':$('#is_special').val()
 
                 }, function (data) {
                     if (data == 0) {

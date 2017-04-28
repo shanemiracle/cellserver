@@ -38,10 +38,44 @@ class Celltype extends Rest
             abort(401);
         }
 
+        $attest = Session::get('attest');
         $father_cell_type = Request::instance()->param('father_cell_type');
         $father_cell_name = Request::instance()->param('father_cell_name');
 
-        return (new View())->fetch('/celltype/add', ['father_cell_type' => $father_cell_type, 'father_cell_name' => $father_cell_name]);
+        $retData = apiCellType::apiCellTypeGet($attest, 1, $father_cell_type);
+
+        if($retData){
+            if ($retData['ret_code'] == 0) {
+                $c_r = $retData['color_r'];
+                $c_g = $retData['color_g'];
+                $c_b = $retData['color_b'];
+
+                if($c_r>>24 == 0xff){
+                    $c_r = ($c_r & 0x00ffffff);
+                }
+                else{
+                    $c_r = 0;
+                }
+
+                if($c_g>>24 == 0xff){
+                    $c_g = ($c_g & 0x00ffffff);
+                }
+                else{
+                    $c_g = 0;
+                }
+
+                if($c_b>>24 == 0xff){
+                    $c_b = ($c_b & 0x00ffffff);
+                }
+                else{
+                    $c_b = 0;
+                }
+            }
+        }
+
+        return (new View())->fetch('/celltype/add', ['father_cell_type' => $father_cell_type, 'father_cell_name' => $father_cell_name,
+            'color_r'=>($c_r!=0)?sprintf('%06x',$c_r):0,'color_g'=>($c_g!=0)?sprintf('%06x',$c_g):0,
+            'color_b'=>($c_b!=0)?sprintf('%06x',$c_b):0]);
     }
 
     public function edit()
@@ -72,6 +106,31 @@ class Celltype extends Rest
                     $smallUrl = '';
                 }
 
+                $c_r = $retData['color_r'];
+                $c_g = $retData['color_g'];
+                $c_b = $retData['color_b'];
+
+                if($c_r>>24 == 0xff){
+                    $c_r = ($c_r & 0x00ffffff);
+                }
+                else{
+                    $c_r = 0;
+                }
+
+                if($c_g>>24 == 0xff){
+                    $c_g = ($c_g & 0x00ffffff);
+                }
+                else{
+                    $c_g = 0;
+                }
+
+                if($c_b>>24 == 0xff){
+                    $c_b = ($c_b & 0x00ffffff);
+                }
+                else{
+                    $c_b = 0;
+                }
+
 
                 $data = ['father_cell_type' => $father_cell_type, 'father_cell_name' => $father_cell_name,
                     'cell_type'=>$cell_type,'info_ver'=>$retData['info_ver'],
@@ -79,8 +138,9 @@ class Celltype extends Rest
                     'abb_name'=>$retData['abb_name'],'size_max'=>$retData['size_max']/10,
                     'size_min'=>$retData['size_min']/10,'remark'=>$retData['remark'],
                     'file_id_big'=>$retData['file_id_big'],'file_id_small'=>$retData['file_id_small'],
-                    'bigUrl'=>$bigUrl,'smallUrl'=>$smallUrl,'color_r'=>sprintf('%06x',$retData['color_r']),
-                    'color_g'=>sprintf('%06x',$retData['color_g']),'color_b'=>sprintf('%06x',$retData['color_b'])];
+                    'bigUrl'=>$bigUrl,'smallUrl'=>$smallUrl,'color_r'=>($c_r!=0)?sprintf('%06x',$c_r):0,
+                    'color_g'=>($c_g!=0)?sprintf('%06x',$c_g):0,'color_b'=>($c_b!=0)?sprintf('%06x',$c_b):0,
+                    'is_special'=>$retData['is_special']];
             }
         }
 
@@ -132,8 +192,9 @@ class Celltype extends Rest
         $color_r = Request::instance()->param('color_r');
         $color_g = Request::instance()->param('color_g');
         $color_b = Request::instance()->param('color_b');
+        $is_special = Request::instance()->param('is_special');
         $retData = apiCellType::apiCellTypeAdd($attest, 1, $father_cell_type, $cn_name, $en_name, $abb_name, $size_max * 10, $size_min * 10, $remark, $file_id_big,$file_id_small,
-            $color_r,$color_g,$color_b);
+            $color_r,$color_g,$color_b,$is_special);
         if ($retData) {
             if ($retData['ret_code'] == 0) {
                 print 0;
@@ -237,9 +298,10 @@ class Celltype extends Rest
         $color_r = Request::instance()->param('color_r');
         $color_g = Request::instance()->param('color_g');
         $color_b = Request::instance()->param('color_b');
+        $is_special = Request::instance()->param('is_special');
 
         $retData = apiCellType::apiCellTypeSet($attest, 1, $cell_type, $info_ver, $cn_name, $en_name, $abb_name, $size_max * 10, $size_min * 10, $remark,$file_id_big,$file_id_small,
-            $color_r,$color_g,$color_b);
+            $color_r,$color_g,$color_b,$is_special);
         if ($retData) {
             if ($retData['ret_code'] == 0) {
                 print 0;

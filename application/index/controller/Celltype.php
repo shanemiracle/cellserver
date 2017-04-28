@@ -43,6 +43,9 @@ class Celltype extends Rest
         $father_cell_name = Request::instance()->param('father_cell_name');
 
         $retData = apiCellType::apiCellTypeGet($attest, 1, $father_cell_type);
+        $c_r = 0;
+        $c_g = 0;
+        $c_b = 0;
 
         if($retData){
             if ($retData['ret_code'] == 0) {

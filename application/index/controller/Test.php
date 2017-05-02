@@ -468,6 +468,35 @@ class Test
                 $cell_type = Request::instance()->param('cell_type');
                 $ret = apiCellType::apiCellTypeFacherList($attest,$check_type,$cell_type);
                 break;
+
+            case 65:
+                $attest = Session::get('attest');
+                $check_type = Request::instance()->param('check_type');
+                $cell_type1 = Request::instance()->param('cell_type1');
+                $cell_type2 = Request::instance()->param('cell_type2');
+                $cell_type3= Request::instance()->param('cell_type3');
+                $ret = apiCellType::apiTenCellTypeAdd($attest,$check_type,$cell_type1,$cell_type2,$cell_type3);
+                break;
+            case 66:
+                $attest = Session::get('attest');
+                $check_type = Request::instance()->param('check_type');
+                $ret = apiCellType::apiTenCellTypeDrop($attest,$check_type);
+                break;
+
+            case 67:
+                $attest = Session::get('attest');
+                $check_type = Request::instance()->param('check_type');
+                $ret = apiCellType::apiTenCellTypeGet($attest,$check_type);
+                break;
+            case 68:
+                $attest = Session::get('attest');
+                $check_type = Request::instance()->param('check_type');
+                $info_ver = Request::instance()->param('info_ver');
+                $cell_type1 = Request::instance()->param('cell_type1');
+                $cell_type2 = Request::instance()->param('cell_type2');
+                $cell_type3= Request::instance()->param('cell_type3');
+                $ret = apiCellType::apiTenCellTypeAdd($attest,$check_type,$info_ver,$cell_type1,$cell_type2,$cell_type3);
+                break;
         }
 
 

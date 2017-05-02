@@ -137,4 +137,69 @@ class apiCellType
         return false;
     }
 
+    public static function apiTenCellTypeAdd($attest,$check_type,$cell_type1,$cell_type2,$cell_type3) {
+        $sendArray = ['id'=>intval(65),'flag'=>intval(0),'data'=>['attest'=>intval($attest),'check_type'=>intval($check_type),'cell_type1'=>intval($cell_type1),'cell_type2'=>intval($cell_type2),'cell_type3'=>intval($cell_type3)] ];
+        $sendData = json_encode($sendArray);
+        if($sendData){
+            $recvData = Cell::bizSend($sendData);
+            if($recvData) {
+                $recvArray = json_decode($recvData,true);
+
+                if($recvArray) {
+                    return $recvArray;
+                }
+            }
+        }
+        return false;
+    }
+
+    public static function apiTenCellTypeDrop($attest,$check_type) {
+        $sendArray = ['id'=>intval(66),'flag'=>intval(0),'data'=>['attest'=>intval($attest),'check_type'=>intval($check_type)] ];
+        $sendData = json_encode($sendArray);
+        if($sendData){
+            $recvData = Cell::bizSend($sendData);
+            if($recvData) {
+                $recvArray = json_decode($recvData,true);
+
+                if($recvArray) {
+                    return $recvArray;
+                }
+            }
+        }
+
+        return false;
+    }
+    public static function apiTenCellTypeGet($attest,$check_type) {
+        $sendArray = ['id'=>intval(67),'flag'=>intval(0),'data'=>['attest'=>intval($attest),'check_type'=>intval($check_type)] ];
+        $sendData = json_encode($sendArray);
+        if($sendData){
+            $recvData = Cell::bizSend($sendData);
+            if($recvData) {
+                $recvArray = json_decode($recvData,true);
+
+                if($recvArray) {
+                    return $recvArray;
+                }
+            }
+        }
+
+        return false;
+    }
+
+
+    public static function apiTenCellTypeSet($attest,$check_type,$info_ver,$cell_type1,$cell_type2,$cell_type3) {
+        $sendArray = ['id'=>intval(68),'flag'=>intval(0),'data'=>['attest'=>intval($attest),'check_type'=>intval($check_type),'info_ver'=>intval($info_ver),'cell_type1'=>intval($cell_type1),'cell_type2'=>intval($cell_type2),'cell_type3'=>intval($cell_type3)] ];
+        $sendData = json_encode($sendArray);
+        if($sendData){
+            $recvData = Cell::bizSend($sendData);
+            if($recvData) {
+                $recvArray = json_decode($recvData,true);
+
+                if($recvArray) {
+                    return $recvArray;
+                }
+            }
+        }
+        return false;
+    }
 }

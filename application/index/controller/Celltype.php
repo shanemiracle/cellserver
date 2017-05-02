@@ -332,4 +332,72 @@ class Celltype extends Rest
         return $this->response(['data' => $data], 'json', 200);
 
     }
+
+    public function ajax_ten_add()
+    {
+        $attest = Session::get('attest');
+        $data = [];
+        $check_type = Request::instance()->param('check_type');
+        $cell_type1 = Request::instance()->param('cell_type1');
+        $cell_type2 = Request::instance()->param('cell_type2');
+        $cell_type3 = Request::instance()->param('cell_type3');
+        $retData = apiCellType::apiTenCellTypeAdd($attest, $check_type, $cell_type1, $cell_type2, $cell_type3);
+        if ($retData) {
+            if ($retData['ret_code'] == 0) {
+                $data = $retData['data'];
+            }
+        }
+        return $this->response(['data' => $data], 'json', 200);
+
+    }
+    public function ajax_ten_drop()
+    {
+        $attest = Session::get('attest');
+        $check_type = Request::instance()->param('check_type');
+        $retData = apiCellType::apiTenCellTypeDrop($attest, &check_type);
+        if ($retData) {
+            if ($retData['ret_code'] == 0) {
+                print 0;
+            } else {
+                print $retData['err_desc'];
+            }
+
+        } else {
+            print 10000;
+        }
+    }
+    public function ajax_ten_get()
+    {
+        $attest = Session::get('attest');
+        $data = [];
+        $check_type = Request::instance()->param('check_type');
+        $retData = apiCellType::apiTenCellTypeGet($attest, $check_type);
+        if ($retData) {
+            if ($retData['ret_code'] == 0) {
+                $data = $retData['data'];
+            }
+        }
+        return $this->response(['data' => $data], 'json', 200);
+
+    }
+
+    public function ajax_ten_set()
+    {
+        $attest = Session::get('attest');
+        $data = [];
+        $check_type = Request::instance()->param('check_type');
+        $info_ver= Request::instance()->param('info_ver');
+
+        $cell_type1 = Request::instance()->param('cell_type1');
+        $cell_type2 = Request::instance()->param('cell_type2');
+        $cell_type3 = Request::instance()->param('cell_type3');
+        $retData = apiCellType::apiTenCellTypeSet($attest, $check_type,$info_ver, $cell_type1, $cell_type2, $cell_type3);
+        if ($retData) {
+            if ($retData['ret_code'] == 0) {
+                $data = $retData['data'];
+            }
+        }
+        return $this->response(['data' => $data], 'json', 200);
+
+    }
 }

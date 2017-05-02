@@ -471,11 +471,16 @@ class Test
 
             case 65:
                 $attest = Session::get('attest');
-                $check_type = Request::instance()->param('check_type');
-                $cell_type1 = Request::instance()->param('cell_type1');
-                $cell_type2 = Request::instance()->param('cell_type2');
-                $cell_type3= Request::instance()->param('cell_type3');
-                $ret = apiCellType::apiTenCellTypeAdd($attest,$check_type,$cell_type1,$cell_type2,$cell_type3);
+
+                $cell_no = Request::instance()->param('cell_no');
+
+                $cell_no_list = explode(',',$cell_no);
+                $data = [];
+                for($i = 0; $i < count($cell_no_list); $i++ ) {
+                    array_push($data,['cell_no'=>intval($cell_no_list[$i])]);
+                }
+
+                $ret = apiCellType::apiTenCellTypeAdd($attest,1,$data);
                 break;
             case 66:
                 $attest = Session::get('attest');
@@ -490,17 +495,17 @@ class Test
                 break;
             case 68:
                 $attest = Session::get('attest');
-                $check_type = Request::instance()->param('check_type');
                 $info_ver = Request::instance()->param('info_ver');
-                $cell_type1 = Request::instance()->param('cell_type1');
-                $cell_type2 = Request::instance()->param('cell_type2');
-                $cell_type3= Request::instance()->param('cell_type3');
-                $ret = apiCellType::apiTenCellTypeAdd($attest,$check_type,$info_ver,$cell_type1,$cell_type2,$cell_type3);
+                $cell_no = Request::instance()->param('cell_no');
+
+                $cell_no_list = explode(',',$cell_no);
+                $data = [];
+                for($i = 0; $i < count($cell_no_list); $i++ ) {
+                    array_push($data,['cell_no'=>intval($cell_no_list[$i])]);
+                }
+                $ret = apiCellType::apiTenCellTypeSet($attest,1,$info_ver,$data);
                 break;
         }
-
-
-
 
         return json_encode($ret);
     }

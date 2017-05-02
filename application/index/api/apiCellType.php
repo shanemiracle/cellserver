@@ -137,8 +137,8 @@ class apiCellType
         return false;
     }
 
-    public static function apiTenCellTypeAdd($attest,$check_type,$cell_type1,$cell_type2,$cell_type3) {
-        $sendArray = ['id'=>intval(65),'flag'=>intval(0),'data'=>['attest'=>intval($attest),'check_type'=>intval($check_type),'cell_type1'=>intval($cell_type1),'cell_type2'=>intval($cell_type2),'cell_type3'=>intval($cell_type3)] ];
+    public static function apiTenCellTypeAdd($attest,$check_type,$data) {
+        $sendArray = ['id'=>intval(65),'flag'=>intval(0),'data'=>['attest'=>intval($attest),'check_type'=>intval($check_type),'data'=>$data] ];
         $sendData = json_encode($sendArray);
         if($sendData){
             $recvData = Cell::bizSend($sendData);
@@ -187,8 +187,8 @@ class apiCellType
     }
 
 
-    public static function apiTenCellTypeSet($attest,$check_type,$info_ver,$cell_type1,$cell_type2,$cell_type3) {
-        $sendArray = ['id'=>intval(68),'flag'=>intval(0),'data'=>['attest'=>intval($attest),'check_type'=>intval($check_type),'info_ver'=>intval($info_ver),'cell_type1'=>intval($cell_type1),'cell_type2'=>intval($cell_type2),'cell_type3'=>intval($cell_type3)] ];
+    public static function apiTenCellTypeSet($attest,$check_type,$info_ver,$data) {
+        $sendArray = ['id'=>intval(68),'flag'=>intval(0),'data'=>['attest'=>intval($attest),'check_type'=>intval($check_type),'info_ver'=>intval($info_ver),'data'=>$data] ];
         $sendData = json_encode($sendArray);
         if($sendData){
             $recvData = Cell::bizSend($sendData);

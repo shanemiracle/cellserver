@@ -18,6 +18,7 @@ use app\index\api\apiDiagCheck;
 use app\index\api\apiDoctor;
 use app\index\api\apiHospital;
 use app\index\api\apiLogin;
+use app\index\api\apiManager;
 use think\Request;
 use think\Session;
 use think\View;
@@ -505,7 +506,73 @@ class Test
                 }
                 $ret = apiCellType::apiTenCellTypeSet($attest,1,$info_ver,$data);
                 break;
+
+            case 81:
+                $attest = Session::get('attest');
+                $user_name = Request::instance()->param('user_name');
+                $password= Request::instance()->param('password');
+                $mobile_no = Request::instance()->param('mobile_no');
+                $power_data = Request::instance()->param('power_data');
+                $ret = apiManager::apiManagerAdd($attest,$user_name,$password,$mobile_no,$power_data);
+                break;
+
+            case 82:
+                $attest = Session::get('attest');
+
+                $manager_no = Request::instance()->param('manager_no');
+                $info_ver = Request::instance()->param('info_ver');
+                $password = Request::instance()->param('password');
+                $power_data = Request::instance()->param('power_data');
+
+
+                $ret = apiManager::apiManagerSet($attest,$manager_no,$info_ver,$password,$power_data);
+                break;
+
+            case 83:
+                $attest = Session::get('attest');
+                $manager_no = Request::instance()->param('manager_no');
+
+                $ret = apiManager::apiManagerDrop($attest,$manager_no);
+                break;
+
+            case 84:
+                $attest = Session::get('attest');
+                $manager_start = Request::instance()->param('manager_start');
+                $get_num = Request::instance()->param('get_num');
+
+                $ret = apiManager::apiManagerList($attest,$manager_start,$get_num);
+                break;
+            case 85:
+                $attest = Session::get('attest');
+                $manager_no = Request::instance()->param('manager_no');
+
+                $ret = apiManager::apiManagerGet($attest,$manager_no);
+                break;
+
+            case 86:
+                $attest = Session::get('attest');
+                $manager_no = Request::instance()->param('manager_no');
+                $hospital_no = Request::instance()->param('hospital_no');
+
+                $ret = apiManager::apiManagerHospitalAdd($attest,$manager_no,$hospital_no);
+                break;
+            case 87:
+                $attest = Session::get('attest');
+                $manager_no = Request::instance()->param('manager_no');
+                $hospital_no = Request::instance()->param('hospital_no');
+
+                $ret = apiManager::apiManagerHospitalDrop($attest,$manager_no,$hospital_no);
+                break;
+            case 88:
+                $attest = Session::get('attest');
+                $hospital_start= Request::instance()->param('hospital_start');
+                $manager_no = Request::instance()->param('manager_no');
+
+                $ret = apiManager::apiManagerList($attest,$manager_no,$hospital_start);
+                break;
         }
+
+
 
         return json_encode($ret);
     }

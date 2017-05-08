@@ -567,8 +567,14 @@ class Test
                 $attest = Session::get('attest');
                 $hospital_start= Request::instance()->param('hospital_start');
                 $manager_no = Request::instance()->param('manager_no');
+                $get_num = Request::instance()->param('get_num');
 
-                $ret = apiManager::apiManagerList($attest,$manager_no,$hospital_start);
+                $ret = apiManager::apiManagerHospitalList($attest,$manager_no,$hospital_start,$get_num);
+                break;
+            case 89:
+                $attest = Session::get('attest');
+                $user_name= Request::instance()->param('user_name');
+                $ret = apiManager::apiManagerNameGet($attest,$user_name);
                 break;
         }
 

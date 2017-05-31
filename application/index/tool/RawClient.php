@@ -24,7 +24,7 @@ class RawClient
      * @param string $host
      * @param int $port
      */
-    public function __construct($host, $port, $timeout=3)
+    public function __construct($host, $port, $timeout=5)
     {
         $this->host = $host;
         $this->port = $port;

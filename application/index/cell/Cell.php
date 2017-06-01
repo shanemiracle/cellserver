@@ -14,6 +14,7 @@ class Cell
     private $biz;
     private $downRoot;
     private $downData;
+    private $searchData;
     private static $cell;
     public static function getCell() {
         if(!(self::$cell instanceof self)){
@@ -51,6 +52,18 @@ class Cell
             $cellOb->downData  = new RawClient(Cell::$ip,20002,60);
         }
         $recv =$cellOb->downData->send($data);
+        if( $recv ) {
+            return $recv;
+        }
+        return 'error';
+    }
+
+    public static function searchSend($data) {
+        $cellOb = self::getCell();
+        if( $cellOb->searchData == null ) {
+            $cellOb->searchData  = new RawClient(Cell::$ip,20003,60);
+        }
+        $recv =$cellOb->searchData->send($data);
         if( $recv ) {
             return $recv;
         }

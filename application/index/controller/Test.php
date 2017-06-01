@@ -19,11 +19,13 @@ use app\index\api\apiDoctor;
 use app\index\api\apiHospital;
 use app\index\api\apiLogin;
 use app\index\api\apiManager;
+use app\index\table\tableSearchCell;
+use think\controller\Rest;
 use think\Request;
 use think\Session;
 use think\View;
 
-class Test
+class Test extends Rest
 {
     public function upfile(){
         return '<form action="/test/up" enctype="multipart/form-data" method="post">
@@ -36,7 +38,78 @@ class Test
         return (new View())->fetch('/test/test',['logourl'=>'']);
     }
 
+    public function tableAdd() {
+        $data = ['cell_no'=>'2','hospital_no'=>'1','project_no'=>'2','sign_doctor'=>'1',
+        'end_time'=>'2017-06-01 17:34:11', 'photo_type'=>4,'section_seq'=>1,'file_id'=>'12',
+        'x_pos'=>1,'y_pos'=>1,'x_length'=>1,'y_length'=>1,'cell_type'=>23,'ph_value'=>'5.6'];
 
+        srand(time());
+        for($i = 0; $i < 2; $i++ ) {
+            $hos_no = sprintf("%04d", $i + 1);
+            $time = 1420000000;
+            for( $j = 0; $j < 50; $j++) {
+
+                $pro_no = sprintf("%s%016d",$hos_no, $time+= 14000 );
+                $sign_doc = sprintf("%s%08d",$hos_no, ($j %5 + 1 ));
+                $end_time = date('Y-m-d H:i:s', $time);
+
+                for($k = 0; $k < 50; $k++ ) {
+                    $photo_type = $k % 4 + 1;
+                    $section_seq = $k %2 + 1;
+                    $file_id = sprintf("%044x", rand());
+                    $x_pos = $k+2;
+                    $y_pos = $k+50;
+                    $x_len = 1024;
+                    $y_len = 760;
+                    $cell_type = rand()%200 + 1;
+                    $ph_value = sprintf("%02d.%01d",rand()%13+1, rand()%10);
+
+                    $cell_no = sprintf("%s%02d",$pro_no,$k+1);
+
+                    $data = ['cell_no'=>$cell_no,'hospital_no'=>$hos_no,
+                    'project_no'=>$pro_no,'sign_doctor'=>$sign_doc,
+                    'end_time'=>$end_time,'photo_type'=>$photo_type,
+                    'section_seq'=>$section_seq,'file_id'=>$file_id,
+                    'x_pos'=>$x_pos,'y_pos'=>$y_pos,
+                    'x_length'=>$x_len,'y_length'=>$y_len,
+                    'cell_type'=>$cell_type,'ph_value'=>$ph_value];
+
+                    if( 0 != tableSearchCell::addSearchCell($data) ) {
+                        return -1;
+                    }
+
+                }
+
+            }
+        }
+
+        return 0;
+    }
+
+    public function tableGet( ) {
+        $hospital_no = Request::instance()->param('hos_no');
+        $project_no = Request::instance()->param('pro_no');
+        $sign_doctor = Request::instance()->param('doc_no');
+        $start_time = Request::instance()->param('s_time');
+        $end_time = Request::instance()->param('e_time');
+
+        $data = tableSearchCell::getSearchCell($hospital_no,$project_no,$sign_doctor,$start_time,$end_time);
+        $data = ['num'=>count($data),'data'=>$data];
+//        print_r($data);
+        return $this->response( $data, 'json', 200 );
+    }
+
+    public function tableCount( ) {
+        $hospital_no = Request::instance()->param('hos_no');
+        $project_no = Request::instance()->param('pro_no');
+        $sign_doctor = Request::instance()->param('doc_no');
+        $start_time = Request::instance()->param('s_time');
+        $end_time = Request::instance()->param('e_time');
+
+        $data = tableSearchCell::countSearchCell($hospital_no,$project_no,$sign_doctor,$start_time,$end_time);
+//        print_r($data);
+        return $this->response( $data, 'json', 200 );
+    }
 
     public function up(){
         $file = Request::instance()->file('file');

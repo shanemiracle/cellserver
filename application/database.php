@@ -13,13 +13,13 @@ return [
     // 数据库类型
     'type'           => 'mysql',
     // 服务器地址
-    'hostname'       => '127.0.0.1',
+    'hostname'       => '115.236.69.122',
     // 数据库名
-    'database'       => '',
+    'database'       => 'wk_cell_search_1000',
     // 用户名
-    'username'       => 'root',
+    'username'       => 'admin',
     // 密码
-    'password'       => '',
+    'password'       => '2ws4rf6yh',
     // 端口
     'hostport'       => '',
     // 连接dsn
@@ -47,5 +47,5 @@ return [
     // 是否自动写入时间戳字段
     'auto_timestamp' => false,
     // 是否需要进行SQL性能分析
-    'sql_explain'    => false,
+    'sql_explain'    => true,
 ];

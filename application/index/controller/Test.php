@@ -44,16 +44,16 @@ class Test extends Rest
         'x_pos'=>1,'y_pos'=>1,'x_length'=>1,'y_length'=>1,'cell_type'=>23,'ph_value'=>'5.6'];
 
         srand(time());
-        for($i = 0; $i < 2; $i++ ) {
+        for($i = 0; $i < 20; $i++ ) {
             $hos_no = sprintf("%04d", $i + 1);
             $time = 1420000000;
-            for( $j = 0; $j < 50; $j++) {
+            for( $j = 0; $j < 5000; $j++) {
 
                 $pro_no = sprintf("%s%016d",$hos_no, $time+= 14000 );
                 $sign_doc = sprintf("%s%08d",$hos_no, ($j %5 + 1 ));
                 $end_time = date('Y-m-d H:i:s', $time);
 
-                for($k = 0; $k < 50; $k++ ) {
+                for($k = 0; $k < 500; $k++ ) {
                     $photo_type = $k % 4 + 1;
                     $section_seq = $k %2 + 1;
                     $file_id = sprintf("%044x", rand());

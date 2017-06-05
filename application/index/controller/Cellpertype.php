@@ -121,7 +121,7 @@ class Cellpertype extends Rest
         $get_num = 0;
 
         $start = 0;
-        for($i=0;$i<10;$i++){
+        for($i=0;$i<100;$i++){
             $retData = apiCellPerType::apiCellPerTypeList($attest,1,$start,10);
             if ($retData) {
                 if ($retData['ret_code'] == 0) {

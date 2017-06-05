@@ -47,7 +47,7 @@ class Test extends Rest
         for($i = 0; $i < 20; $i++ ) {
             $hos_no = sprintf("%04d", $i + 1);
             $time = 1420000000;
-            for( $j = 0; $j < 5000; $j++) {
+            for( $j = 0; $j < 500; $j++) {
 
                 $pro_no = sprintf("%s%016d",$hos_no, $time+= 14000 );
                 $sign_doc = sprintf("%s%08d",$hos_no, ($j %5 + 1 ));

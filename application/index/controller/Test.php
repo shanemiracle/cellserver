@@ -92,8 +92,9 @@ class Test extends Rest
         $sign_doctor = Request::instance()->param('doc_no');
         $start_time = Request::instance()->param('s_time');
         $end_time = Request::instance()->param('e_time');
+        $cell_type = Request::instance()->param('cell_type');
 
-        $data = tableSearchCell::getSearchCell($hospital_no,$project_no,$sign_doctor,$start_time,$end_time);
+        $data = tableSearchCell::getSearchCell($hospital_no,$project_no,$cell_type,$sign_doctor,$start_time,$end_time);
         $data = ['num'=>count($data),'data'=>$data];
 //        print_r($data);
         return $this->response( $data, 'json', 200 );
@@ -105,8 +106,9 @@ class Test extends Rest
         $sign_doctor = Request::instance()->param('doc_no');
         $start_time = Request::instance()->param('s_time');
         $end_time = Request::instance()->param('e_time');
+        $cell_type = Request::instance()->param('cell_type');
 
-        $data = tableSearchCell::countSearchCell($hospital_no,$project_no,$sign_doctor,$start_time,$end_time);
+        $data = tableSearchCell::countSearchCell($hospital_no,$project_no,$cell_type,$sign_doctor,$start_time,$end_time);
 //        print_r($data);
         return $this->response( $data, 'json', 200 );
     }

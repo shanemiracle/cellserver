@@ -176,7 +176,7 @@ class Celltype extends Rest
         }
 
         return (new View())->fetch('/celltype/index', ['cur_cell_type' => $cur_cell_type, 'cur_cell_name' => $cur_cell_name,
-            'count' => $count, 'data' => $data]);
+            'count' => $count, 'data' => $data,'total_num'=>0]);
     }
 
     public function ajax_add()
@@ -243,6 +243,24 @@ class Celltype extends Rest
         }
         return $this->response(['data' => $data], 'json', 200);
 
+    }
+
+    public function ajax_count()
+    {
+        $attest = Session::get('attest');
+
+        $retData = apiCellType::apiCellTypeList($attest, 1, 0, 0);
+        if( $retData ) {
+            if( $retData['ret_code'] == 0 ) {
+                print $retData['total_num'];
+            }
+            else{
+                print 0;
+            }
+        }
+        else {
+            print 0;
+        }
     }
 
     public function ajax_son_list()

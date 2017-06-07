@@ -55,6 +55,8 @@
                     class="Hui-iconfont Hui-iconfont-add"> 添加细胞类型</i></a>
 		</span>
 
+        <span class="r">共有数据: <strong><span id="total_num">{$total_num}</span></strong>条</span>
+
 
     </div>
 
@@ -87,6 +89,10 @@
 <script type="text/javascript">
     var thistable;
     $(document).ready(function () {
+
+        $.post('/celltype/ajax_count', null, function (d) {
+            $('#total_num').html(d);
+        });
 
         thistable = $('.table-sort').DataTable({
             ajax: {
@@ -145,7 +151,11 @@
                 area: ['800px', '560px'],
                 content: '/celltype/add?'+'father_cell_type='+$('#cur_cell_type').val()+'&father_cell_name='+$('#cur_cell_name').val(),
                 end: function () {
-                    thistable.ajax.reload(null, false);
+                    thistable.ajax.reload(function () {
+                        $.post('/celltype/ajax_count', null, function (d) {
+                            $('#total_num').html(d);
+                        });
+                    }, false);
 //                    location.reload();
                 }
             });
@@ -176,7 +186,11 @@
             layer.confirm('是否删除?', {icon: 3, title: '提示'}, function (index) {
                 $.post('/celltype/ajax_drop', {'cell_type': data['cell_type']}, function (d) {
                     if (d == 0) {
-                        thistable.ajax.reload(null, false);
+                        thistable.ajax.reload(function () {
+                            $.post('/celltype/ajax_count', null, function (d) {
+                                $('#total_num').html(d);
+                            });
+                        }, false);
                     } else {
                         alert(d);
                     }

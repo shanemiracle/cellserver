@@ -38,7 +38,7 @@ class Cellpertype extends Rest
             abort(401);
         }
 
-        return (new View())->fetch('/cellpertype/index');
+        return (new View())->fetch('/cellpertype/index',['total_num'=>0]);
     }
 
     public function add() {
@@ -107,6 +107,24 @@ class Cellpertype extends Rest
         }
         else {
             print 10000;
+        }
+    }
+
+    public function ajax_count()
+    {
+        $attest = Session::get('attest');
+
+        $retData = apiCellPerType::apiCellPerTypeList($attest, 1, 0, 0);
+        if( $retData ) {
+            if( $retData['ret_code'] == 0 ) {
+                print $retData['total_num'];
+            }
+            else{
+                print 0;
+            }
+        }
+        else {
+            print 0;
         }
     }
 

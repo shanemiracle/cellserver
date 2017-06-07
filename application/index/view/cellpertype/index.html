@@ -47,7 +47,7 @@
             <a href="javascript:void(0);" id="btnAdd" class="btn btn-primary radius"><i
                     class="Hui-iconfont Hui-iconfont-add">添加细胞比例</i></a>
 		</span>
-
+        <span class="r">共有数据: <strong><span id="total_num">{$total_num}</span></strong>条</span>
 
     </div>
 
@@ -72,6 +72,10 @@
 
     var table;
     $(document).ready(function () {
+        $.post('/cellpertype/ajax_count', null, function (d) {
+            $('#total_num').html(d);
+        });
+
         table = $('.table-sort').DataTable({
             ajax: {
                 url: "/cellpertype/ajax_list"
@@ -108,6 +112,9 @@
 
         });
 
+        alert(table.rows.count());
+
+
 
         $('#btnAdd').on('click', addRow);
 
@@ -120,7 +127,12 @@
                 area: ['800px', '480px'],
                 content: '/cellpertype/add',
                 end: function () {
-                    table.ajax.reload(null,false);
+                    table.ajax.reload(function () {
+                        $.post('/cellpertype/ajax_count', null, function (d) {
+                            $('#total_num').html(d);
+                        });
+                    },false);
+
                 }
             });
 
@@ -137,6 +149,7 @@
                 content: '/cellpertype/edit?'+'cell_per_type='+data['cell_per_type'],
                 end: function () {
                     table.ajax.reload(null,false);
+
                 }
             });
 
@@ -149,7 +162,11 @@
             layer.confirm('是否删除?',{icon:3,title:'提示'},function(index){
                 $.post('/cellpertype/ajax_drop',{'cell_per_type':data['cell_per_type']},function (d) {
                     if(d==0){
-                        table.ajax.reload(null,false);
+                        table.ajax.reload(function () {
+                            $.post('/cellpertype/ajax_count', null, function (d) {
+                                $('#total_num').html(d);
+                            });
+                        },false);
                     }else{
                         alert(d);
                     }

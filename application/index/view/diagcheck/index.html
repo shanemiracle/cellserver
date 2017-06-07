@@ -48,7 +48,7 @@
                     class="Hui-iconfont Hui-iconfont-add">添加诊断比例</i></a>
 		</span>
 
-
+        <span class="r">共有数据: <strong><span id="total_num">{$total_num}</span></strong>条</span>
     </div>
 
     <div class="mt-20">
@@ -72,6 +72,11 @@
 
     var table;
     $(document).ready(function () {
+
+        $.post('/diagcheck/ajax_count', null, function (d) {
+            $('#total_num').html(d);
+        });
+
         table = $('.table-sort').DataTable({
             ajax: {
                 url: "/diagcheck/ajax_list"
@@ -120,7 +125,11 @@
                 area: ['800px', '480px'],
                 content: '/diagcheck/add',
                 end: function () {
-                    table.ajax.reload(null,false);
+                    table.ajax.reload(function () {
+                        $.post('/diagcheck/ajax_count', null, function (d) {
+                            $('#total_num').html(d);
+                        });
+                    },false);
                 }
             });
 
@@ -149,7 +158,11 @@
             layer.confirm('是否删除?',{icon:3,title:'提示'},function(index){
                 $.post('/diagcheck/ajax_drop',{'diag_check_type':data['diag_check_type']},function (d) {
                     if(d==0){
-                        table.ajax.reload(null,false);
+                        table.ajax.reload(function () {
+                            $.post('/diagcheck/ajax_count', null, function (d) {
+                                $('#total_num').html(d);
+                            });
+                        },false);
                     }else{
                         alert(d);
                     }

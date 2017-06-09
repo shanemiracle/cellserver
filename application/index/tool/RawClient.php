@@ -79,7 +79,7 @@ class RawClient
            if($this->socket){
                $ret_s = '';
                for($i = 0; $i < 20; $i++){
-                   $receive = socket_read($this->socket, 8129);
+                   $receive = socket_read($this->socket, 65535);
                    if ($receive){
 
                        $ret_s .= $receive;
@@ -105,7 +105,7 @@ class RawClient
                            $len =$len_arry['1'];
                        }
 
-                       if($len>8096||$len ==0){
+                       if($len>65535||$len ==0){
                            break;
                        }
 

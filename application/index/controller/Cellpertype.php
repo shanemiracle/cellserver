@@ -140,7 +140,7 @@ class Cellpertype extends Rest
 
         $start = 0;
         for($i=0;$i<1000;$i++){
-            $retData = apiCellPerType::apiCellPerTypeList($attest,1,$start,10);
+            $retData = apiCellPerType::apiCellPerTypeList($attest,1,$start,50);
             if ($retData) {
                 if ($retData['ret_code'] == 0) {
                     $total_num = $retData['total_num'];

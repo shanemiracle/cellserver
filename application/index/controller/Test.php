@@ -93,8 +93,10 @@ class Test extends Rest
         $start_time = Request::instance()->param('s_time');
         $end_time = Request::instance()->param('e_time');
         $cell_type = Request::instance()->param('cell_type');
+        $start = Request::instance()->param('start');
+        $num = Request::instance()->param('num');
 
-        $data = tableSearchCell::getSearchCell($hospital_no,$project_no,$cell_type,$sign_doctor,$start_time,$end_time);
+        $data = tableSearchCell::getSearchCell($hospital_no,$project_no,$cell_type,$sign_doctor,$start_time,$end_time,$start,$num);
         $data = ['num'=>count($data),'data'=>$data];
 //        print_r($data);
         return $this->response( $data, 'json', 200 );

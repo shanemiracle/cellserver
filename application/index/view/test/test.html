@@ -27,7 +27,9 @@
 hello world!
 
 <div>
-    <input id="input-id" name="file" type="file" multiple class="file-input"  >
+    <!--<input id="input-id" name="file" type="file" multiple class="file-input"  >-->
+    <input type="button" id="download" name="download" value="下载">
+    <a href="http://localhost:8888/test/tableGet?hos_no=6&s_time=2013-1-8&e_time=2017-1-1&cell_type=13" download="download.txt">点击直接下载并保存成 download.txt 文件</a>
 </div>
 
 
@@ -35,81 +37,19 @@ hello world!
 
 <script>
     $(document).ready(function () {
-//        alert("111");
-        var file = $('#input-id');
-        file.fileinput({
-            uploadUrl:"/fileup/ajax_up",
-            allowedPreviewTypes:['image','html','text','video','flash'],
-            uploadAsync:true,
-            language:'zh',
-            showUpload:true,
-            showRemove:false,
-            showCaption:false,
-            showPreview:true,
-            browseOnZoneClick:false,
-            overwriteInitial:true,
-            removeFromPreviewOnError:false,
-            maxFileCount:2,
-//            fileActionSettings:{
-//                showRemove:true,
-//                showUpload:true
-//            },
-            initialPreview:[
-                "/file/08/6184a0fb4397d010e1fdb54516dfd6.png",
-                "{$logourl}"
 
-            ],
-            initialPreviewAsData:true,
-            initialPreviewConfig:[
-                {caption:"",width:'120px',url:'#',key:0},
-                {caption:"",width:'120px',url:'#',key:1}
-            ]
+        function downloadFile(url){
+
+            window.location=url;
+
+        }
+
+//        $('#download').on('click', downloadFile('http://localhost:8888/test/tableCount?hos_no=6&s_time=2013-1-8&e_time=2019-1-1'));
+
+        $('#download').on('click',function () {
+            downloadFile('http://localhost:8888/test/tableCount?hos_no=6&s_time=2013-1-8&e_time=2019-1-1');
         });
 
-        file.on('fileselect',function(event,numFiles,label) {
-
-            console.log('fileselect');
-        });
-
-
-        file.on('fileuploaded',function (event,data,previewId,index) {
-//            alert("222");
-//            alert(previewId);
-            console.log(data.response);
-        });
-
-        file.on('fileclear',function (event) {
-            console.log('fileclear');
-        });
-
-        file.on('filecleared',function (event) {
-            console.log('filecleared');
-        });
-
-        file.on('filepredelete',function (event,key) {
-            console.log('filepredelete');
-        });
-
-        file.on('filedeleted',function (event,key) {
-            console.log('filedeleted '+key);
-        });
-
-        file.on('filesuccessremove',function (event,id) {
-            console.log('filesuccessremove');
-        });
-
-        file.on('fileremove',function (event,id) {
-            console.log('fileremove');
-        });
-
-        file.on('fileselectnone',function (event) {
-            console.log('fileselectnone');
-        });
-
-        file.on('change',function (event) {
-
-            console.log('change');
-        });
 
     });
 </script>

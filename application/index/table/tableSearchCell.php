@@ -82,11 +82,18 @@ class tableSearchCell
     }
 
 
-    public static function getSearchCell($hospital_no,$project_no,$cell_type,$sign_doctor,$start_time,$end_time ) {
+    public static function getSearchCell($hospital_no,$project_no,$cell_type,$sign_doctor,$start_time,$end_time, $start, $num ) {
 
         $sql = tableSearchCell::sqlGet( $hospital_no,$project_no,$cell_type,$sign_doctor,$start_time,$end_time );
 
-        $sql = "SELECT * ".$sql;
+        if( $start!=null && $num!= null) {
+            $sql = "EXPLAIN SELECT * ".$sql." LIMIT ".$start.",".$num;
+        }
+        else{
+            $sql = "EXPLAIN SELECT * ".$sql;
+        }
+
+
         echo $sql.'\n';
 
         $data = \think\Db::query($sql);
@@ -105,7 +112,7 @@ class tableSearchCell
 
         $sql = tableSearchCell::sqlGet( $hospital_no,$project_no,$cell_type,$sign_doctor,$start_time,$end_time );
 
-        $sql = "SELECT count(*) ".$sql;
+        $sql = " SELECT count(*) ".$sql." AND cell_no>'0000009954a3b1b000000000000d'";
 
         echo $sql.'\n';
 

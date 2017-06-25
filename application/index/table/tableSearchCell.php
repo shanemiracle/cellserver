@@ -82,15 +82,15 @@ class tableSearchCell
     }
 
 
-    public static function getSearchCell($hospital_no,$project_no,$cell_type,$sign_doctor,$start_time,$end_time, $start, $num ) {
+    public static function getSearchCell($hospital_no,$project_no,$cell_type,$sign_doctor,$start_time,$end_time, $id, $num ) {
 
         $sql = tableSearchCell::sqlGet( $hospital_no,$project_no,$cell_type,$sign_doctor,$start_time,$end_time );
 
-        if( $start!=null && $num!= null) {
-            $sql = "EXPLAIN SELECT * ".$sql." LIMIT ".$start.",".$num;
+        if( $id!=null && $num!= null) {
+            $sql = "SELECT cell_no,file_id,x_pos,y_pos,x_length,y_length,cell_type ".$sql." AND id>".$id.""." LIMIT 0,".$num;
         }
         else{
-            $sql = "EXPLAIN SELECT * ".$sql;
+            $sql = "SELECT cell_no,file_id,x_pos,y_pos,x_length,y_length,cell_type ".$sql;
         }
 
 
@@ -101,18 +101,16 @@ class tableSearchCell
         return $data;
     }
 
-    public static function countSearchCell($hospital_no,$project_no,$cell_type,$sign_doctor,$start_time,$end_time ) {
-//        $sql = tableSearchCell::sqlGet( $hospital_no,$project_no,$sign_doctor,$start_time,$end_time );
-
-//        $sql = 'select count(*) from '.$sql.' as t6';
-
-//        return $sql;
-//        $sql = "select count(*) from search_cell where  hospital_no=".$hospital_no."  and end_time > UNIX_TIMESTAMP('".$start_time."') AND end_time<=UNIX_TIMESTAMP('".$end_time."')  and cell_type=13";
-//       $sql = "select count(*) from search_cell where project_no='0000000154a3b1b000000000'";
-
+    public static function countSearchCell($hospital_no,$project_no,$cell_type,$sign_doctor,$start_time,$end_time,$id, $num ) {
+//
         $sql = tableSearchCell::sqlGet( $hospital_no,$project_no,$cell_type,$sign_doctor,$start_time,$end_time );
+        if( $id!=null && $num!= null) {
+            $sql = "SELECT count(*) ".$sql." AND id>".$id.""." LIMIT 0,".$num;
+        }
+        else{
+            $sql = "SELECT count(*) ".$sql;
+        }
 
-        $sql = " SELECT count(*) ".$sql." AND cell_no>'0000009954a3b1b000000000000d'";
 
         echo $sql.'\n';
 

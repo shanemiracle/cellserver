@@ -100,16 +100,53 @@ class Hospital extends Rest
         }
     }
 
-    public  function ajax_list() {
-        $data = [];
+    public function ajax_list()
+    {
         $attest = Session::get('attest');
-        $retData = apiHospital::apiHospitalGet($attest,0,100);
-        if( $retData ) {
-            if( $retData['ret_code'] == 0 ) {
-                $data = $retData['data'];
+        $data = [];
+        $allData = [];
+        $get_num = 0;
+
+        $start = 0;
+        for($i=0;$i<1000;$i++){
+            $retData = apiHospital::apiHospitalGet($attest, $start, 100);
+            if ($retData) {
+                if ($retData['ret_code'] == 0) {
+                    $data = $retData['data'];
+                }
+            }
+            if ($retData) {
+                if ($retData['ret_code'] == 0) {
+                    $total_num = $retData['total_num'];
+                    $data = $retData['data'];
+                    $this_num = count($data);
+                    $get_num += $this_num;
+
+
+                    $allData = array_merge($allData,$data);
+                    if( $this_num != 0 ) {
+                        $start = $data[count($data)-1]['hospital_no'];
+                    }
+                    else {
+                        break;
+                    }
+
+                }
+                else{
+                    break;
+                }
+            }
+            else{
+                break;
+            }
+
+            if($total_num==$get_num) {
+                break;
             }
         }
-        return $this->response(['data'=>$data],'json',200);
+
+        return $this->response(['data' => $allData], 'json', 200);
+
     }
 
     public  function ajax_add() {

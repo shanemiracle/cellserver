@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="/static/h-ui/css/H-ui.min.css"/>
+    <link rel="stylesheet" type="text/css" href="/static/h-ui.admin/css/H-ui.admin.css"/>
+    <link rel="stylesheet" type="text/css" href="/lib/Hui-iconfont/1.0.8/iconfont.css"/>
+    <link rel="stylesheet" type="text/css" href="/static/h-ui.admin/css/style.css"/>
+    <!--<link rel="stylesheet" type="text/css" href="/static/css/bootstrap.min.css">-->
+    <link rel="stylesheet" type="text/css" href="/static/css/chosen.css"/>
+
+
+
+    <title>projectcell</title>
+</head>
+<body>
+
+<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 学习库管理 <span
+        class="c-gray en">&gt;</span> 项目细胞下载 <a class="btn btn-success radius r"
+                                                style="line-height:1.6em;margin-top:3px"
+                                                href="javascript:location.replace(location.href);" title="刷新"><i
+        class="Hui-iconfont">&#xe68f;</i></a>
+</nav>
+
+
+<div class="page-container">
+
+    <div class=" pd-5 bg-1 bk-gray mt-20">
+        <div>
+            <i class="Hui-iconfont ">选择医院 </i>
+            <select id="s_hospital"  data-placeholder="支持按名字搜索(不选则搜索全部医院)" style="width:360px;">
+
+            </select>
+        </div>
+    </div>
+
+    <div class=" pd-5 bg-1 bk-gray mt-20">
+
+            <span>开始日期 </span><input type="text" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd',maxDate:'%y-%M-%d'})" id="logmin" class="input-text Wdate" style="width:150px;">
+
+
+            <span> - 结束日期 </span><input type="text" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd',minDate:$('#logmin').val(),maxDate:'%y-%M-%d'})" id="logmax" class="input-text Wdate" style="width:150px;">
+
+
+    </div>
+
+
+</div>
+
+
+<script type="text/javascript" src="/lib/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript" src="/static/h-ui/js/H-ui.js"></script>
+<script type="text/javascript" src="/static/h-ui.admin/js/H-ui.admin.js"></script>
+<!--<script type="text/javascript" src="/lib/js/bootstrap.min.js"></script>-->
+<script type="text/javascript" src="/lib/js/chosen.jquery.js"></script>
+<script type="text/javascript" src="/lib/My97DatePicker/4.8/WdatePicker.js"></script>
+
+
+
+<script>
+    $(document).ready(function () {
+        var hos = $('#s_hospital');
+
+
+        $.post('/hospital/ajax_list', null, function (d) {
+
+            //这里要拼接下e 如果显示不出来 记得是 eval('+e+');
+            var i = 0;//和for循环一样 i做计数
+            var jsonData = eval(d);//接收到的数据转化为JQuery对象，由JQuery为我们处理
+            var jData = jsonData['data'];
+            $("<option>").attr("value", "-1").html("全选").appendTo(hos);
+            $.each(jData, function(index, objVal) { //遍历对象数组，index是数组的索引号，objVal是遍历的一个对象。
+                //val["属性"]可取到对应的属性值。
+                $("<option>").attr("value", objVal["hospital_no"]).html(objVal["hospital_name"]).appendTo(hos);
+            });
+
+
+            hos.chosen({
+                no_results_text: '没有数据',
+                search_contains: true,
+                allow_single_deselect: true,
+                display_disabled_options: false
+            });
+
+        });
+
+
+        hos.change(function () {
+//            alert(hos.val());
+//            alert(hos.find('option:selected').text());
+
+        });
+
+
+    });
+</script>
+
+</body>
+</html>

@@ -66,6 +66,11 @@ class Publicpag extends Rest
 
         $hard_ver = Session::get('public_hard_ver');
 
+        if($hard_ver>4||$hard_ver==0){
+            $hard_ver = 1;
+        }
+
+
         return (new View())->fetch('/publicpag/index',['total_num'=>0,'hard_ver'=>$hard_ver]);
     }
 

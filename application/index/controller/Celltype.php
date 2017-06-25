@@ -230,20 +230,53 @@ class Celltype extends Rest
     public function ajax_list()
     {
         $attest = Session::get('attest');
-        $check_type = Request::instance()->param('check_type');
-        $cell_start = Request::instance()->param('cell_start');
-        $get_num = Request::instance()->param('get_num');
         $data = [];
+        $allData = [];
+        $get_num = 0;
 
-        $retData = apiCellType::apiCellTypeList($attest, $check_type, $cell_start, $get_num);
-        if ($retData) {
-            if ($retData['ret_code'] == 0) {
-                $data = $retData['data'];
+        $start = 0;
+        for($i=0;$i<1000;$i++){
+            $retData = apiCellType::apiCellTypeList($attest, 1, $start, 250);
+            if ($retData) {
+                if ($retData['ret_code'] == 0) {
+                    $data = $retData['data'];
+                }
+            }
+            if ($retData) {
+                if ($retData['ret_code'] == 0) {
+                    $total_num = $retData['total_num'];
+                    $data = $retData['data'];
+                    $this_num = count($data);
+                    $get_num += $this_num;
+
+
+                    $allData = array_merge($allData,$data);
+                    if( $this_num != 0 ) {
+                        $start = $data[count($data)-1]['cell_type'];
+                    }
+                    else {
+                        break;
+                    }
+
+                }
+                else{
+                    break;
+                }
+            }
+            else{
+                break;
+            }
+
+            if($total_num==$get_num) {
+                break;
             }
         }
-        return $this->response(['data' => $data], 'json', 200);
+
+        return $this->response(['data' => $allData], 'json', 200);
 
     }
+
+
 
     public function ajax_count()
     {

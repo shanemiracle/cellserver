@@ -10,7 +10,6 @@
     <link rel="stylesheet" type="text/css" href="/static/css/chosen.css"/>
 
 
-
     <title>projectcell</title>
 </head>
 <body>
@@ -26,9 +25,18 @@
 <div class="page-container">
 
     <div class=" pd-5 bg-1 bk-gray mt-20">
+        <div class="three steps">
+            <span class="active step">查询</span>
+            <span class=" step">选中项目生成下载链接</span>
+            <span class="disabled step">下载</span>
+        </div>
+    </div>
+
+
+    <div class=" pd-5 bg-1 bk-gray mt-20">
         <div>
-            <i class="Hui-iconfont ">选择医院 </i>
-            <select id="s_hospital"  data-placeholder="支持按名字搜索(不选则搜索全部医院)" style="width:360px;">
+            <i class="Hui-iconfont ml-20">选择医院 </i>
+            <select id="s_hospital" data-placeholder="支持按名字搜索(不选则搜索全部医院)" style="width:360px;">
 
             </select>
         </div>
@@ -36,12 +44,52 @@
 
     <div class=" pd-5 bg-1 bk-gray mt-20">
 
-            <span>开始日期 </span><input type="text" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd',maxDate:'%y-%M-%d'})" id="logmin" class="input-text Wdate" style="width:150px;">
+        <span><i class="Hui-iconfont ml-20">开始日期 </i></span><input type="text"
+                                                                   onfocus="WdatePicker({dateFmt:'yyyy-MM-dd',maxDate:'%y-%M-%d'})"
+                                                                   id="t_datemin" class="input-text Wdate"
+                                                                   style="width:150px;">
 
 
-            <span> - 结束日期 </span><input type="text" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd',minDate:$('#logmin').val(),maxDate:'%y-%M-%d'})" id="logmax" class="input-text Wdate" style="width:150px;">
+        <span><i class="Hui-iconfont ">- 结束日期 </i></span><input type="text"
+                                                                onfocus="WdatePicker({dateFmt:'yyyy-MM-dd',minDate:$('#t_datemin').val(),maxDate:'%y-%M-%d'})"
+                                                                id="t_datemax" class="input-text Wdate"
+                                                                style="width:150px;">
+
+        <span class="r mr-40">
+            <button type="submit" class="btn btn-primary radius" id="btn_search" name="btn_search"><i
+                    class="Hui-iconfont Hui-iconfont-search"></i>查询</button>
+        </span>
+
+    </div>
 
 
+    <div class="mt-20">
+        <HR WIDTH=100% SIZE=1>
+    </div>
+
+
+    <div class="">
+        <table id='this_table' class="table table-border table-bordered table-bg th radius table-hover table-sort">
+            <thead>
+            <tr class="text-c">
+                <th width="20"><input type="checkbox" class="checkall"></th>
+                <th width="40">ID</th>
+                <th width="180">项目编号</th>
+                <th width="130">项目时间</th>
+                <th width="130">审核医生</th>
+                <th width="80">病人姓名</th>
+                <th width="40">病人年龄</th>
+                <th width="40">病人性别</th>
+                <th width="80">玻片编号</th>
+                <th width="80">取材部位</th>
+            </tr>
+            </thead>
+
+            <tbody class="text-c">
+
+            </tbody>
+
+        </table>
     </div>
 
 
@@ -54,26 +102,32 @@
 <!--<script type="text/javascript" src="/lib/js/bootstrap.min.js"></script>-->
 <script type="text/javascript" src="/lib/js/chosen.jquery.js"></script>
 <script type="text/javascript" src="/lib/My97DatePicker/4.8/WdatePicker.js"></script>
-
+<script type="text/javascript" src="/lib/datatables/1.10.0/jquery.dataTables.min.js"></script>
 
 
 <script>
     $(document).ready(function () {
-        var hos = $('#s_hospital');
 
 
+        function check_click() {
+            alert(111);
+        }
+
+
+
+//===========================医院选择框================================
+        var hos = $("#s_hospital");
         $.post('/hospital/ajax_list', null, function (d) {
-
             //这里要拼接下e 如果显示不出来 记得是 eval('+e+');
             var i = 0;//和for循环一样 i做计数
             var jsonData = eval(d);//接收到的数据转化为JQuery对象，由JQuery为我们处理
             var jData = jsonData['data'];
             $("<option>").attr("value", "-1").html("全选").appendTo(hos);
-            $.each(jData, function(index, objVal) { //遍历对象数组，index是数组的索引号，objVal是遍历的一个对象。
+            $.each(jData, function (index, objVal) { //遍历对象数组，index是数组的索引号，objVal是遍历的一个对象。
                 //val["属性"]可取到对应的属性值。
-                $("<option>").attr("value", objVal["hospital_no"]).html(objVal["hospital_name"]).appendTo(hos);
-            });
+                $("<option>").attr("value", objVal["hospital_no"]).html(objVal["hospital_name"] + "(" + objVal["hospital_no"] + ")").appendTo(hos);
 
+            });
 
             hos.chosen({
                 no_results_text: '没有数据',
@@ -82,14 +136,120 @@
                 display_disabled_options: false
             });
 
+
         });
 
 
         hos.change(function () {
 //            alert(hos.val());
-//            alert(hos.find('option:selected').text());
 
         });
+
+//===========================表格================================
+
+        var date_min = $('#t_datemin');
+        var date_max = $('#t_datemax');
+
+        var table = $('#this_table').DataTable({
+//            ajax: {
+//                url: "",
+//                data: function (d) {
+//                    d.hos_no = hos.val();
+//                    d.s_time = date_min.val();
+//                    d.e_time = date_max.val();
+//                }
+//            },
+
+            scrollY: 200,
+            paging: false,
+//            serverSide:true,
+            processing:true,
+            autoWidth: true,
+            info: true,
+            aaSorting: [[1, "asc"]],//默认第几个排序
+            bStateSave: true,//状态保存
+            aoColumnDefs: [
+                //{"bVisible": false, "aTargets": [ 3 ]} //控制列的隐藏显示
+                    {"orderable": false, "aTargets": [0]}// 不参与排序的列
+            ],
+            columns: [
+                {
+                    "sClass": "text-center",
+                    "data": "id",
+                    "render": function (data, type, full, meta) {
+                        return '<input type="checkbox"  class="checkchild" name="checkchild"  />';
+                    },
+                    "bSortable": false
+                },
+//                {
+//                    targets: -1,
+//                    data: null,
+//                    defaultContent: '<input type="checkbox"  class="checkchild" name="checkchild" />'
+//
+//                },
+                {data: 'id'},
+                {data: 'project_no'},
+                {data: 'end_time'},
+                {data: 'sign_doctor'},
+                {data: 'patient_name'},
+                {data: 'patient_age'},
+                {data: 'patient_gender'},
+                {data: 'section_id'},
+                {data: 'sample_part'}
+            ],
+            language: {
+                'emptyTable': '没有数据',
+                'loadingRecords': '加载中...',
+                'processing': '查询中...',
+                'search': '检索:',
+                'lengthMenu': '每页 _MENU_ 条',
+                'zeroRecords': '没有数据',
+                'paginate': {
+                    'first': '第一页',
+                    'last': '最后一页',
+                    'next': '后一页',
+                    'previous': '前一页'
+                },
+                'info': '共 _TOTAL_ 条',
+                'infoEmpty': '没有数据',
+                'infoFiltered': '(过滤总件数 _MAX_ 条)'
+            }
+
+        });
+
+        $("button[name='btn_search']").bind("click", function () { //按钮 触发table重新请求服务器
+            table.ajax.url("/projectcell/ajax_list?hos_no="+hos.val()+"&s_time="+date_min.val()+"&e_time="+date_max.val()).load(function (e) {
+                $('[name="checkchild"]').bind("click", function (e) { //按钮 触发table重新请求服务器
+//            e.preventDefault();
+                    e.stopPropagation();
+                });
+            }, false);
+//            alert(1);
+        });
+
+
+
+        $(".checkall").click(function () {
+            var check = $(this).prop("checked");
+            $(".checkchild").prop("checked", check);
+        });
+
+//
+        $('#this_table tbody').on( 'click', 'tr', function (e) {
+            var tr = $(this);
+            var checked = tr.find(".checkchild");
+            var checkedValue = checked.prop("checked");
+//            var index = tr.index();
+            checked.prop("checked", !checkedValue);
+
+        } );
+
+
+
+
+
+
+
 
 
     });

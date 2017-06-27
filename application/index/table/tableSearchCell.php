@@ -27,7 +27,7 @@ class tableSearchCell
                 $sql .= " AND sign_doctor='".$sign_doctor."'";
             }
             if($start_time!=null&&$end_time!=null) {
-                $sql .= " AND end_time>UNIX_TIMESTAMP('".$start_time."') AND end_time<=UNIX_TIMESTAMP('".$end_time."')";
+                $sql .= " AND end_time>UNIX_TIMESTAMP('".$start_time."') AND end_time<=(UNIX_TIMESTAMP('".$end_time."')+86400)";
             }
             
             return $sql;
@@ -45,7 +45,7 @@ class tableSearchCell
             }
 
             if($start_time!=null&&$end_time!=null) {
-                $sql .= " AND end_time>UNIX_TIMESTAMP('".$start_time."') AND end_time<=UNIX_TIMESTAMP('".$end_time."')";
+                $sql .= " AND end_time>UNIX_TIMESTAMP('".$start_time."') AND end_time<=(UNIX_TIMESTAMP('".$end_time."')+86400)";
             }
 
             return $sql;
@@ -58,7 +58,7 @@ class tableSearchCell
                 $sql .= " AND project_no='".$project_no."'";
             }
             if($start_time!=null&&$end_time!=null) {
-                $sql .= " AND end_time>UNIX_TIMESTAMP('".$start_time."') AND end_time<=UNIX_TIMESTAMP('".$end_time."')";
+                $sql .= " AND end_time>UNIX_TIMESTAMP('".$start_time."') AND end_time<=(UNIX_TIMESTAMP('".$end_time."')+86400)";
             }
 
             return $sql;
@@ -67,14 +67,14 @@ class tableSearchCell
         if($project_no!=null) {
             $sql .= " WHERE project_no='".$project_no."'";
             if($start_time!=null&&$end_time!=null) {
-                $sql .= " AND end_time>UNIX_TIMESTAMP('".$start_time."') AND end_time<=UNIX_TIMESTAMP('".$end_time."')";
+                $sql .= " AND end_time>UNIX_TIMESTAMP('".$start_time."') AND end_time<=(UNIX_TIMESTAMP('".$end_time."')+86400)";
             }
 
             return $sql;
         }
 
         if($start_time!=null&&$end_time!=null) {
-            $sql .= " WHERE end_time>UNIX_TIMESTAMP('".$start_time."') AND end_time<=UNIX_TIMESTAMP('".$end_time."')";
+            $sql .= " WHERE end_time>UNIX_TIMESTAMP('".$start_time."') AND end_time<=(UNIX_TIMESTAMP('".$end_time."')+86400)";
         }
         
         return $sql;

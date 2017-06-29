@@ -6,11 +6,15 @@
     <link rel="stylesheet" type="text/css" href="/static/h-ui.admin/css/H-ui.admin.css"/>
     <link rel="stylesheet" type="text/css" href="/lib/Hui-iconfont/1.0.8/iconfont.css"/>
     <link rel="stylesheet" type="text/css" href="/static/h-ui.admin/css/style.css"/>
-    <!--<link rel="stylesheet" type="text/css" href="/static/css/bootstrap.min.css">-->
+    <!--&lt;!&ndash;<link rel="stylesheet" type="text/css" href="/static/css/bootstrap.min.css">&ndash;&gt;-->
     <link rel="stylesheet" type="text/css" href="/static/css/chosen.css"/>
+    <link rel="stylesheet" type="text/css" href="/static/css/jquery.steps.css">
 
 
     <title>projectcell</title>
+
+
+
 </head>
 <body>
 
@@ -22,18 +26,35 @@
 </nav>
 
 
-<div class="page-container">
+<div class="two steps">
+    <span class="active step" id="step_search">查询</span>
+    <span class="step" id="step_down">下载</span>
+</div>
 
-    <div class=" pd-5 bg-1 bk-gray mt-20">
-        <div class="three steps">
-            <span class="active step">查询</span>
-            <span class=" step">选中项目生成下载链接</span>
-            <span class="disabled step">下载</span>
-        </div>
+
+<div class="page-container" id="dv_down" style="display: none">
+    <h3>勾选的项目编号列表:<small>(共计<span id="total_num">0</span>个项目)</small></h3>
+    <div>
+        <textarea id="info_data" name="info_data" class="textarea" ></textarea>
+    </div>
+
+    <div class="text-c">
+        <input type="button" id="down_gen" class="btn btn-primary radius mt-20 text-c " value="勾选项目生成下载链接">
+    </div>
+
+    <div id="progress_gen" style="display: none">
+        <span id="progressbar" class="progress "><div class="progress-bar mt-20" ><span class="sr-only" id="progressValue" style="width:0%"></span></div></span>
+    </div>
+
+    <div class="text-c mt-20 size-big" id="down_file" style="font-size: 16px;;display: none">
+        <a id="link_file" href="http://localhost:8888/file/08/6184a0fb4397d010e1fdb54516dfd6.png" download="赵丽颖.png">下载列表</a>
     </div>
 
 
-    <div class=" pd-5 bg-1 bk-gray mt-20">
+</div>
+
+<div class="page-container" id="dv_search" >
+    <div class=" pd-5 bg-1 bk-gray mt-10">
         <div>
             <i class="Hui-iconfont ml-20">选择医院 </i>
             <select id="s_hospital" data-placeholder="支持按名字搜索(不选则搜索全部医院)" style="width:360px;">
@@ -68,7 +89,7 @@
     </div>
 
 
-    <div class="">
+    <div class="mt-10">
         <table id='this_table' class="table table-border table-bordered table-bg th radius table-hover table-sort">
             <thead>
             <tr class="text-c">
@@ -91,8 +112,6 @@
 
         </table>
     </div>
-
-
 </div>
 
 
@@ -103,19 +122,97 @@
 <script type="text/javascript" src="/lib/js/chosen.jquery.js"></script>
 <script type="text/javascript" src="/lib/My97DatePicker/4.8/WdatePicker.js"></script>
 <script type="text/javascript" src="/lib/datatables/1.10.0/jquery.dataTables.min.js"></script>
-
+<script type="text/javascript" src="/lib/js/jquery.steps.js"></script>
+<script type="text/javascript" src="/lib/js/spark-md5.min.js"></script>
 
 <script>
     $(document).ready(function () {
+//
+//        $('#dv_search').show();
+//        $('#dv_down').hide();
+        var step_search = document.getElementById("step_search");
+        var step_down = document.getElementById("step_down");
+        var textpro = document.getElementById("info_data");
 
+        var down_gen = document.getElementById("down_gen");
 
-        function check_click() {
-            alert(111);
+        var progressValue = document.getElementById("progressValue");
+        var down_file = document.getElementById("down_file");
+        var link_file = document.getElementById("link_file");
+
+        function initDown() {
+            allNum = 0;
+            $('#down_file').hide();
+            $('#down_gen').show();
+            $('#progress_gen').hide();
+            down_gen.disabled = false;
+
         }
 
+        $('#down_gen').on('click',function (e) {
+
+            if(textpro.value != "") {
+                var getId = SparkMD5.hash(textpro.value);
+                alert(getId);
+
+                down_gen.disabled = true;
+                $('#down_file').hide();
+                $('#progress_gen').show();
+                progress();
+            }
+            else{
+                alert("请先勾选项目");
+            }
 
 
-//===========================医院选择框================================
+        });
+
+        function successGen() {
+            down_gen.disabled = false;
+            $('#progress_gen').hide();
+            $('#down_file').show();
+            $('#down_gen').hide();
+
+            //获取生成文件路径和名称生成链接
+//            link_file.download = "miss zhao.png"
+//            link_file.text = "下载内容";
+
+        }
+
+        //获取生成进度
+        var allNum = 0;
+        function progresssGet() {
+
+            return allNum++;
+        }
+
+        function progress() {
+//            alert(allNum);
+
+//            var val = progressValue.style.width;
+//            if(val.length > 0){
+//                var valNumber = val.substring(0,val.length-1);
+//            }
+//            else{
+//                var valNumber = 0;
+//            }
+//            valNumber++;
+
+            var valNumber =  progresssGet();
+
+            progressValue.style.width = valNumber+"%";
+
+            if(valNumber <= 99) {
+                setTimeout(progress,100);
+            }
+            else{
+                successGen();
+
+            }
+        }
+//
+////===========================医院选择框================================
+//
         var hos = $("#s_hospital");
         $.post('/hospital/ajax_list', null, function (d) {
             //这里要拼接下e 如果显示不出来 记得是 eval('+e+');
@@ -125,7 +222,7 @@
             $("<option>").attr("value", "-1").html("全选").appendTo(hos);
             $.each(jData, function (index, objVal) { //遍历对象数组，index是数组的索引号，objVal是遍历的一个对象。
                 //val["属性"]可取到对应的属性值。
-                $("<option>").attr("value", objVal["hospital_no"]).html(objVal["hospital_name"] + "(" + objVal["hospital_no"] + ")").appendTo(hos);
+                $("<option>").attr("value", objVal["hospital_no"]).html(objVal["hospital_name"] + "(" + objVal["hospital_no"].toString(16) + ")").appendTo(hos);
 
             });
 
@@ -160,24 +257,24 @@
 //                }
 //            },
 
-            scrollY: 200,
+            scrollY: 300,
             paging: false,
 //            serverSide:true,
-            processing:true,
+            processing: true,
             autoWidth: true,
             info: true,
             aaSorting: [[1, "asc"]],//默认第几个排序
             bStateSave: true,//状态保存
             aoColumnDefs: [
                 //{"bVisible": false, "aTargets": [ 3 ]} //控制列的隐藏显示
-                    {"orderable": false, "aTargets": [0]}// 不参与排序的列
+                {"orderable": false, "aTargets": [0]}// 不参与排序的列
             ],
             columns: [
                 {
                     "sClass": "text-center",
-                    "data": "id",
+                    "data": "project_no",
                     "render": function (data, type, full, meta) {
-                        return '<input type="checkbox"  class="checkchild" name="checkchild"  />';
+                        return "<input type='checkbox'  class='checkchild' name='checkchild' value="+data+" />";
                     },
                     "bSortable": false
                 },
@@ -218,7 +315,7 @@
         });
 
         $("button[name='btn_search']").bind("click", function () { //按钮 触发table重新请求服务器
-            table.ajax.url("/projectcell/ajax_list?hos_no="+hos.val()+"&s_time="+date_min.val()+"&e_time="+date_max.val()).load(function (e) {
+            table.ajax.url("/projectcell/ajax_list?hos_no=" + hos.val() + "&s_time=" + date_min.val() + "&e_time=" + date_max.val()).load(function (e) {
                 $('[name="checkchild"]').bind("click", function (e) { //按钮 触发table重新请求服务器
 //            e.preventDefault();
                     e.stopPropagation();
@@ -228,28 +325,80 @@
         });
 
 
-
         $(".checkall").click(function () {
             var check = $(this).prop("checked");
             $(".checkchild").prop("checked", check);
         });
 
 //
-        $('#this_table tbody').on( 'click', 'tr', function (e) {
+        $('#this_table tbody').on('click', 'tr', function (e) {
             var tr = $(this);
             var checked = tr.find(".checkchild");
             var checkedValue = checked.prop("checked");
 //            var index = tr.index();
             checked.prop("checked", !checkedValue);
 
-        } );
+        });
+
+
+
+        function tableGetCheck() {
+            var oldVal = textpro.value;
+            var v_data = "";
+
+            textpro.value = '';
+
+            var num = 0;
+
+            $('[name="checkchild"]').each(function () {
+                if($(this).prop('checked')==true){
+                    num++;
+                    if(v_data==""){
+                    v_data = $(this).val();
+                    }
+                    else{
+                        v_data = v_data+"," +
+                                " "+$(this).val();
+                    }
+                }
+            });
+
+//            alert(v_data);
+            textpro.value = v_data;
+            $('#total_num').html(num);
+
+            if(oldVal != v_data){
+                initDown();
+            }
+
+        }
+
+        ///////////////////////////////tab//////////////
 
 
 
 
+        function jumpSearch(){
+            step_down.className = "step";
+            step_search.className = "active step";
 
+            $('#dv_search').show();
+            $('#dv_down').hide();
+        }
 
+        function jumpDown() {
+            step_down.className = "active step";
+            step_search.className = "step";
 
+            $('#dv_search').hide();
+            $('#dv_down').show();
+
+            tableGetCheck();
+        }
+
+        step_search.onclick = jumpSearch;
+
+        step_down.onclick = jumpDown;
 
 
     });

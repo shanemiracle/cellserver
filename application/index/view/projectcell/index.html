@@ -157,7 +157,19 @@
                 down_gen.disabled = true;
                 $('#down_file').hide();
                 $('#progress_gen').show();
-                progress();
+
+                var request_id = SparkMD5.hash(textpro.value);
+
+                $.post('/projectcell/ajax_download_create?request_id='+request_id+"&id_list="+textpro.value,null,function (d) {
+                    if( d != 0 ) {
+                        alert("创建下载失败"+d);
+                        return;
+                    }
+                    else{
+                        progress(request_id);
+                    }
+                });
+
             }
             else{
                 alert("请先勾选项目");
@@ -177,52 +189,82 @@
             link_file.text = "下载列表";
             link_file.href = file_path;
 
+            console.log("download href"+link_file.href);
+
         }
 
         //获取生成进度
         var allNum = 0;
-        function progresssGet(get_id) {
+//        function progresssGet(get_id) {
+//            console.log("progresssGet"+get_id);
+//
+//            $.post('/projectcell/ajax_download_progress?request_id='+get_id,null,function (d) {
+//                if(!d){
+//                    return null;
+//                }
+//                var jsonData = eval(d);
+//                return jsonData;
+//            });
+//
+//        }
 
-            $.post('/projectcell/ajax_download_progress?request_id='+get_id,null,function (d) {
-                var jsonData = eval(d);
-                return jsonData;
+
+        function progresssGet(get_id){
+            var result;
+            $.ajax({
+                url : '/projectcell/ajax_download_progress?request_id='+get_id,
+                async:false,//这里选择异true步为false，那么这个程序执行到这里的时候会暂停，等待
+                            //数据加载完成后才继续执行
+                success : function(data){
+                    result = data;
+                }
             });
-
-
-            return null;
+            return result;
         }
         
         
-        
 
-        function progress() {
+        function progress(req_id) {
+            console.log("progress");
 
-            var request_id = SparkMD5.hash(textpro.value);
-
-            $.post('/projectcell/ajax_download_create?request_id='+request_id+"&id_list="+textpro.value,null,function (d) {
-                if( d != 0 ) {
-                    alert("创建下载失败"+d);
-                    return;
+            $.post('/projectcell/ajax_download_progress?request_id='+req_id,null,function (d) {
+                if(!d){
+                    return null;
                 }
+//                var valNumber = eval(d);
+
+                console.log(d);
+
+                if(d['ret_code'] == 0 ) {
+                    progressValue.style.width = d['download_per']+"%";
+                }
+                console.log("progress "+d['download_per']);
+                if(d['download_per'] <= 99) {
+                    setTimeout(progress,500);
+                }
+                else{
+                    successGen(d['file_path']);
+                }
+
             });
 
-            var valNumber =  progresssGet(request_id);
-
-            if(valNumber == null) {
-                alert("progressGet null");
-                return;
-            }
-
-            if(valNumber['ret_code'] == 0 ) {
-                progressValue.style.width = valNumber['download_per']+"%";
-            }
-
-            if(valNumber['download_per'] <= 99) {
-                setTimeout(progress,500);
-            }
-            else{
-                successGen(valNumber['file_path']);
-            }
+//            var valNumber =  progresssGet(req_id);
+//
+//            if(valNumber == null) {
+//                alert("progressGet null");
+//                return;
+//            }
+//
+//            if(valNumber['ret_code'] == 0 ) {
+//                progressValue.style.width = valNumber['download_per']+"%";
+//            }
+//            console.log("progress"+valNumber['download_per']);
+//            if(valNumber['download_per'] <= 99) {
+//                setTimeout(progress,500);
+//            }
+//            else{
+//                successGen(valNumber['file_path']);
+//            }
         }
 //
 ////===========================医院选择框================================

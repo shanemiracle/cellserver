@@ -70,7 +70,7 @@ class Projectcell extends Rest
         $data = apiProjectCell::apiProjectCellProgress($attest,$request_id);
 
         if( $data ) {
-            return $this->response(['data' => $data], 'json', 200);
+            return $this->response($data, 'json', 200);
         }
         else {
             return null;

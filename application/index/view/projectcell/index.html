@@ -33,7 +33,7 @@
 
 
 <div class="page-container" id="dv_down" style="display: none">
-    <h3>勾选的项目编号列表:<small>(共计<span id="total_num">0</span>个项目)</small></h3>
+    <h3>勾选的项目ID列表:<small>(共计<span id="total_num">0</span>个项目)</small></h3>
     <div>
         <textarea id="info_data" name="info_data" class="textarea" ></textarea>
     </div>
@@ -152,8 +152,7 @@
         $('#down_gen').on('click',function (e) {
 
             if(textpro.value != "") {
-                var getId = SparkMD5.hash(textpro.value);
-                alert(getId);
+                
 
                 down_gen.disabled = true;
                 $('#down_file').hide();
@@ -167,47 +166,62 @@
 
         });
 
-        function successGen() {
+        function successGen(file_path) {
             down_gen.disabled = false;
             $('#progress_gen').hide();
             $('#down_file').show();
             $('#down_gen').hide();
 
             //获取生成文件路径和名称生成链接
-//            link_file.download = "miss zhao.png"
-//            link_file.text = "下载内容";
+            link_file.download = "医院("+hos.find('option:selected').text()+")_时间起点("+date_min.val()+")_时间终点("+date_max.val()+").zip";
+            link_file.text = "下载列表";
+            link_file.href = file_path;
 
         }
 
         //获取生成进度
         var allNum = 0;
-        function progresssGet() {
+        function progresssGet(get_id) {
 
-            return allNum++;
+            $.post('/projectcell/ajax_download_progress?request_id='+get_id,null,function (d) {
+                var jsonData = eval(d);
+                return jsonData;
+            });
+
+
+            return null;
         }
+        
+        
+        
 
         function progress() {
-//            alert(allNum);
 
-//            var val = progressValue.style.width;
-//            if(val.length > 0){
-//                var valNumber = val.substring(0,val.length-1);
-//            }
-//            else{
-//                var valNumber = 0;
-//            }
-//            valNumber++;
+            var request_id = SparkMD5.hash(textpro.value);
 
-            var valNumber =  progresssGet();
+            $.post('/projectcell/ajax_download_create?request_id='+request_id+"&id_list="+textpro.value,null,function (d) {
+                if( d != 0 ) {
+                    alert("创建下载失败"+d);
+                    return;
+                }
+            });
 
-            progressValue.style.width = valNumber+"%";
+            var valNumber =  progresssGet(request_id);
 
-            if(valNumber <= 99) {
-                setTimeout(progress,100);
+            if(valNumber == null) {
+                alert("progressGet null");
+                return;
+            }
+
+            if(valNumber['ret_code'] == 0 ) {
+                progressValue.style.width = valNumber['download_per']+"%";
+            }
+
+            if(valNumber['download_per'] <= 99) {
+                setTimeout(progress,500);
             }
             else{
-                successGen();
-
+                successGen(valNumber['file_path']);
             }
         }
 //
@@ -272,18 +286,12 @@
             columns: [
                 {
                     "sClass": "text-center",
-                    "data": "project_no",
+                    "data": "id",
                     "render": function (data, type, full, meta) {
                         return "<input type='checkbox'  class='checkchild' name='checkchild' value="+data+" />";
                     },
                     "bSortable": false
                 },
-//                {
-//                    targets: -1,
-//                    data: null,
-//                    defaultContent: '<input type="checkbox"  class="checkchild" name="checkchild" />'
-//
-//                },
                 {data: 'id'},
                 {data: 'project_no'},
                 {data: 'end_time'},
@@ -363,14 +371,18 @@
                 }
             });
 
-//            alert(v_data);
-            textpro.value = v_data;
-            $('#total_num').html(num);
+            if( num <= 1000 ) {
+                textpro.value = v_data;
+                $('#total_num').html(num);
 
-            if(oldVal != v_data){
-                initDown();
+                if(oldVal != v_data){
+                    initDown();
+                }
+
+                return 0;
             }
 
+            return -1;
         }
 
         ///////////////////////////////tab//////////////
@@ -387,13 +399,18 @@
         }
 
         function jumpDown() {
-            step_down.className = "active step";
-            step_search.className = "step";
+            if( 0 == tableGetCheck() )
+            {
+                step_down.className = "active step";
+                step_search.className = "step";
 
-            $('#dv_search').hide();
-            $('#dv_down').show();
+                $('#dv_search').hide();
+                $('#dv_down').show();
+            }
+            else{
+                alert("单次下载项目个数不要超过1千");
+            }
 
-            tableGetCheck();
         }
 
         step_search.onclick = jumpSearch;

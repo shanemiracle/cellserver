@@ -9,9 +9,11 @@
 namespace app\index\controller;
 
 
+use app\index\api\apiProjectCell;
 use app\index\table\tableSearchProject;
 use think\controller\Rest;
 use think\Request;
+use think\Session;
 use think\View;
 
 class Projectcell extends Rest
@@ -34,6 +36,67 @@ class Projectcell extends Rest
         $data = tableSearchProject::getSearchCell($hospital_no,null,null,$start_time,$end_time,0,0);
 
         return $this->response(['data' => $data], 'json', 200);
+    }
+
+    public function ajax_download_create()
+    {
+        $attest = Session::get('attest');
+
+        $request_id = Request::instance()->param('request_id');
+        $id_list = Request::instance()->param('id_list');
+
+        $data = apiProjectCell::apiProjectCellCreate($attest,$request_id,$id_list);
+
+        if( $data ) {
+            if( $data['ret_code'] == 0 ) {
+                print 0;
+            }
+            else {
+                print $data['err_desc'];
+            }
+        }
+        else {
+            print 10000;
+        }
+
+    }
+
+    public function ajax_download_progress()
+    {
+        $attest = Session::get('attest');
+
+        $request_id = Request::instance()->param('request_id');
+
+        $data = apiProjectCell::apiProjectCellProgress($attest,$request_id);
+
+        if( $data ) {
+            return $this->response(['data' => $data], 'json', 200);
+        }
+        else {
+            return null;
+        }
+    }
+
+    public function ajax_download_cancel()
+    {
+        $attest = Session::get('attest');
+
+        $request_id = Request::instance()->param('request_id');
+
+        $data = apiProjectCell::apiProjectCellCancel($attest,$request_id);
+
+        if( $data ) {
+            if( $data['ret_code'] == 0 ) {
+                print 0;
+            }
+            else {
+                print $data['err_desc'];
+            }
+        }
+        else {
+            print 10000;
+        }
+
     }
 
 }

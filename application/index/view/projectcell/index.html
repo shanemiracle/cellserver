@@ -178,14 +178,16 @@
 
         });
 
-        function successGen(file_path) {
+        function successGen(file_path,name) {
             down_gen.disabled = false;
             $('#progress_gen').hide();
             $('#down_file').show();
             $('#down_gen').hide();
 
             //获取生成文件路径和名称生成链接
-            link_file.download = "医院("+hos.find('option:selected').text()+")_时间起点("+date_min.val()+")_时间终点("+date_max.val()+").zip";
+            var request_id = SparkMD5.hash(textpro.value);
+
+            link_file.download = name+".zip";
             link_file.text = "下载列表";
             link_file.href = file_path;
 
@@ -243,7 +245,7 @@
                     setTimeout(progress(req_id),100);
                 }
                 else{
-                    successGen(d['file_path']);
+                    successGen(d['file_path'],d['request_id']);
                 }
 
             });

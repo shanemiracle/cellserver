@@ -240,7 +240,7 @@
                 }
                 console.log("progress "+d['download_per']);
                 if(d['download_per'] <= 99) {
-                    setTimeout(progress(req_id),500);
+                    setTimeout(progress(req_id),100);
                 }
                 else{
                     successGen(d['file_path']);

@@ -237,10 +237,13 @@
 
                 }
                 else{
-                    alert("err"+d['err_desc']);
+                    alert("err "+d['ret_code']+d['err_desc']);
+
+                    initDown();
+
                 }
                 console.log("progress "+d['download_per']);
-                
+
             });
 
 //            var valNumber =  progresssGet(req_id);

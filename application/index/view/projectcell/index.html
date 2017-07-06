@@ -197,18 +197,6 @@
 
         //获取生成进度
         var allNum = 0;
-//        function progresssGet(get_id) {
-//            console.log("progresssGet"+get_id);
-//
-//            $.post('/projectcell/ajax_download_progress?request_id='+get_id,null,function (d) {
-//                if(!d){
-//                    return null;
-//                }
-//                var jsonData = eval(d);
-//                return jsonData;
-//            });
-//
-//        }
 
 
         function progresssGet(get_id){
@@ -233,21 +221,26 @@
                 if(!d){
                     return null;
                 }
-//                var valNumber = eval(d);
 
                 console.log(d);
 
                 if(d['ret_code'] == 0 ) {
                     progressValue.style.width = d['download_per']+"%";
-                }
-                console.log("progress "+d['download_per']);
-                if(d['download_per'] <= 99) {
-                    setTimeout(progress(req_id),100);
+
+                    if(d['download_per'] <= 99) {
+                        setTimeout(progress(req_id),100);
+                    }
+                    else{
+
+                        successGen(d['file_path'],d['request_id']);
+                    }
+
                 }
                 else{
-                    successGen(d['file_path'],d['request_id']);
+                    alert("err"+d['err_desc']);
                 }
-
+                console.log("progress "+d['download_per']);
+                
             });
 
 //            var valNumber =  progresssGet(req_id);

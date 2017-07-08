@@ -152,8 +152,8 @@
         $('#down_gen').on('click',function (e) {
 
             if(textpro.value != "") {
-                
 
+                $('#down_gen').hide();
                 down_gen.disabled = true;
                 $('#down_file').hide();
                 $('#progress_gen').show();
@@ -231,16 +231,13 @@
                         setTimeout(progress(req_id),100);
                     }
                     else{
-
                         successGen(d['file_path'],d['request_id']);
                     }
-
                 }
                 else{
                     alert("err "+d['ret_code']+d['err_desc']);
 
                     initDown();
-
                 }
                 console.log("progress "+d['download_per']);
 

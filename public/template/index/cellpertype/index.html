@@ -1,0 +1,162 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    {include file='../public/template/index/common/commonStyle.html'/}
+    <title>机器码列表</title>
+</head>
+<body>
+{include file='../public/template/index/common/top.html'/}
+{include file='../public/template/index/common/sideBar.html'/}
+<section class="Hui-article-box">
+    <nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页
+        <span class="c-gray en">&gt;</span> 细胞比例管理 <span
+            class="c-gray en">&gt;</span> 骨髓细胞比例列表
+        <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新">
+            <i class="Hui-iconfont">&#xe68f;</i>
+        </a>
+    </nav>
+    <div class="Hui-article">
+        <article class="cl pd-20">
+            <div class="cl pd-5 bg-1 bk-gray mt-20">
+            <span class="l">
+                <a href="javascript:void(0);" id="btnAdd" class="btn btn-primary radius"><i
+                        class="Hui-iconfont Hui-iconfont-add">添加细胞比例</i></a>
+            </span>
+                <span class="r">共有数据: <strong><span id="total_num">{$total_num}</span></strong>条</span>
+
+            </div>
+
+            <div class="mt-20">
+                <table id='hos_table' class="table table-border table-bordered table-bg th radius table-hover table-sort">
+                    <thead class="text-c">
+                    <th>比例编号</th>
+                    <th>信息版本</th>
+                    <th>中文名</th>
+                    <th>操作</th>
+                    </thead>
+                    <tbody class="text-c">
+
+                    </tbody>
+
+                </table>
+            </div>
+        </article>
+    </div>
+</section>
+{include file='../public/template/index/common/commonJs.html'/}
+<script>
+    var table;
+    $(document).ready(function () {
+        $.post('/cellpertype/ajax_count', null, function (d) {
+            $('#total_num').html(d);
+        });
+
+        table = $('.table-sort').DataTable({
+            ajax: {
+                url: "/cellpertype/ajax_list"
+            },
+            aaSorting: [[0, "desc"]],//默认第几个排序
+            bStateSave: true,//状态保存
+            aoColumnDefs: [
+                //{"bVisible": false, "aTargets": [ 3 ]} //控制列的隐藏显示
+                {"orderable": false, "aTargets": [1, 2, 3]}// 不参与排序的列
+            ],
+            columns: [
+                {data: 'cell_per_type'},
+                {data: 'info_ver'},
+                {data: 'per_name'},
+                {
+                    targets: -1,
+                    data: null,
+                    defaultContent: '<a href="javascript:void(0);" id="edit" class="btn btn-primary radius"><i class="Hui-iconfont Hui-iconfont-edit"></i>编辑</a>   | <a href="javascript:void(0);" id="del" class="btn btn-primary radius"><i class="Hui-iconfont Hui-iconfont-del2"></i>删除</a>'
+                }
+            ],
+            language: {
+                'emptyTable': '没有数据',
+                'loadingRecords': '加载中...',
+                'processing': '查询中...',
+                'search': '检索:',
+                'lengthMenu': '每页 _MENU_ 条',
+                'zeroRecords': '没有数据',
+                'paginate': {
+                    'first': '第一页',
+                    'last': '最后一页',
+                    'next': '后一页',
+                    'previous': '前一页'
+                },
+                'info': '第 _PAGE_ 页 / 总 _PAGES_ 页 / 共 _TOTAL_ 条',
+                'infoEmpty': '没有数据',
+                'infoFiltered': '(过滤总件数 _MAX_ 条)'
+            }
+
+        });
+
+        $('#btnAdd').on('click', addRow);
+
+
+        //添加
+        function addRow() {
+//            var index = layer.open({
+//                type: 2,
+////                maxmin: true,
+//                closeBtn: 0,
+//                title: false,
+//                area: ['800px', '480px'],
+//                content: '/cellpertype/add',
+//                end: function () {
+//                    table.ajax.reload(function () {
+//                        $.post('/cellpertype/ajax_count', null, function (d) {
+//                            $('#total_num').html(d);
+//                        });
+//                    }, false);
+//
+//                }
+//            });
+            $(this).attr('href','/cellpertype/add');
+        }
+
+        //编辑
+        $('#hos_table tbody').on('click', 'a#edit', function () {
+            var data = table.row($(this).parents('tr')).data();
+//            var index = layer.open({
+//                type: 2,
+////                maxmin: true,
+////                title: '编辑细胞比例',
+//                title:false,
+//                area: ['800px', '480px'],
+//                content: '/cellpertype/edit?' + 'cell_per_type=' + data['cell_per_type'],
+//                end: function () {
+//                    tasble.ajax.reload(null, false);
+//                }
+//            });
+            $(this).attr('href','/cellpertype/edit?' + 'cell_per_type=' + data['cell_per_type']);
+
+        });
+
+        $('#hos_table tbody').on('click', 'a#del', function () {
+            var data = table.row($(this).parents('tr')).data();
+            layer.confirm('是否删除?', {icon: 3, title: '提示'}, function (index) {
+                $.post('/cellpertype/ajax_drop', {'cell_per_type': data['cell_per_type']}, function (d) {
+                    if (d == 0) {
+                        table.ajax.reload(function () {
+                            $.post('/cellpertype/ajax_count', null, function (d) {
+                                $('#total_num').html(d);
+                            });
+                        }, false);
+                    } else {
+                        alert(d);
+                    }
+                });
+                layer.close(index);
+            });
+
+        });
+
+
+    });
+
+
+</script>
+
+</body>
+</html>

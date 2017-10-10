@@ -17,9 +17,9 @@ return [
     // 应用命名空间
     'app_namespace'          => 'app',
     // 应用调试模式
-    'app_debug'              => false,
+    'app_debug'              => true,
     // 应用Trace
-    'app_trace'              => false,
+    'app_trace'              => true,
     // 应用模式状态
     'app_status'             => '',
     // 是否支持多模块
@@ -114,6 +114,10 @@ return [
     'request_cache'          => false,
     // 请求缓存有效期
     'request_cache_expire'   => null,
+    // 全局请求缓存排除规则
+    'request_cache_except'   => [],
+
+//    'view_base'     => __DIR__.'/../public/template/',
 
     // +----------------------------------------------------------------------
     // | 模板设置
@@ -136,10 +140,15 @@ return [
         'taglib_begin' => '{',
         // 标签库标签结束标记
         'taglib_end'   => '}',
+        'view_base'     => __DIR__ . '/../public/template/',
+
+//        'layout_on'=>false,
+        //'layout_name'=>'layout',
+        //'layout_item'=>'{__REPLACE__}'
     ],
 
     // 视图输出字符串内容替换
-    'view_replace_str'       => [],
+    'view_replace_str'=> ['__SERVER__'=>'../public/template/serverView'],
     // 默认跳转页面对应的模板文件
     'dispatch_success_tmpl'  => THINK_PATH . 'tpl' . DS . 'dispatch_jump.tpl',
     'dispatch_error_tmpl'    => THINK_PATH . 'tpl' . DS . 'dispatch_jump.tpl',
@@ -157,9 +166,6 @@ return [
     'show_error_msg'         => false,
     // 异常处理handle类 留空使用 \think\exception\Handle
     'exception_handle'       => '',
-    'http_exception_template'=>[
-        401=>APP_PATH.'401.html',
-    ],
 
     // +----------------------------------------------------------------------
     // | 日志设置
@@ -172,10 +178,10 @@ return [
 //        'path'  => LOG_PATH,
 //        // 日志记录级别
 //        'level' => [],
-        'type' => 'socket',
-        'host' => '127.0.0.1',
-        'force_clientids' =>['xiaoj'],
-        'allow_client_ids' =>['xiaoj'],
+        'type'=>'socket',
+        'host'=>'localhost:8080',
+        'force_client_ids'=>['xiaoj'],
+        'allow_client_ids'=>['xiaoj'],
     ],
 
     // +----------------------------------------------------------------------
@@ -224,15 +230,15 @@ return [
         // cookie 名称前缀
         'prefix'    => '',
         // cookie 保存时间
-        'expire'    => 1800,
+        'expire'    => 0,
         // cookie 保存路径
         'path'      => '/',
         // cookie 有效域名
         'domain'    => '',
-        //  cookie 启用安全传输
-        'secure'    => false,
+        //  cookie 启用安全传输false
+        'secure'    => true,
         // httponly设置
-        'httponly'  => '',
+        'httponly'  => true,
         // 是否使用 setcookie
         'setcookie' => true,
     ],

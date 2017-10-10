@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | ThinkPHP [ WE CAN DO IT JUST THINK ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2006~2016 http://thinkphp.cn All rights reserved.
+// | Copyright (c) 2006~2017 http://thinkphp.cn All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed ( http://www.apache.org/licenses/LICENSE-2.0 )
 // +----------------------------------------------------------------------
@@ -12,6 +12,7 @@
 namespace think\view\driver;
 
 use think\App;
+use think\Config;
 use think\exception\TemplateNotFoundException;
 use think\Loader;
 use think\Log;
@@ -73,10 +74,12 @@ class Think
     {
         if ('' == pathinfo($template, PATHINFO_EXTENSION)) {
             // 获取模板文件名
+//            print "1111".$template;
             $template = $this->parseTemplate($template);
         }
         // 模板不存在 抛出异常
         if (!is_file($template)) {
+//            print '222'.$template;
             throw new TemplateNotFoundException('template not exists:' . $template, $template);
         }
         // 记录视图信息
@@ -112,11 +115,23 @@ class Think
             // 跨模块调用
             list($module, $template) = explode('@', $template);
         }
-        if ($this->config['view_base']) {
+
+//        print_r(Config::get('template'));
+
+//        if ($this->config['view_base'])
+        $sysconfig = Config::get('template');
+
+        if ($sysconfig['view_base'] != '')
+        {
             // 基础视图目录
+
+//            print '11111'.$sysconfig['view_base'];
             $module = isset($module) ? $module : $request->module();
-            $path   = $this->config['view_base'] . ($module ? $module . DS : '');
+//            print $module;
+            $path   = $sysconfig['view_base'].($module ? $module . DS : '');
+//            print '#'.$path;
         } else {
+//            print '222';
             $path = isset($module) ? APP_PATH . $module . DS . 'view' . DS : $this->config['view_path'];
         }
 

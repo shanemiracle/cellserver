@@ -1,0 +1,100 @@
+﻿<!DOCTYPE HTML>
+<html>
+<head>
+    {include file='../public/template/index/common/commonStyle.html'/}
+    <!--<link rel="stylesheet" type="text/css" href="template/static/css/bootstrap-switch.min.css"/>-->
+    <title>编辑检测类型</title>
+
+</head>
+<body>
+{include file='../public/template/index/common/top.html'/}
+{include file='../public/template/index/common/sideBar.html'/}
+<section class="Hui-article-box">
+    <nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页
+        <span class="c-gray en">&gt;</span> 检测类型管理
+        <span class="c-gray en">&gt;</span> 检测类型编辑
+        <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新">
+            <i class="Hui-iconfont">&#xe68f;</i>
+        </a>
+    </nav>
+    <div class="Hui-article">
+        <article class="cl pd-20">
+            <!--<div class="page-containser">-->
+            <form class="form form-vertical" id="form_add" action="">
+                <div class="row cl">
+                    <label class="form-label col-xs-4 col-sm-2 col-sm-offset-1">检测类型编号:</label>
+                    <div class="formControls col-xs-8 col-sm-6">
+                        <input type="text" class="input-text radius" style="color: #7e8795" value="{$check_type}"
+                               id="check_type" readonly>
+                    </div>
+                </div>
+
+                <div class="row cl">
+                    <label class="form-label col-xs-4 col-sm-2 col-sm-offset-1">信息版本:</label>
+                    <div class="formControls col-xs-8 col-sm-6">
+                        <input type="text" class="input-text radius" style="color: #7e8795" value="{$info_ver}"
+                               id="info_ver" readonly>
+                    </div>
+                </div>
+
+                <div class="row cl">
+                    <label class="form-label col-xs-4 col-sm-2 col-sm-offset-1">详情:</label>
+                    <div class="formControls col-xs-8 col-sm-6">
+                        <!--<input type="text" class="textarea radius  text-left" value="" id="desc" placeholder="详情描述..." autofocus >-->
+                        <textarea id="desc" cols rows class="textarea" placeholder="详情描述...最少输入2个字符" datatype="*10-120"
+                                  nullmsg="描述不能为空" minlength="2" maxlength="120"
+                                  onkeyup="$.Huitextarealength(this,120)">{$desc}</textarea>
+                        <p class="textarea-numberbar">
+                            <em class="textarea-length">*</em>/120
+                        </p>
+                    </div>
+                </div>
+                <div class="row cl">
+                    <div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-3">
+                        <input type="button" id="btnSubmit" class="btn btn-primary radius text-c" value="提交">
+                    </div>
+                </div>
+            </form>
+        </article>
+    </div>
+</section>
+{include file='../public/template/index/common/commonJs.html'/}
+
+
+<script type="text/javascript" src="/template/lib/jquery.validation/1.14.0/jquery.validate.js"></script>
+<script type="text/javascript" src="/template/lib/jquery.validation/1.14.0/validate-methods.js"></script>
+<!--<script type="text/javascript" src="/lib/jquery.validation/1.14.0/messages_zh.js"></script>-->
+<!--<script type="text/javascript" src="/lib/jquery.validation/1.14.0/additional-methods.js"></script>-->
+<script type="text/javascript" src="/template/lib/js/bootstrap-switch.min.js"></script>
+
+
+<script type="text/javascript">
+
+
+    $(document).ready(function () {
+        $('#btnSubmit').on('click', function () {
+
+            $.post('/checktype/ajax_edit', {
+                'check_type': $('#check_type').val(),
+                'info_ver': $('#info_ver').val(),
+                'desc': $('#desc').val()
+            }, function (data) {
+                if (data == 0) {
+                    alert('修改成功');
+                    var index = parent.layer.getFrameIndex(window.name);
+                    parent.layer.close(index);
+                }
+                else {
+                    alert(data);
+                }
+            });
+
+
+        });
+
+    });
+
+
+</script>
+</body>
+</html>

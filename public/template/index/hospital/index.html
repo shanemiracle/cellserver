@@ -1,0 +1,175 @@
+﻿<!DOCTYPE HTML>
+<html>
+<head>
+    {include file='../public/template/index/common/commonStyle.html'/}
+    <title>医院列表</title>
+</head>
+<body>
+
+{include file='../public/template/index/common/top.html'/}
+{include file='../public/template/index/common/sideBar.html'/}
+<section class="Hui-article-box">
+    <nav class="breadcrumb">
+        <i class="Hui-iconfont">&#xe67f;</i> 首页
+        <span class="c-gray en">&gt;</span> 医院管理
+        <span class="c-gray en">&gt;</span> 医院列表
+        <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新">
+            <i class="Hui-iconfont">&#xe68f;</i>
+        </a>
+    </nav>
+    <div class="Hui-article">
+    <!--<div class="page-container">-->
+        <article class="cl pd-20">
+            <div class="cl pd-5 bg-1 bk-gray mt-20">
+            <span class="l">
+                <a href="javascript:void(0);" id="btnAdd" class="btn btn-primary radius"><i
+                        class="Hui-iconfont Hui-iconfont-add"></i>添加医院</a>
+            </span>
+
+                <span class="r">共有数据: <strong><span id="total_num">{$total_num}</span></strong>条</span>
+
+            </div>
+            <div class="mt-20">
+                <table id='hos_table'
+                       class="table table-border table-bordered table-bg th radius table-hover table-sort">
+                    <thead class="text-c">
+                    <th>医院编号</th>
+                    <th>医院名称</th>
+                    <th>信息版本</th>
+                    <th>地区</th>
+                    <th>统一编码</th>
+                    <th>等级</th>
+                    <th>创建时间</th>
+                    <th>操作</th>
+                    </thead>
+                    <tbody class="text-c">
+                    </tbody>
+                </table>
+            </div>
+        </article>
+    </div>
+</section>
+{include file='../public/template/index/common/commonJs.html'/}
+
+<!--<script type="text/javascript" src="/template/lib/jquery/1.9.1/jquery.min.js"></script>-->
+<!--<script type="text/javascript" src="/template/lib/layer/2.4/layer.js"></script>-->
+<!--<script type="text/javascript" src="/template/lib/My97DatePicker/4.8/WdatePicker.js"></script>-->
+<!--<script type="text/javascript" src="/template/lib/datatables/1.10.0/jquery.dataTables.min.js"></script>-->
+<!--<script type="text/javascript" src="/template/static/h-ui/js/H-ui.js"></script>-->
+<!--<script type="text/javascript" src="/template/static/h-ui.admin/js/H-ui.admin.js"></script>-->
+<script type="text/javascript">
+    var hostable;
+    $(document).ready(function () {
+        $.post('/hospital/ajax_count', null, function (d) {
+            $('#total_num').html(d);
+        });
+        hostable = $('.table-sort').DataTable({
+            ajax: {
+                url: "/hospital/ajax_list",
+            },
+            aaSorting: [[0, "desc"]],//默认第几个排序
+            bStateSave: true,//状态保存
+            aoColumnDefs: [
+                //{"bVisible": false, "aTargets": [ 3 ]} //控制列的隐藏显示
+                {"orderable": false, "aTargets": [1, 2, 3, 4, 5, 7]}// 不参与排序的列
+            ],
+            columns: [
+                {data: 'hospital_no'},
+                {data: 'hospital_name'},
+                {data: 'hospital_ver'},
+                {data: 'zone'},
+                {data: 'hospital_number'},
+                {data: 'level'},
+                {data: 'create_time'},
+                {
+                    targets: -1,
+                    data: null,
+                    defaultContent: '<a href="javascript:void(0);" id="edit" class="btn btn-primary radius"><i class="Hui-iconfont Hui-iconfont-edit"></i>编辑</a>   | <a href="javascript:void(0);" id="del" class="btn btn-primary radius"><i class="Hui-iconfont Hui-iconfont-del2"></i>删除</a>'
+                }
+            ],
+            language: {
+                'emptyTable': '没有数据',
+                'loadingRecords': '加载中...',
+                'processing': '查询中...',
+                'search': '检索:',
+                'lengthMenu': '每页 _MENU_ 条',
+                'zeroRecords': '没有数据',
+                'paginate': {
+                    'first': '第一页',
+                    'last': '最后一页',
+                    'next': '后一页',
+                    'previous': '前一页'
+                },
+                'info': '第 _PAGE_ 页 / 总 _PAGES_ 页 / 共 _TOTAL_ 条',
+                'infoEmpty': '没有数据',
+                'infoFiltered': '(过滤总件数 _MAX_ 条)'
+            }
+
+        });
+
+
+        $('#btnAdd').on('click', addRow);
+
+        function addRow() {
+//            var index = layer.open({
+//                type: 2,
+////                maxmin: true,
+//                title: false,
+//                closeBtn: 0,
+//                area: ['800px', '300px'],
+//                content: 'hospital/add',
+//                end: function () {
+//                    hostable.ajax.reload(function () {
+//                        $.post('/hospital/ajax_count', null, function (d) {
+//                            $('#total_num').html(d);
+//                        });
+//                    }, false);
+//                }
+//            });
+            $(this).attr('href','hospital/add')
+        }
+
+        $('#hos_table tbody').on('click', 'a#edit', function () {
+            var data = hostable.row($(this).parents('tr')).data();
+//            var index = layer.open({
+//                type: 2,
+////                title: '编辑医院',
+//                title:false,
+//                closeBtn: 0,
+//                area: ['800px', '300px'],
+//                content: 'hospital/edit?' + 'hospital_no=' + data['hospital_no'],
+//                end: function () {
+//                    hostable.ajax.reload(null, false);
+//                }
+//            });
+//
+//            layer.full(index);
+            $(this).attr('href','hospital/edit?' + 'hospital_no=' + data['hospital_no']);
+        });
+
+        $('#hos_table tbody').on('click', 'a#del', function () {
+            var data = hostable.row($(this).parents('tr')).data();
+            layer.confirm('是否删除?', {icon: 3, title: '提示'}, function (index) {
+                $.post('/hospital/ajax_drop', {'hospital_no': data['hospital_no']}, function (d) {
+                    if (d == 0) {
+                        hostable.ajax.reload(function () {
+                            $.post('/hospital/ajax_count', null, function (d) {
+                                $('#total_num').html(d);
+                            });
+                        }, false);
+                    } else {
+                        alert(d);
+                    }
+                });
+                layer.close(index);
+            });
+
+
+        });
+
+    });
+
+
+</script>
+</body>
+</html>

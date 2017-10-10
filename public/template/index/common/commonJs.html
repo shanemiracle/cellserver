@@ -1,0 +1,29 @@
+    <!--<script type="text/javascript" src="/template/static/lib/H-ui/lib/jquery/1.9.1/jquery.min.js"></script>-->
+    <!--<script type="text/javascript" src="/template/static/lib/H-ui/lib/layer/2.4/layer.js"></script>-->
+    <!--<script type="text/javascript" src="/template/static/lib/H-ui/lib/jquery.contextmenu/jquery.contextmenu.r2.js"></script>-->
+    <!--<script type="text/javascript" src="/template/static/lib/H-ui/h-ui/H-ui.min.js"></script>-->
+    <!--<script type="text/javascript" src="/template/static/lib/H-ui/h-ui.admin/H-ui.admin.page.js"></script>-->
+
+
+
+
+    <script type="text/javascript" src="/template/lib/jquery/1.9.1/jquery.min.js"></script>
+    <script type="text/javascript" src="/template/lib/layer/2.4/layer.js"></script>
+    <script type="text/javascript" src="/template/lib/datatables/1.10.0/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="/template/static/h-ui/js/H-ui.js"></script>
+    <script type="text/javascript" src="/template/static/h-ui.admin/js/H-ui.admin.page.js"></script>
+    <script type="text/javascript" src="/template/lib/My97DatePicker/4.8/WdatePicker.js"></script>
+    <script type="text/javascript">
+
+    $(function(){
+        $.post('/login/getApiLoginInfo', null, function (res) {
+            if(res.ret_code!==0){
+                window.location.href='/login'
+            }else{
+                $('#user_name').html(res.name);
+            }
+        });
+    })
+
+
+    </script>

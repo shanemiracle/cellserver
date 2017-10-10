@@ -46,7 +46,7 @@ class Diagcheckblood extends Rest
             abort(401);
         }
 
-        return (new View())->fetch('/Diagcheckblood/index',['total_num'=>0]);
+        return (new View())->fetch('/diagcheckblood/index',['total_num'=>0]);
     }
 
     public function add() {
@@ -54,7 +54,7 @@ class Diagcheckblood extends Rest
             abort(401);
         }
 
-        return (new View())->fetch('/Diagcheckblood/add');
+        return (new View())->fetch('/diagcheckblood/add');
     }
 
     public function edit() {
@@ -74,7 +74,7 @@ class Diagcheckblood extends Rest
             }
         }
 
-        return (new View())->fetch('/Diagcheckblood/edit', $data);
+        return (new View())->fetch('/diagcheckblood/edit', $data);
     }
 
     public  function ajax_add() {

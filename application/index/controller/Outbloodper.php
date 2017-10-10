@@ -38,7 +38,7 @@ class Outbloodper extends Rest
             abort(401);
         }
 
-        return (new View())->fetch('/Outbloodper/index',['total_num'=>0]);
+        return (new View())->fetch('/outbloodper/index',['total_num'=>0]);
     }
 
     public function add() {
@@ -46,7 +46,7 @@ class Outbloodper extends Rest
             abort(401);
         }
 
-        return (new View())->fetch('/Outbloodper/add');
+        return (new View())->fetch('/outbloodper/add');
     }
 
     public function edit() {
@@ -66,7 +66,7 @@ class Outbloodper extends Rest
             }
         }
 
-        return (new View())->fetch('/Outbloodper/edit', $data);
+        return (new View())->fetch('/outbloodper/edit', $data);
     }
 
     public  function ajax_add() {

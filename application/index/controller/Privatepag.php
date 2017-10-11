@@ -32,7 +32,7 @@ class Privatepag extends Rest
 
     public function add() {
         if ($this->attest() != true) {
-            abort(401);
+            return (new View())->fetch('login/index');
         }
 
         $hard_ver = Request::instance()->param('hard_ver');
@@ -62,7 +62,7 @@ class Privatepag extends Rest
 
     public function index() {
         if( $this->attest() != true ) {
-            abort(401);
+            return (new View())->fetch('login/index');
         }
         $data_list = [];
         $hard_ver = Session::get('private_hard_ver');

@@ -35,7 +35,7 @@ class Doctor extends Rest
     public function edit()
     {
         if ($this->attest() != true) {
-            abort(401);
+            return (new View())->fetch('login/index');
         }
         $doctor_no = Request::instance()->param('doctor_no');
         $hospital_name = Request::instance()->param('hospital_name');
@@ -75,7 +75,7 @@ class Doctor extends Rest
     public function add()
     {
         if ($this->attest() != true) {
-            abort(401);
+            return (new View())->fetch('login/index');
         }
 
         $hospital_no = Request::instance()->param('hospital_no');
@@ -87,7 +87,7 @@ class Doctor extends Rest
     public function index()
     {
         if ($this->attest() != true) {
-            abort(401);
+            return (new View())->fetch('login/index');
         }
         $data_list = [];
         $d_ho_no = Session::get('default_device_hos_no');

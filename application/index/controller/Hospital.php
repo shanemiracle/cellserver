@@ -33,7 +33,7 @@ class Hospital extends Rest
 
     public function index() {
         if( $this->attest() != true ) {
-            abort(401);
+            return (new View())->fetch('login/index');
         }
 
         return (new View())->fetch('/hospital/index',['total_num'=>0]);
@@ -41,7 +41,7 @@ class Hospital extends Rest
 
     public function add() {
         if( $this->attest() != true ) {
-            abort(401);
+            return (new View())->fetch('login/index');
         }
 
         return (new View())->fetch('/hospital/add');
@@ -50,7 +50,7 @@ class Hospital extends Rest
     public function edit() {
 
         if( $this->attest() != true ) {
-            abort(401);
+            return (new View())->fetch('login/index');
         }
 
         $attest = Session::get('attest');

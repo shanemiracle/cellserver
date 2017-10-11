@@ -32,7 +32,7 @@ class Device extends Rest
 
         public function edit() {
             if( $this->attest() != true ) {
-                abort(401);
+                return (new View())->fetch('login/index');
             }
 
             $machine_code = Request::instance()->param('machine_code');
@@ -55,7 +55,7 @@ class Device extends Rest
 
         public function add() {
             if( $this->attest() != true ) {
-                abort(401);
+                return (new View())->fetch('login/index');
             }
 
             $hospital_no = Request::instance()->param('hospital_no');

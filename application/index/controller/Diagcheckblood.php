@@ -43,7 +43,7 @@ class Diagcheckblood extends Rest
 
     public function index() {
         if ($this->attest() != true) {
-            abort(401);
+            return (new View())->fetch('login/index');
         }
 
         return (new View())->fetch('/diagcheckblood/index',['total_num'=>0]);
@@ -51,7 +51,7 @@ class Diagcheckblood extends Rest
 
     public function add() {
         if ($this->attest() != true) {
-            abort(401);
+            return (new View())->fetch('login/index');
         }
 
         return (new View())->fetch('/diagcheckblood/add');
@@ -59,7 +59,7 @@ class Diagcheckblood extends Rest
 
     public function edit() {
         if ($this->attest() != true) {
-            abort(401);
+            return (new View())->fetch('login/index');
         }
 
         $diag_check_type = Request::instance()->param('diag_check_type');

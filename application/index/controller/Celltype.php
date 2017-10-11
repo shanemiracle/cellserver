@@ -35,7 +35,7 @@ class Celltype extends Rest
     public function add()
     {
         if ($this->attest() != true) {
-            abort(401);
+            return (new View())->fetch('login/index');
         }
 
         $attest = Session::get('attest');
@@ -84,7 +84,7 @@ class Celltype extends Rest
     public function edit()
     {
         if ($this->attest() != true) {
-            abort(401);
+            return (new View())->fetch('login/index');
         }
 
         $father_cell_type = Request::instance()->param('father_cell_type');
@@ -153,7 +153,7 @@ class Celltype extends Rest
     public function index()
     {
         if ($this->attest() != true) {
-            abort(401);
+            return (new View())->fetch('login/index');
         }
 
         $cur_cell_type = Request::instance()->param('cur_cell_type');

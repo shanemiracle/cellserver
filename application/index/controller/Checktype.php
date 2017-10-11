@@ -33,7 +33,7 @@ class Checktype extends Rest
 
     public function index() {
         if ($this->attest() != true) {
-            abort(401);
+            return (new View())->fetch('login/index');
         }
 
         return (new View())->fetch('/checktype/index');
@@ -41,7 +41,7 @@ class Checktype extends Rest
 
     public function edit() {
         if ($this->attest() != true) {
-            abort(401);
+            return (new View())->fetch('login/index');
         }
         $check_type = Request::instance()->param('check_type');
         $data = [];

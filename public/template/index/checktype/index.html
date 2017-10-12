@@ -25,6 +25,7 @@
                     <thead class="text-c">
                     <th>检测类型编号</th>
                     <th>信息版本</th>
+                    <th>名称</th>
                     <th>操作</th>
                     </thead>
                     <tbody class="text-c">
@@ -49,11 +50,12 @@
             bStateSave: true,//状态保存
             aoColumnDefs: [
                 //{"bVisible": false, "aTargets": [ 3 ]} //控制列的隐藏显示
-                {"orderable": false, "aTargets": [1, 2]}// 不参与排序的列
+                {"orderable": false, "aTargets": [1,2,3]}// 不参与排序的列
             ],
             columns: [
                 {data: 'check_type'},
                 {data: 'info_ver'},
+                {data:'name'},
                 {
                     targets: -1,
                     data: null,

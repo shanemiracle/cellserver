@@ -119,7 +119,23 @@ $(function(){
 	});
 	
 	/*左侧菜单*/
-	$.Huifold(".menu_dropdown dl dt",".menu_dropdown dl dd","fast",1,"click");	
+	// $.Huifold(".menu_dropdown dl dt",".menu_dropdown dl dd","fast",1,"click");	
+
+	var clickMenu = $.cookie('current');
+	$('.Hui-aside dl dt').each(function(i){
+		if(i == clickMenu){
+			$('.Hui-aside dl dt').eq(i).next().css('display','block');
+		}
+		$(this).click(function(){
+			if( $(this).next().css('display') == 'none'){
+				$('.Hui-aside dl dt').next().slideUp('400');
+				$(this).next().slideDown('400');
+				$.cookie('current', i, {expires: 60 * 24 * 30, path: '/'});
+			}else{
+				$(this).next().slideUp('400');
+			}
+		});
+	});
 		
 	/*换肤*/
 	$("#Hui-skin .dropDown-menu a").click(function(){

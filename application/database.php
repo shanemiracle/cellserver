@@ -15,7 +15,7 @@ return [
     // 服务器地址
     'hostname'        => '115.236.69.122',
     // 数据库名
-    'database'        => 'wk_mlrs',
+    'database'        => 'wk_cell_search_1000',
     // 用户名
     'username'        => 'admin',
     // 密码

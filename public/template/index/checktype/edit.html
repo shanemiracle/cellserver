@@ -80,7 +80,8 @@
                 'desc': $('#desc').val()
             }, function (data) {
                 if (data == 0) {
-                    alert('修改成功');
+                    layer.msg('修改成功');
+                    location.href='/checktype/index';
                     var index = parent.layer.getFrameIndex(window.name);
                     parent.layer.close(index);
                 }

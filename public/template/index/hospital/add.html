@@ -217,6 +217,7 @@
                 }, function (data) {
                     if (data == 0) {
                         layer.msg('添加成功');
+                        location.href='/hospital/index';
                         var index = parent.layer.getFrameIndex(window.name);
                         parent.layer.close(index);
                     }

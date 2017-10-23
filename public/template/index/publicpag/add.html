@@ -239,7 +239,8 @@
                     'hard_ver': $('#hard_ver').val()
                 }, function (data) {
                     if (data == 0) {
-                        alert('添加成功');
+                        layer.msg('添加成功');
+                        location.href='/publicpag/index';
                         var index = parent.layer.getFrameIndex(window.name);
                         parent.layer.close(index);
                     }

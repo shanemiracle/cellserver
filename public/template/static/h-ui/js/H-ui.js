@@ -4265,15 +4265,37 @@ $(function() {
  * jQuery.Huitextarealength.js 字数限制
  * ========================================================================*/
 !function($) {
-	$.Huitextarealength = function(obj, maxlength) {
-		var v = $(obj).val();
-		var l = v.length;
-		if (l > maxlength) {
-			v = v.substring(0, maxlength);
-			$(obj).val(v);
-		}
-		$(obj).parent().find(".textarea-length").text(v.length);
-	}
+	// $.Huitextarealength = function(obj, maxlength) {
+	// 	var v = $(obj).val();
+	// 	var l = v.length;
+	// 	if (l > maxlength) {
+	// 		v = v.substring(0, maxlength);
+	// 		$(obj).val(v);
+	// 	}
+	// 	$(obj).parent().find(".textarea-length").text(v.length);
+	// }
+    $.Huitextarealength = function(obj, maxlength) {
+        var v = $(obj).val();
+        var allLen = 0;
+        var uTmpLen = 0;
+        var l = v.length;
+        for(var i = 0;i<l;i++){
+            uTmpLen = (v.charCodeAt(i)>=0 && v.charCodeAt(i)<=128)?1:3;
+            // allLen += v.charCodeAt(i)>255?3:1;
+            if (allLen+uTmpLen > maxlength) {
+                v = v.substring(0, i);
+                $(obj).val(v);
+                break;
+            }
+
+            allLen += uTmpLen;
+        }
+        // $(obj).parent().find(".textarea-length").text(v.length);
+        $(obj).parent().find(".textarea-length").text(allLen);
+
+    }
+
+
 } (window.jQuery);
 
 /* =======================================================================

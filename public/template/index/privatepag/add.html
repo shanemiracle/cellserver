@@ -188,6 +188,7 @@ include file='../public/template/index/common/commonStyle.html'/}
                 }, function (data) {
                     if (data == 0) {
                         alert('添加成功');
+                        location.href='/privatepag/index';
                         var index = parent.layer.getFrameIndex(window.name);
                         parent.layer.close(index);
                     }

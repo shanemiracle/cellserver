@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE HTML>
-<html>
+<>
 <head>
     {include file='../public/template/index/common/commonStyle.html'/}
     <link rel="stylesheet" type="text/css" href="/template/static/css/bootstrap-switch.min.css"/>
@@ -60,7 +60,7 @@
                 <div class="row cl">
                     <label class="form-label col-xs-4 col-sm-2 col-sm-offset-1">是否典型细胞:</label>
                     <div class="formControls col-xs-8 col-sm-6">
-                        <div class="">
+                        <div class=''>
                             <input type="checkbox" id="is_special" value="0" name="is_special">
                         </div>
                     </div>
@@ -157,21 +157,11 @@
         </article>
     </div>
 </section>
-</body>
 
 {include file='../public/template/index/common/commonJs.html'/}
 
-<!--<script type="text/javascript" src="/lib/jquery/1.9.1/jquery.min.js"></script>-->
-<!--<script type="text/javascript" src="/lib/layer/2.4/layer.js"></script>-->
-<!--<script type="text/javascript" src="/lib/My97DatePicker/4.8/WdatePicker.js"></script>-->
-<!--<script type="text/javascript" src="/lib/datatables/1.10.0/jquery.dataTables.min.js"></script>-->
-<!--<script type="text/javascript" src="/static/h-ui/js/H-ui.js"></script>-->
-<!--<script type="text/javascript" src="/static/h-ui.admin/js/H-ui.admin.js"></script>-->
-
 <script type="text/javascript" src="/template/lib/jquery.validation/1.14.0/jquery.validate.js"></script>
-<script type="text/javascript" src="/template/lib/jquery.validation/1.14.0/validate-methods.js"></script>
-<!--<script type="text/javascript" src="/lib/jquery.validation/1.14.0/messages_zh.js"></script>-->
-<!--<script type="text/javascript" src="/lib/jquery.validation/1.14.0/additional-methods.js"></script>-->
+<script type="text/javascript" src="/template/lib/jquery.validation/1.14.0/validate-methods.js"></script><!--<script type="text/javascript" src="/lib/jquery.validation/1.14.0/additional-methods.js"></script>-->
 <script type="text/javascript" src="/template/lib/js/bootstrap-switch.min.js"></script>
 <script type="text/javascript" src="/template/lib/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="/template/lib/js/plugins/canvas-to-blob.min.js"></script>
@@ -182,7 +172,6 @@
 <script type="text/javascript" src="/template/lib/js/locales/zh.js"></script>
 
 <script type="text/javascript">
-
 
     /**
      * 根据用户输入的字符获取相关的正则表达式
@@ -383,10 +372,10 @@
                 },
                 size_max: {
                     isFloat: true
+                },
+                en_name:{
+                    isEnglish:true
                 }
-//                cn_name:{
-//                    isChinese:true
-//                }
             },
             messages: {
                 size_min: {
@@ -445,5 +434,5 @@
 
 
 </script>
-
+</body>
 </html>

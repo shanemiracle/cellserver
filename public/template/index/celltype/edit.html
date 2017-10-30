@@ -441,7 +441,8 @@
                 }, function (data) {
                     if (data == 0) {
                         layer.msg('修改成功');
-                        location.href='/celltype/index';
+//                        location.href='/celltype/index';
+                        history.go(-1);
                         var index = parent.layer.getFrameIndex(window.name);
                         parent.layer.close(index);
                     }

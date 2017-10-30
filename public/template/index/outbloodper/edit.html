@@ -96,34 +96,34 @@
 <script type="text/javascript">
     var form = $('#form_add');
 
-    jQuery.validator.addMethod("isChines", function (value, element) {
-        var chn = /[\u4E00-\u9FA5]/;
-        return !chn.test(value);
-    }, "表达式不能包含中文");
+//    jQuery.validator.addMethod("isChines", function (value, element) {
+//        var chn = /[\u4E00-\u9FA5]/;
+//        return !chn.test(value);
+//    }, "表达式不能包含中文");
 
     $(document).ready(function () {
         form.validate({
             rules: {
-                expression: {
-                    isChines: false
-                },
+//                expression: {
+//                    isChines: false
+//                },
                 en_name: {
-                    isChines: true
+                    isEnglish: true
                 }
             },
             messages: {
-                expression: {
-                    isChines: "表达式不能包含中文"
-                },
+//                expression: {
+//                    isChines: "表达式不能包含中文"
+//                },
                 en_name: {
-                    isChines: "不能包含中文"
+                    isEnglish: "不能包含中文"
                 }
             }
         });
 
         $('#btnSubmit').on('click', function () {
             if (form.valid()) {
-                $.post('/cellpertype/ajax_edit', {
+                $.post('/outbloodper/ajax_edit', {
                     'cell_per_type': $('#cell_per_type').val(),
                     'info_ver': $('#info_ver').val(),
                     'per_name': $('#per_name').val(),
@@ -132,7 +132,7 @@
                     'remark': $('#remark').val()
                 }, function (data) {
                     if (data == 0) {
-                        alert('编辑成功');
+                        layer.msg('修改成功');
                         location.href='/outbloodper/index';
                         var index = parent.layer.getFrameIndex(window.name);
                         parent.layer.close(index);

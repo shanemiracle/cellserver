@@ -57,28 +57,28 @@ class Celltype extends Rest
                     $c_r = ($c_r & 0x00ffffff);
                 }
                 else{
-                    $c_r = 0;
+                    $c_r = 0x00000001;
                 }
 
                 if($c_g>>24 == 0xff){
                     $c_g = ($c_g & 0x00ffffff);
                 }
                 else{
-                    $c_g = 0;
+                    $c_g = 0x00000001;
                 }
 
                 if($c_b>>24 == 0xff){
                     $c_b = ($c_b & 0x00ffffff);
                 }
                 else{
-                    $c_b = 0;
+                    $c_b = 0x00000001;
                 }
             }
         }
 
         return (new View())->fetch('/celltype/add', ['father_cell_type' => $father_cell_type, 'father_cell_name' => $father_cell_name,
-            'color_r'=>($c_r!=0)?sprintf('%06x',$c_r):0,'color_g'=>($c_g!=0)?sprintf('%06x',$c_g):0,
-            'color_b'=>($c_b!=0)?sprintf('%06x',$c_b):0]);
+            'color_r'=>sprintf('%06x',$c_r),'color_g'=>sprintf('%06x',$c_g),
+            'color_b'=>sprintf('%06x',$c_b)]);
     }
 
     public function edit()

@@ -117,21 +117,21 @@ class Celltype extends Rest
                     $c_r = ($c_r & 0x00ffffff);
                 }
                 else{
-                    $c_r = 0;
+                    $c_r = 0x00000001;
                 }
 
                 if($c_g>>24 == 0xff){
                     $c_g = ($c_g & 0x00ffffff);
                 }
                 else{
-                    $c_g = 0;
+                    $c_g = 0x00000001;
                 }
 
                 if($c_b>>24 == 0xff){
                     $c_b = ($c_b & 0x00ffffff);
                 }
                 else{
-                    $c_b = 0;
+                    $c_b = 0x00000001;
                 }
 
 
@@ -141,8 +141,8 @@ class Celltype extends Rest
                     'abb_name'=>$retData['abb_name'],'size_max'=>$retData['size_max']/10,
                     'size_min'=>$retData['size_min']/10,'remark'=>$retData['remark'],
                     'file_id_big'=>$retData['file_id_big'],'file_id_small'=>$retData['file_id_small'],
-                    'bigUrl'=>$bigUrl,'smallUrl'=>$smallUrl,'color_r'=>($c_r!=0)?sprintf('%06x',$c_r):0,
-                    'color_g'=>($c_g!=0)?sprintf('%06x',$c_g):0,'color_b'=>($c_b!=0)?sprintf('%06x',$c_b):0,
+                    'bigUrl'=>$bigUrl,'smallUrl'=>$smallUrl,'color_r'=>sprintf('%06x',$c_r),
+                    'color_g'=>sprintf('%06x',$c_g),'color_b'=>sprintf('%06x',$c_b),
                     'is_special'=>$retData['is_special']];
             }
         }

@@ -73,29 +73,28 @@
                             <span>
                                 <i class="Hui-iconfont ml-5">开始日期 </i>
                             </span>
-                        <input type="text" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd',maxDate:'%y-%M-%d'})"
-                               id="t_datemin" class="input-text Wdate" style="width:120px;">
+                            <input type="text" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd',maxDate:'%y-%M-%d'})"
+                                   id="t_datemin" class="input-text Wdate" style="width:120px;">
                             <span>
                               <i class="Hui-iconfont ">-结束日期 </i>
                             </span>
-                        <input type="text" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd',minDate:$('#t_datemin').val(),maxDate:'%y-%M-%d'})"
-                               id="t_datemax" class="input-text Wdate" style="width:120px;">
-
-                        <span class=" ml-5">
-                            <button type="submit" class="btn btn-primary radius" id="btn_search" name="btn_search">
-                                <i class="Hui-iconfont Hui-iconfont-search"></i>查询
-                            </button>
-                        </span>
-                        <span class="ml-5">
-                            <button  class="btn btn-primary radius" id="pre_download" name="pre_download" style="display:inline-block">
-                                <i class="Hui-iconfont Hui-iconfont-down product-rar">生成项目压缩包</i>
-                            </button>
-                        </span>
+                            <input type="text" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd',minDate:$('#t_datemin').val(),maxDate:'%y-%M-%d'})"
+                                   id="t_datemax" class="input-text Wdate" style="width:120px;">
+                            <span class=" ml-5">
+                                <button type="submit" class="btn btn-primary radius" id="btn_search" name="btn_search">
+                                    <i class="Hui-iconfont Hui-iconfont-search"></i>查询
+                                </button>
+                            </span>
+                            <span class="ml-5">
+                                <button  class="btn btn-primary radius" id="pre_download" name="pre_download" style="display:inline-block">
+                                    <i class="Hui-iconfont Hui-iconfont-down product-rar">生成项目压缩包</i>
+                                </button>
+                            </span>
                         <!--<a href="" class="btn btn-primary radius" id="down_package" style="display:none">下载</a>-->
-                        <span id="down_file" style="display:none">
-                        <a id="link_file" href="http://localhost:8888/file/08/6184a0fb4397d010e1fdb54516dfd6.png"
-                           download="赵丽颖.png" class="btn btn-primary radius">下载列表</a>
-                        </span>
+                            <span id="down_file" style="display:none">
+                            <a id="link_file" href="http://localhost:8888/file/08/6184a0fb4397d010e1fdb54516dfd6.png"
+                               download="赵丽颖.png" class="btn btn-primary radius">下载列表</a>
+                            </span>
 
                     </div>
                 </div>
@@ -149,9 +148,9 @@
             function initDown() {
                 allNum = 0;
                 $('#down_file').hide();
-//                $('#pre_download').show();
+                $('#pre_download').show();
                 $('#progress_gen').hide();
-//                pre_download.disabled = false;
+                pre_download.disabled = false;
 
             }
 

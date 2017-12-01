@@ -126,7 +126,7 @@
 //                    }, false);
 //                }
 //            });
-            $(this).attr('href','hospital/add')
+            $(this).attr('href','/hospital/add')
         }
 
         $('#hos_table tbody').on('click', 'a#edit', function () {
@@ -144,7 +144,7 @@
 //            });
 //
 //            layer.full(index);
-            $(this).attr('href','hospital/edit?' + 'hospital_no=' + data['hospital_no']);
+            $(this).attr('href','/hospital/edit?' + 'hospital_no=' + data['hospital_no']);
         });
 
         $('#hos_table tbody').on('click', 'a#del', function () {

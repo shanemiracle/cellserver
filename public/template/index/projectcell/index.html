@@ -6,6 +6,18 @@
     {include file='../public/template/index/common/commonStyle.html'/}
     <link rel="stylesheet" type="text/css" href="/template/static/css/chosen.css"/>
     <link rel="stylesheet" type="text/css" href="/template/static/css/jquery.steps.css">
+    <style>
+        .progress,.progress-bar,.sr-only{height:10px; font-size:0;line-height:0}
+        .progress{overflow:hidden; width:400px;-khtml-border-radius:6px;-ms-border-radius:6px;-o-border-radius:6px;-moz-border-radius:6px;-webkit-border-radius:6px;border-radius:6px}
+        .progress-bar{width:100%;background-color:#ccc}
+        .sr-only{display:inline-block; background-color:#58b957}
+
+        #progress_gen{
+            position:absolute;
+            top:55px;
+            left:25%;
+        }
+    </style>
 </head>
 <body>
 {include file='../public/template/index/common/top.html'/}
@@ -19,63 +31,75 @@
         </a>
     </nav>
     <div class="Hui-article">
-        <article class="cl pd-20">
-            <div class="two steps">
-                <span class="active step" id="step_search">查询</span>
-                <span class="step" id="step_down">下载</span>
-            </div>
-            <div class="page-container" id="dv_down" style="display: none">
-                <h5>勾选的项目ID列表:
-                    <small>(共计<span id="total_num">0</span>个项目)</small>
-                </h5>
-                <div>
-                    <textarea id="info_data" name="info_data" class="textarea"></textarea>
-                </div>
+        <article class="cl pd-5">
 
-                <div class="text-c">
-                    <input type="button" id="down_gen" class="btn btn-primary radius mt-20 text-c " value="勾选项目生成下载链接">
-                </div>
 
-                <div id="progress_gen" style="display: none">
-                <span id="progressbar" class="progress "><div class="progress-bar mt-20"><span class="sr-only"
-                                                                                               id="progressValue"
-                                                                                               style="width:0%"></span></div></span>
-                </div>
+            <!--<div class="progress"><div class="progress-bar"><span class="sr-only" style="width:25%"></span></div></div>-->
+            <!--<div class="two steps">-->
+                <!--<span class="active step" id="step_search">查询</span>-->
+                <!--<span class="step" id="step_down">下载</span>-->
+            <!--&lt;!&ndash;</div>&ndash;&gt;-->
+            <!--<div class="page-container" id="dv_down" style="display: none; padding:5px">-->
+                <!--<h5>勾选的项目ID列表:-->
+                    <!--<small>(共计<span id="total_num">0</span>个项目)</small>-->
+                <!--</h5>-->
+                <!--<div>-->
+                    <!--<textarea id="info_data" name="info_data" class="textarea"></textarea>-->
+                <!--</div>-->
 
-                <div class="text-c mt-20 size-big" id="down_file" style="font-size: 16px;;display: none">
-                    <a id="link_file" href="http://localhost:8888/file/08/6184a0fb4397d010e1fdb54516dfd6.png"
-                       download="赵丽颖.png">下载列表</a>
-                </div>
-            </div>
-            <div class="page-container" id="dv_search">
-                <div class=" pd-5 bg-1 bk-gray mt-10">
-                    <div>
-                        <i class="Hui-iconfont ml-20">选择医院 </i>
-                        <select id="s_hospital" data-placeholder="支持按名字搜索(不选则搜索全部医院)" style="width:360px;">
+                <!--<div class="text-c">-->
+                    <!--<input type="button" id="btn_download" class="btn btn-primary radius mt-20 text-c " value="生成项目压缩包">-->
+                <!--</div>-->
 
-                        </select>
+                <div id="progress_gen" style="display:none">
+                    <div  class="progress">
+                        <div class="progress-bar ">
+                            <span class="sr-only" id="progressValue" style="width:0%"></span>
+                        </div>
                     </div>
                 </div>
-                <div class=" pd-5 bg-1 bk-gray mt-20">
-                    <span>
-                        <i class="Hui-iconfont ml-20">开始日期 </i>
-                    </span>
-                    <input type="text" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd',maxDate:'%y-%M-%d'})"
-                           id="t_datemin" class="input-text Wdate" style="width:150px;">
-                    <span>
-                        <i class="Hui-iconfont ">- 结束日期 </i>
-                    </span>
-                    <input type="text" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd',minDate:$('#t_datemin').val(),maxDate:'%y-%M-%d'})"
-                           id="t_datemax" class="input-text Wdate" style="width:150px;">
-                    <span class="r mr-40">
-                        <button type="submit" class="btn btn-primary radius" id="btn_search" name="btn_search">
-                            <i class="Hui-iconfont Hui-iconfont-search"></i>查询
-                        </button>
-                    </span>
+
+                <div class="text-c mt-20 size-big " id="down_file" style="font-size: 16px;;display: none">
+                    <a id="link_file" href="http://localhost:8888/file/08/6184a0fb4397d010e1fdb54516dfd6.png"
+                       download="赵丽颖.png" class="btn btn-primary radius">下载列表</a>
                 </div>
-                <div class="mt-20">
-                    <HR WIDTH=100% SIZE=1>
+            <!--</div>-->
+            <div class="page-container" id="dv_search" style="padding:5px">
+                <div class="  bg-1 bk-gray ">
+                    <div>
+                        <i class="Hui-iconfont ml-5">选择医院 </i>
+                        <select id="s_hospital" data-placeholder="支持按名字搜索(不选则搜索全部医院)" style="width:360px;">
+                        </select>
+                            <span>
+                                <i class="Hui-iconfont ml-5">开始日期 </i>
+                            </span>
+                        <input type="text" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd',maxDate:'%y-%M-%d'})"
+                               id="t_datemin" class="input-text Wdate" style="width:120px;">
+                            <span>
+                              <i class="Hui-iconfont ">-结束日期 </i>
+                            </span>
+                        <input type="text" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd',minDate:$('#t_datemin').val(),maxDate:'%y-%M-%d'})"
+                               id="t_datemax" class="input-text Wdate" style="width:120px;">
+
+                        <span class=" ml-5">
+                            <button type="submit" class="btn btn-primary radius" id="btn_search" name="btn_search">
+                                <i class="Hui-iconfont Hui-iconfont-search"></i>查询
+                            </button>
+                        </span>
+                        <span class="ml-5">
+                            <button  class="btn btn-primary radius" id="pre_download" name="pre_download" style="display:inline-block">
+                                <i class="Hui-iconfont Hui-iconfont-down product-rar">生成项目压缩包</i>
+                            </button>
+                        </span>
+                        <!--<a href="" class="btn btn-primary radius" id="down_package" style="display:none">下载</a>-->
+                        <span id="down_file" style="display:none">
+                        <a id="link_file" href="http://localhost:8888/file/08/6184a0fb4397d010e1fdb54516dfd6.png"
+                           download="赵丽颖.png" class="btn btn-primary radius">下载列表</a>
+                        </span>
+
+                    </div>
                 </div>
+
                 <div class="mt-10">
                     <table id='this_table'
                            class="table table-border table-bordered table-bg th radius table-hover table-sort">
@@ -115,33 +139,45 @@
             var step_down = document.getElementById("step_down");
             var textpro = document.getElementById("info_data");
 
-            var down_gen = document.getElementById("down_gen");
+            var pre_download = document.getElementById("pre_download");
 
-            var progressValue = document.getElementById("progressValue");
+//            var progressValue = document.getElementById("progressValue");
+            var progressValue =$('#progressValue');
             var down_file = document.getElementById("down_file");
             var link_file = document.getElementById("link_file");
 
             function initDown() {
                 allNum = 0;
                 $('#down_file').hide();
-                $('#down_gen').show();
+//                $('#pre_download').show();
                 $('#progress_gen').hide();
-                down_gen.disabled = false;
+//                pre_download.disabled = false;
 
             }
 
-            $('#down_gen').on('click', function (e) {
-
-                if (textpro.value != "") {
-
-                    $('#down_gen').hide();
-                    down_gen.disabled = true;
-                    $('#down_file').hide();
+            $('#pre_download').on('click', function (e) {
+                e.preventDefault();
+                var checkValue='',
+                    checkString='',
+                            num=0;
+                $('#this_table  tr td').find('.checkchild').each(function(){
+                    if($(this).prop('checked')==true){
+                        num++;
+                        checkValue= $(this).val();
+                        checkString += checkValue +',' ;
+                    }
+                })
+                if(checkString=='') layer.msg('请至少选择一个项目');
+                if(num>1000) layer.msg('单次下载项目个数不要超过1000');
+                if(checkString!==''&&num<1000){
+//                    $('#pre_download .product-rar').html('下载');
+                    $('#pre_download').hide();
                     $('#progress_gen').show();
 
-                    var request_id = SparkMD5.hash(textpro.value);
+//                    $('#down_package').css('display','inline-block');
 
-                    $.post('/projectcell/ajax_download_create?request_id=' + request_id + "&id_list=" + textpro.value, null, function (d) {
+                    var request_id = SparkMD5.hash(checkString);
+                    $.post('/projectcell/ajax_download_create?request_id=' + request_id + "&id_list=" + checkString, null, function (d) {
                         if (d != 0) {
                             alert("创建下载失败" + d);
                             return;
@@ -150,24 +186,43 @@
                             progress(request_id);
                         }
                     });
+                }
 
-                }
-                else {
-                    alert("请先勾选项目");
-                }
+
+//                if (textpro.value != "") {
+//                    $('#pre_download').hide();
+//                    btn_download.disabled = true;
+//                    $('#down_file').hide();
+//
+//                    var request_id = SparkMD5.hash(textpro.value);
+//
+//                    $.post('/projectcell/ajax_download_create?request_id=' + request_id + "&id_list=" + textpro.value, null, function (d) {
+//                        if (d != 0) {
+//                            alert("创建下载失败" + d);
+//                            return;
+//                        }
+//                        else {
+//                            progress(request_id);
+//                        }
+//                    });
+//
+//                }
+//                else {
+//                    alert("请先勾选项目");
+//                }
             });
 
             function successGen(file_path, name) {
-                down_gen.disabled = false;
+                btn_download.disabled = false;
                 $('#progress_gen').hide();
                 $('#down_file').show();
-                $('#down_gen').hide();
+                $('#btn_download').hide();
 
                 //获取生成文件路径和名称生成链接
-                var request_id = SparkMD5.hash(textpro.value);
+                var request_id = SparkMD5.hash(checkString);
 
                 link_file.download = name + ".zip";
-                link_file.text = "下载列表";
+                link_file.text = "压缩包下载";
                 link_file.href = file_path;
 
                 console.log("download href" + link_file.href);
@@ -191,20 +246,17 @@
                 return result;
             }
 
-
+            //进度条
             function progress(req_id) {
-                console.log("progress");
-
+//                console.log("progress");
                 $.post('/projectcell/ajax_download_progress?request_id=' + req_id, null, function (d) {
                     if (!d) {
                         return null;
                     }
-
                     console.log(d);
-
                     if (d['ret_code'] == 0) {
-                        progressValue.style.width = d['download_per'] + "%";
-
+//                        progressValue.style.width = d['download_per'] + "%";
+                        progressValue.css('width',d['download_per'] +'%');
                         if (d['download_per'] <= 99) {
                             setTimeout(progress(req_id), 100);
                         }
@@ -213,12 +265,11 @@
                         }
                     }
                     else {
-                        alert("err " + d['ret_code'] + d['err_desc']);
+                        layer.msg("err " + d['ret_code'] + d['err_desc']);
 
                         initDown();
                     }
-                    console.log("progress " + d['download_per']);
-
+//                    console.log("progress " + d['download_per']);
                 });
 
 //            var valNumber =  progresssGet(req_id);
@@ -267,11 +318,6 @@
             });
 
 
-            hos.change(function () {
-//            alert(hos.val());
-
-            });
-
 //===========================表格================================
 
             var date_min = $('#t_datemin');
@@ -287,7 +333,7 @@
 //                }
 //            },
 
-                scrollY: 300,
+                scrollY: 370,
                 paging: false,
 //            serverSide:true,
                 processing: true,
@@ -348,56 +394,59 @@
 //            alert(1);
             });
 
-
-            $(".checkall").click(function () {
-                var check = $(this).prop("checked");
-                $(".checkchild").prop("checked", check);
-            });
-
 //
-            $('#this_table tbody').on('click', 'tr', function (e) {
-                var tr = $(this);
-                var checked = tr.find(".checkchild");
-                var checkedValue = checked.prop("checked");
-//            var index = tr.index();
-                checked.prop("checked", !checkedValue);
+//            $(".checkall").click(function () {
+//                var check = $(this).prop("checked");
+//                $(".checkchild").prop("checked", check);
+//            });
 
-            });
+//            $('#this_table tbody ').on('click', 'tr', function () {
+////                var tr = $(this);
+//                var checkedTd = $(this).find('.checkchild');
+//                var isChecked = checkedTd.prop('checked');
+////                var checkedValue = checked.prop("checked");
+//                if(isChecked){
+//                    console.log(checkedTd.val());
+//                }
+//
+////                console.log(checkedValue);
+////            var index = tr.index();
+////                checked.prop("checked", !checkedValue);
+//            });
 
-
-            function tableGetCheck() {
-                var oldVal = textpro.value;
-                var v_data = "";
-
-                textpro.value = '';
-
-                var num = 0;
-
-                $('[name="checkchild"]').each(function () {
-                    if ($(this).prop('checked') == true) {
-                        num++;
-                        if (v_data == "") {
-                            v_data = $(this).val();
-                        }
-                        else {
-                            v_data = v_data + "," + $(this).val();
-                        }
-                    }
-                });
-
-                if (num <= 1000) {
-                    textpro.value = v_data;
-                    $('#total_num').html(num);
-
-                    if (oldVal != v_data) {
-                        initDown();
-                    }
-
-                    return 0;
-                }
-
-                return -1;
-            }
+            //选择的项目
+//            function tableGetCheck() {
+//                var oldVal = textpro.value;
+//                var v_data = "";
+//
+////                textpro.value = '';
+//
+//                var num = 0;
+//
+//                $('[name="checkchild"]').each(function () {
+//                    if ($(this).prop('checked') == true) {
+//                        num++;
+//                        if (v_data == "") {
+//                            v_data = $(this).val();
+//                        }
+//                        else {
+//                            v_data = v_data + "," + $(this).val();
+//                            console.log(v_data);
+//                        }
+//                    }
+//                });
+//                if (num <= 1000) {
+//                    textpro.value = v_data;
+//                    $('#total_num').html(num);
+//
+//                    if (oldVal != v_data) {
+//                        initDown();
+//                    }
+//
+//                    return 0;
+//                }
+//                return -1;
+//            }
 
             ///////////////////////////////tab//////////////
 
@@ -423,8 +472,8 @@
                 }
 
             }
-            step_search.onclick = jumpSearch;
-            step_down.onclick = jumpDown;
+//            step_search.onclick = jumpSearch;
+//            step_down.onclick = jumpDown;
 
         });
     </script>

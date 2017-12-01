@@ -3501,7 +3501,7 @@ a.label:hover, a.label:focus, a.badge:hover, a.badge:focus{color: #fff;text-deco
 	Explain:		警告,使用警告框jQuery插件
 */
 .progress,.progress-bar,.sr-only{height:10px; font-size:0;line-height:0}
-.progress{overflow:hidden; width:400px}
+.progress{overflow:hidden; width:300px}
 .progress.radius{}/*自定义圆角*/
 .progress-bar{width:100%;background-color:#efefef;}
 .sr-only{

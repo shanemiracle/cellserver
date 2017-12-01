@@ -1,461 +1,462 @@
-<!--<!DOCTYPE HTML>-->
-<!--<html>-->
-<!--<head>-->
-
-    <!--{include file='../public/template/index/common/commonStyle.html'/}-->
-    <!--<link rel="stylesheet" type="text/css" href="/template/static/css/bootstrap-switch.min.css"/>-->
-    <!--<link rel="stylesheet" type="text/css" href="/template/static/css/bootstrap.min.css"/>-->
-    <!--<link rel="stylesheet" type="text/css" href="/template/static/css/fileinput.min.css">-->
-
-    <!--<title>编辑细胞类型</title>-->
-
-<!--</head>-->
-<!--<body>-->
-<!--{include file='../public/template/index/common/top.html'/}-->
-<!--{include file='../public/template/index/common/sideBar.html'/}-->
-<!--<section class="Hui-article-box">-->
-    <!--<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页-->
-        <!--<span class="c-gray en">&gt;</span> 细胞类型管理-->
-        <!--<span class="c-gray en">&gt;</span> 编辑细胞类型-->
-        <!--<a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px"-->
-           <!--href="javascript:location.replace(location.href);" title="刷新">-->
-            <!--<i class="Hui-iconfont">&#xe68f;</i>-->
-        <!--</a>-->
-    <!--</nav>-->
-    <!--<div class="Hui-article">-->
-        <!--<article class="cl pd-20">-->
-            <!--<h4 class='text-c'>编辑细胞类型</h4>-->
-            <!--<form class="form form-vertical" id="form_add" action="">-->
-                <!--<div class="row cl">-->
-                    <!--<label class="form-label col-xs-4 col-sm-2 col-sm-offset-1">父级细胞名称:</label>-->
-                    <!--<div class="formControls col-xs-8 col-sm-6">-->
-                        <!--<input type="text" class="input-text radius" style="color: #7e8795" value="{$father_cell_name}"-->
-                               <!--id="father_cell_name" readonly>-->
-                    <!--</div>-->
-                <!--</div>-->
-
-                <!--<div class="row cl">-->
-                    <!--<label class="form-label col-xs-4 col-sm-2 col-sm-offset-1">本细胞编号:</label>-->
-                    <!--<div class="formControls col-xs-8 col-sm-6">-->
-                        <!--<input type="text" class="input-text radius" style="color: #7e8795" value="{$cell_type}"-->
-                               <!--id="cell_type" readonly>-->
-                    <!--</div>-->
-                <!--</div>-->
-
-                <!--<div class="row cl">-->
-                    <!--<label class="form-label col-xs-4 col-sm-2 col-sm-offset-1">信息版本:</label>-->
-                    <!--<div class="formControls col-xs-8 col-sm-6">-->
-                        <!--<input type="text" class="input-text radius" style="color: #7e8795" id="info_ver"-->
-                               <!--value="{$info_ver}" readonly>-->
-                    <!--</div>-->
-                <!--</div>-->
-
-                <!--<div class="row cl">-->
-                    <!--<label class="form-label col-xs-4 col-sm-2 col-sm-offset-1">中文名:</label>-->
-                    <!--<div class="formControls col-xs-8 col-sm-6">-->
-                        <!--<input type="text" class="input-text radius" id="cn_name" value="{$cn_name}" maxlength="21"-->
-                               <!--autofocus required>-->
-                    <!--</div>-->
-                <!--</div>-->
-
-                <!--<div class="row cl">-->
-                    <!--<label class="form-label col-xs-4 col-sm-2 col-sm-offset-1">英文名:</label>-->
-                    <!--<div class="formControls col-xs-8 col-sm-6">-->
-                        <!--<input type="text" class="input-text radius" id="en_name" value="{$en_name}" maxlength="64">-->
-                    <!--</div>-->
-                <!--</div>-->
-
-                <!--<div class="row cl">-->
-                    <!--<label class="form-label col-xs-4 col-sm-2 col-sm-offset-1">是否典型细胞:</label>-->
-                    <!--<div class="formControls col-xs-8 col-sm-6">-->
-                        <!--<div class="">-->
-                            <!--<input type="checkbox" id="is_special" value="{$is_special}" name="is_special">-->
-                        <!--</div>-->
-                    <!--</div>-->
-
-                <!--</div>-->
-
-                <!--<div class="row cl">-->
-                    <!--<label class="form-label col-xs-4 col-sm-2 col-sm-offset-1">缩写:</label>-->
-                    <!--<div class="formControls col-xs-8 col-sm-3">-->
-                        <!--<input type="text" class="input-text radius" id="abb_name" value="{$abb_name}" maxlength="7">-->
-                    <!--</div>-->
-                <!--</div>-->
-
-                <!--<div class="row cl">-->
-                    <!--<label class="form-label col-xs-4 col-sm-2 col-sm-offset-1">最小尺寸:</label>-->
-                    <!--<div class="formControls col-xs-3 col-sm-3">-->
-                        <!--<div class="input-group">-->
-                            <!--<input type="text" class="input-text " id="size_min" maxlength="8" value="{$size_min}"-->
-                                   <!--name="size_min">-->
-                            <!--<span class="input-group-addon">um(微米)</span>-->
-                        <!--</div>-->
-                    <!--</div>-->
-                <!--</div>-->
-
-                <!--<div class="row cl">-->
-                    <!--<label class="form-label col-xs-4 col-sm-2 col-sm-offset-1">最大尺寸:</label>-->
-                    <!--<div class="formControls col-xs-3 col-sm-3">-->
-                        <!--<div class="input-group">-->
-                            <!--<input type="text" class="input-text " id="size_max" maxlength="8" value="{$size_max}"-->
-                                   <!--name="size_max">-->
-                            <!--<span class="input-group-addon">um(微米)</span>-->
-                        <!--</div>-->
-                    <!--</div>-->
-                <!--</div>-->
-
-                <!--<div class="row cl">-->
-                    <!--<label class="form-label col-xs-4 col-sm-2 col-sm-offset-1">颜色:</label>-->
-                    <!--<div class="formControls col-xs-3 col-sm-3">-->
-
-                        <!--<div class="input-group">-->
-                            <!--<input type="color" class="color" id="c-r" value="#{$color_r}">-->
-                            <!--<span class="input-group-addon">#</span>-->
-                            <!--<input type="text" class="input-text " id="color-r" value="{$color_r}" maxlength="6">-->
-                        <!--</div>-->
-
-                        <!--<div class="input-group">-->
-                            <!--<input type="color" class="color" id="c-g" value="#{$color_g}">-->
-                            <!--<span class="input-group-addon">#</span>-->
-                            <!--<input type="text" class="input-text " id="color-g" value="{$color_g}" maxlength="6">-->
-                        <!--</div>-->
-
-                        <!--<div class="input-group">-->
-                            <!--<input type="color" class="color" id="c-b" value="#{$color_b}">-->
-                            <!--<span class="input-group-addon">#</span>-->
-                            <!--<input type="text" class="input-text " id="color-b" value="{$color_b}" maxlength="6">-->
-                        <!--</div>-->
-
-                    <!--</div>-->
-                <!--</div>-->
-
-                <!--<div class="row cl">-->
-                    <!--<label class="form-label col-xs-4 col-sm-2 col-sm-offset-1">图片:</label>-->
-                    <!--<span class=" col-xs-8 col-sm-6">-->
-                        <!--<input id="input-id" name="file" type="file" multiple class="file-input">-->
-                    <!--</span>-->
-                    <!--<input type="hidden" id="file_id_big" value="{$file_id_big}">-->
-                    <!--<input type="hidden" id="file_id_small" value="{$file_id_small}">-->
-                <!--</div>-->
-
-
-                <!--<div class="row cl">-->
-                    <!--<label class="form-label col-xs-4 col-sm-2 col-sm-offset-1">详情:</label>-->
-                    <!--<div class="formControls col-xs-8 col-sm-6">-->
-                        <!--&lt;!&ndash;<input type="text" class="textarea radius  text-left" value="" id="desc" placeholder="详情描述..." autofocus >&ndash;&gt;-->
-                        <!--<textarea id="remark" cols rows class="textarea" placeholder="详情描述..." datatype="*10-2000"-->
-                                  <!--maxlength="2000"-->
-                                  <!--onkeypress="$.Huitextarealength(this,2000)" onkeyup="$.Huitextarealength(this,2000)">{$remark}</textarea>-->
-                        <!--<p class="textarea-numberbar">-->
-                            <!--<em class="textarea-length">*</em>/2000-->
-                        <!--</p>-->
-                    <!--</div>-->
-                <!--</div>-->
-
-
-                <!--<div class="row cl">-->
-                    <!--<div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-3">-->
-                        <!--<input type="button" id="btnSubmit" class="btn btn-primary radius text-c" value="提交">-->
-                    <!--</div>-->
-                <!--</div>-->
-
-            <!--</form>-->
-        <!--</article>-->
-    <!--</div>-->
-<!--</section>-->
-
-<!--</body>-->
-
-<!--{include file='../public/template/index/common/commonJs.html'/}-->
-<!--&lt;!&ndash;<script type="text/javascript" src="/lib/jquery/1.9.1/jquery.min.js"></script>&ndash;&gt;-->
-<!--&lt;!&ndash;<script type="text/javascript" src="/lib/layer/2.4/layer.js"></script>&ndash;&gt;-->
-<!--&lt;!&ndash;<script type="text/javascript" src="/lib/My97DatePicker/4.8/WdatePicker.js"></script>&ndash;&gt;-->
-<!--&lt;!&ndash;<script type="text/javascript" src="/lib/datatables/1.10.0/jquery.dataTables.min.js"></script>&ndash;&gt;-->
-<!--&lt;!&ndash;<script type="text/javascript" src="/static/h-ui/js/H-ui.js"></script>&ndash;&gt;-->
-<!--&lt;!&ndash;<script type="text/javascript" src="/static/h-ui.admin/js/H-ui.admin.js"></script>&ndash;&gt;-->
-
-<!--<script type="text/javascript" src="/template/lib/jquery.validation/1.14.0/jquery.validate.js"></script>-->
-<!--<script type="text/javascript" src="/template/lib/jquery.validation/1.14.0/validate-methods.js"></script>-->
-<!--&lt;!&ndash;<script type="text/javascript" src="/lib/jquery.validation/1.14.0/messages_zh.js"></script>&ndash;&gt;-->
-<!--&lt;!&ndash;<script type="text/javascript" src="/lib/jquery.validation/1.14.0/additional-methods.js"></script>&ndash;&gt;-->
-<!--<script type="text/javascript" src="/template/lib/js/bootstrap-switch.min.js"></script>-->
-
-<!--<script type="text/javascript" src="/template/lib/js/bootstrap.min.js"></script>-->
-<!--<script type="text/javascript" src="/template/lib/js/plugins/canvas-to-blob.min.js"></script>-->
-<!--<script type="text/javascript" src="/template/lib/js/plugins/sortable.min.js"></script>-->
-<!--<script type="text/javascript" src="/template/lib/js/plugins/purify.min.js"></script>-->
-<!--<script type="text/javascript" src="/template/lib/js/fileinput.min.js"></script>-->
-<!--<script type="text/javascript" src="/template/static/themes/fa/theme.js"></script>-->
-<!--<script type="text/javascript" src="/template/lib/js/locales/zh.js"></script>-->
-
-<!--<script type="text/javascript">-->
-    <!--/**-->
-     <!--* 根据用户输入的字符获取相关的正则表达式-->
-     <!--* @param  {string} sCharCode 用户输入的字符，如 'a'，'1'，'.' 等等-->
-     <!--* @return {regexp} patt 正则表达式-->
-     <!--*/-->
-    <!--function __getRegex(sCharCode) {-->
-        <!--var patt;-->
-        <!--if (/[]/g.test(sCharCode)) {-->
-            <!--// 判断是否为空-->
-            <!--patt = /^$/g;-->
-        <!--} else if (/[.]/g.test(sCharCode)) {-->
-            <!--// 判断是否已经包含 . 字符或者为空-->
-            <!--patt = /((\.)|(^$))/g;-->
-        <!--} else if (/[1-9]/g.test(sCharCode)) {-->
-            <!--// 判断是否已经到达小数点后两位-->
-            <!--patt = /\.\d{1}$/g;-->
-        <!--}-->
-        <!--return patt;-->
-    <!--}-->
-
-    <!--$('#size_min').on('keypress', function (e) {-->
-        <!--var sCharCode = String.fromCharCode(e.charCode);-->
-        <!--var sValue = this.value;-->
-
-        <!--if (/[^0-9.]/g.test(sCharCode) || __getRegex(sCharCode).test(sValue)) {-->
-            <!--return false;-->
-        <!--}-->
-    <!--});-->
-
-    <!--$('#size_min').on('keyup paste', function (e) {-->
-        <!--var patt = /^((?!0)\d+(\.\d{0,1})?)$/g;-->
-
-        <!--if (!patt.test(this.value)) {-->
-            <!--// 错误提示相关代码，边框变红、气泡提示什么的-->
-            <!--console.log('输入格式不正确！');-->
-        <!--}-->
-    <!--});-->
-
-    <!--$('#size_max').on('keypress', function (e) {-->
-        <!--var sCharCode = String.fromCharCode(e.charCode);-->
-        <!--var sValue = this.value;-->
-
-        <!--if (/[^0-9.]/g.test(sCharCode) || __getRegex(sCharCode).test(sValue)) {-->
-            <!--return false;-->
-        <!--}-->
-    <!--});-->
-
-    <!--$('#size_max').on('keyup paste', function (e) {-->
-        <!--var patt = /^((?!0)\d+(\.\d{0,1})?)$/g;-->
-
-        <!--if (!patt.test(this.value)) {-->
-            <!--// 错误提示相关代码，边框变红、气泡提示什么的-->
-            <!--console.log('输入格式不正确！');-->
-        <!--}-->
-    <!--});-->
-
-    <!--var c_r = $('#c-r');-->
-    <!--var color_r = $('#color-r');-->
-
-    <!--c_r.on('change', function () {-->
-        <!--var c = c_r.val();-->
-        <!--color_r.val(c.substring(1, c.length));-->
-    <!--});-->
-
-    <!--color_r.on('keyup', function () {-->
-        <!--this.value = this.value.replace(/[^0-9a-fA-F]/g, '');-->
-        <!--c_r.val('#' + this.value.toString(16));-->
-    <!--});-->
-
-    <!--var c_g = $('#c-g');-->
-    <!--var color_g = $('#color-g');-->
-
-    <!--c_g.on('change', function () {-->
-        <!--var c = c_g.val();-->
-        <!--color_g.val(c.substring(1, c.length));-->
-    <!--});-->
-
-    <!--color_g.on('keyup', function () {-->
-        <!--this.value = this.value.replace(/[^0-9a-fA-F]/g, '');-->
-        <!--c_g.val('#' + this.value.toString(16));-->
-    <!--});-->
-
-    <!--var c_b = $('#c-b');-->
-    <!--var color_b = $('#color-b');-->
-
-    <!--c_b.on('change', function () {-->
-        <!--var c = c_b.val();-->
-        <!--color_b.val(c.substring(1, c.length));-->
-    <!--});-->
-
-    <!--color_b.on('keyup', function () {-->
-        <!--this.value = this.value.replace(/[^0-9a-fA-F]/g, '');-->
-        <!--c_b.val('#' + this.value.toString(16));-->
-    <!--});-->
-
-
-    <!--var form = $('#form_add');-->
-    <!--//-->
-    <!--jQuery.validator.addMethod("isFloat", function (value, element) {-->
-        <!--var length = value.length;-->
-        <!--var floatstr = /^[0-9]+(.[0-9]{1})?$/;-->
-        <!--return this.optional(element) || ( floatstr.test(value));-->
-    <!--}, "格式为保留一位小数点的浮点数,如 3.5");-->
-
-    <!--$(document).ready(function () {-->
-
-        <!--$('#is_special').attr('checked', ($('#is_special').val() == 1) ? true : false);-->
-
-        <!--$('[name="is_special"]').bootstrapSwitch({-->
-            <!--onText: "YES",-->
-            <!--offText: "NO",-->
-            <!--onColor: "primary",-->
-<!--//            offColor:"info",-->
-            <!--size: "mini",-->
-            <!--onSwitchChange: function (event, state) {-->
-                <!--if (state == true) {-->
-<!--//                    role.value |= $(this).val();-->
-<!--//                    alert(role.value);-->
-                    <!--$(this).val(1);-->
-                <!--} else {-->
-<!--//                    role.value -= $(this).val();-->
-<!--//                    alert(role.value);-->
-                    <!--$(this).val(0);-->
-                <!--}-->
-
-<!--//                alert($(this).val());-->
-            <!--}-->
-        <!--});-->
-
-
-        <!--var file = $('#input-id');-->
-        <!--file.fileinput({-->
-            <!--uploadUrl: "/fileup/ajax_up",-->
-            <!--allowedPreviewTypes: ['image'],-->
-            <!--uploadAsync: true,-->
-            <!--language: 'zh',-->
-            <!--showUpload: true,-->
-            <!--showRemove: false,-->
-            <!--showCaption: false,-->
-            <!--showPreview: true,-->
-            <!--browseOnZoneClick: false,-->
-            <!--overwriteInitial: true,-->
-            <!--removeFromPreviewOnError: false,-->
-            <!--maxFileCount: 2,-->
-<!--//            fileActionSettings:{-->
-<!--//                showRemove:true,-->
-<!--//                showUpload:true-->
-<!--//            },-->
-            <!--initialPreview: [-->
-                <!--"{$bigUrl}",-->
-                <!--"{$smallUrl}"-->
-
-            <!--],-->
-            <!--initialPreviewAsData: true,-->
-            <!--initialPreviewConfig: [-->
-                <!--{caption: "", width: '120px', url: '#', key: 0},-->
-                <!--{caption: "", width: '120px', url: '#', key: 1}-->
-            <!--]-->
-        <!--});-->
-
-        <!--file.on('fileuploaded', function (event, data, previewId, index) {-->
-
-            <!--var obj = eval(data.response);-->
-            <!--if (obj) {-->
-                <!--if (obj.ret == 0) {-->
-                    <!--if (index == '0') {-->
-                        <!--$('#file_id_big').val(obj.logo);-->
-                        <!--console.log('fileuploaded' + index);-->
-                    <!--}-->
-                    <!--else if (index == '1') {-->
-                        <!--$('#file_id_small').val(obj.logo);-->
-                        <!--console.log('fileuploaded' + index);-->
-                    <!--}-->
-                <!--}-->
-                <!--else {-->
-                    <!--alert(obj.ret);-->
-                <!--}-->
-            <!--}-->
-
-        <!--});-->
-
-        <!--file.on('filesuccessremove', function (event, id) {-->
-            <!--var index = id.charAt(id.length - 1);-->
-
-            <!--if (index == '0') {-->
-                <!--$('#file_id_big').val('');-->
-                <!--console.log('filesuccessremove' + index);-->
-            <!--}-->
-            <!--else if (index == '1') {-->
-                <!--$('#file_id_small').val('');-->
-                <!--console.log('filesuccessremove' + index);-->
-            <!--}-->
-
-<!--//            console.log('filesuccessremove '+index);-->
-        <!--});-->
-
-        <!--file.on('filedeleted', function (event, key) {-->
-            <!--console.log('filedeleted ' + key);-->
-
-            <!--if (key == 0) {-->
-                <!--$('#file_id_big').val('');-->
-            <!--}-->
-            <!--else if (key == 1) {-->
-                <!--$('#file_id_small').val('');-->
-            <!--}-->
-        <!--});-->
-
-
-        <!--form.validate({-->
-            <!--rules: {-->
-                <!--size_min: {-->
-                    <!--isFloat: true-->
-                <!--},-->
-                <!--size_max: {-->
-                    <!--isFloat: true-->
-                <!--}-->
-            <!--},-->
-            <!--messages: {-->
-                <!--size_min: {-->
-                    <!--isFloat: "最多一位小数的浮点数"-->
-                <!--},-->
-                <!--size_max: {-->
-                    <!--isFloat: "最多一位小数的浮点数"-->
-                <!--}-->
-
-            <!--}-->
-        <!--});-->
-
-        <!--$('#btnSubmit').on('click', function () {-->
-            <!--if (form.valid()) {-->
-
-                <!--var c_r = ($('#color-r').val().length == 6) ? ('ff' + $('#color-r').val()) : 0;-->
-                <!--var c_g = ($('#color-g').val().length == 6) ? ('ff' + $('#color-g').val()) : 0;-->
-                <!--var c_b = ($('#color-b').val().length == 6) ? ('ff' + $('#color-b').val()) : 0;-->
-
-                <!--$.post('/celltype/ajax_edit', {-->
-                    <!--'cell_type': $('#cell_type').val(),-->
-                    <!--'info_ver': $('#info_ver').val(),-->
-                    <!--'cn_name': $('#cn_name').val(),-->
-                    <!--'en_name': $('#en_name').val(),-->
-                    <!--'abb_name': $('#abb_name').val(),-->
-                    <!--'size_min': $('#size_min').val(),-->
-                    <!--'size_max': $('#size_max').val(),-->
-                    <!--'remark': $('#remark').val(),-->
-                    <!--'file_id_big': $('#file_id_big').val(),-->
-                    <!--'file_id_small': $('#file_id_small').val(),-->
-                    <!--'color_r': parseInt(c_r, 16),-->
-                    <!--'color_g': parseInt(c_g, 16),-->
-                    <!--'color_b': parseInt(c_b, 16),-->
-                    <!--'is_special': $('#is_special').val()-->
-                <!--}, function (data) {-->
-                    <!--if (data == 0) {-->
-                        <!--alert('修改成功');-->
-                        <!--var index = parent.layer.getFrameIndex(window.name);-->
-                        <!--parent.layer.close(index);-->
-                    <!--}-->
-                    <!--else {-->
-                        <!--alert(data);-->
-                    <!--}-->
-                <!--});-->
-            <!--}-->
-
-        <!--});-->
-
-    <!--});-->
-
-
-<!--</script>-->
-
-<!--</html>-->
+<!DOCTYPE HTML>
+<html>
+<head>
+
+    {include file='../public/template/index/common/commonStyle.html'/}
+    <link rel="stylesheet" type="text/css" href="/template/static/css/bootstrap-switch.min.css"/>
+    <link rel="stylesheet" type="text/css" href="/template/static/css/bootstrap.min.css"/>
+    <link rel="stylesheet" type="text/css" href="/template/static/css/fileinput.min.css">
+
+    <title>编辑细胞类型</title>
+
+</head>
+<body>
+{include file='../public/template/index/common/top.html'/}
+{include file='../public/template/index/common/sideBar.html'/}
+<section class="Hui-article-box">
+    <nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页
+        <span class="c-gray en">&gt;</span> 细胞类型管理123
+        <span class="c-gray en">&gt;</span> 编辑细胞类型
+        <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px"
+           href="javascript:location.replace(location.href);" title="刷新">
+            <i class="Hui-iconfont">&#xe68f;</i>
+        </a>
+    </nav>
+    <div class="Hui-article">
+        <article class="cl pd-20">
+            <h4 class='text-c'>编辑细胞类型</h4>
+            <form class="form form-vertical" id="form_add" action="">
+                <div class="row cl">
+                    <label class="form-label col-xs-4 col-sm-2 col-sm-offset-1">父级细胞名称:</label>
+                    <div class="formControls col-xs-8 col-sm-6">
+                        <input type="text" class="input-text radius" style="color: #7e8795" value="{$father_cell_name}"
+                               id="father_cell_name" readonly>
+                    </div>
+                </div>
+
+                <div class="row cl">
+                    <label class="form-label col-xs-4 col-sm-2 col-sm-offset-1">本细胞编号:</label>
+                    <div class="formControls col-xs-8 col-sm-6">
+                        <input type="text" class="input-text radius" style="color: #7e8795" value="{$cell_type}"
+                               id="cell_type" readonly>
+                    </div>
+                </div>
+
+                <div class="row cl">
+                    <label class="form-label col-xs-4 col-sm-2 col-sm-offset-1">信息版本:</label>
+                    <div class="formControls col-xs-8 col-sm-6">
+                        <input type="text" class="input-text radius" style="color: #7e8795" id="info_ver"
+                               value="{$info_ver}" readonly>
+                    </div>
+                </div>
+
+                <div class="row cl">
+                    <label class="form-label col-xs-4 col-sm-2 col-sm-offset-1">中文名:</label>
+                    <div class="formControls col-xs-8 col-sm-6">
+                        <input type="text" class="input-text radius" id="cn_name" value="{$cn_name}" maxlength="21"
+                               autofocus required>
+                    </div>
+                </div>
+
+                <div class="row cl">
+                    <label class="form-label col-xs-4 col-sm-2 col-sm-offset-1">英文名:</label>
+                    <div class="formControls col-xs-8 col-sm-6">
+                        <input type="text" class="input-text radius" id="en_name" value="{$en_name}" maxlength="64">
+                    </div>
+                </div>
+
+                <div class="row cl">
+                    <label class="form-label col-xs-4 col-sm-2 col-sm-offset-1">是否典型细胞:</label>
+                    <div class="formControls col-xs-8 col-sm-6">
+                        <div class="">
+                            <input type="checkbox" id="is_special" value="{$is_special}" name="is_special">
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="row cl">
+                    <label class="form-label col-xs-4 col-sm-2 col-sm-offset-1">缩写:</label>
+                    <div class="formControls col-xs-8 col-sm-3">
+                        <input type="text" class="input-text radius" id="abb_name" value="{$abb_name}" maxlength="7">
+                    </div>
+                </div>
+
+                <div class="row cl">
+                    <label class="form-label col-xs-4 col-sm-2 col-sm-offset-1">最小尺寸:</label>
+                    <div class="formControls col-xs-3 col-sm-3">
+                        <div class="input-group">
+                            <input type="text" class="input-text " id="size_min" maxlength="8" value="{$size_min}"
+                                   name="size_min">
+                            <span class="input-group-addon">um(微米)</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row cl">
+                    <label class="form-label col-xs-4 col-sm-2 col-sm-offset-1">最大尺寸:</label>
+                    <div class="formControls col-xs-3 col-sm-3">
+                        <div class="input-group">
+                            <input type="text" class="input-text " id="size_max" maxlength="8" value="{$size_max}"
+                                   name="size_max">
+                            <span class="input-group-addon">um(微米)</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row cl">
+                    <label class="form-label col-xs-4 col-sm-2 col-sm-offset-1">颜色:</label>
+                    <div class="formControls col-xs-3 col-sm-3">
+
+                        <div class="input-group">
+                            <input type="color" class="color" id="c-r" value="#{$color_r}">
+                            <span class="input-group-addon">#</span>
+                            <input type="text" class="input-text " id="color-r" value="{$color_r}" maxlength="6">
+                        </div>
+
+                        <div class="input-group">
+                            <input type="color" class="color" id="c-g" value="#{$color_g}">
+                            <span class="input-group-addon">#</span>
+                            <input type="text" class="input-text " id="color-g" value="{$color_g}" maxlength="6">
+                        </div>
+
+                        <div class="input-group">
+                            <input type="color" class="color" id="c-b" value="#{$color_b}">
+                            <span class="input-group-addon">#</span>
+                            <input type="text" class="input-text " id="color-b" value="{$color_b}" maxlength="6">
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="row cl">
+                    <label class="form-label col-xs-4 col-sm-2 col-sm-offset-1">图片:</label>
+                    <span class=" col-xs-8 col-sm-6">
+                        <input id="input-id" name="file" type="file" multiple class="file-input">
+                    </span>
+                    <input type="hidden" id="file_id_big" value="{$file_id_big}">
+                    <input type="hidden" id="file_id_small" value="{$file_id_small}">
+                </div>
+
+
+                <div class="row cl">
+                    <label class="form-label col-xs-4 col-sm-2 col-sm-offset-1">详情:</label>
+                    <div class="formControls col-xs-8 col-sm-6">
+                        <!--<input type="text" class="textarea radius  text-left" value="" id="desc" placeholder="详情描述..." autofocus >-->
+                        <textarea id="remark" cols rows class="textarea" placeholder="详情描述..." datatype="*10-2000"
+                                  maxlength="2000"
+                                  onkeypress="$.Huitextarealength(this,2000)" onkeyup="$.Huitextarealength(this,2000)">{$remark}</textarea>
+                        <p class="textarea-numberbar">
+                            <em class="textarea-length">*</em>/2000
+                        </p>
+                    </div>
+                </div>
+
+
+                <div class="row cl">
+                    <div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-3">
+                        <input type="button" id="btnSubmit" class="btn btn-primary radius text-c" value="提交">
+                    </div>
+                </div>
+
+            </form>
+        </article>
+    </div>
+</section>
+
+</body>
+
+{include file='../public/template/index/common/commonJs.html'/}
+<!--<script type="text/javascript" src="/lib/jquery/1.9.1/jquery.min.js"></script>-->
+<!--<script type="text/javascript" src="/lib/layer/2.4/layer.js"></script>-->
+<!--<script type="text/javascript" src="/lib/My97DatePicker/4.8/WdatePicker.js"></script>-->
+<!--<script type="text/javascript" src="/lib/datatables/1.10.0/jquery.dataTables.min.js"></script>-->
+<!--<script type="text/javascript" src="/static/h-ui/js/H-ui.js"></script>-->
+<!--<script type="text/javascript" src="/static/h-ui.admin/js/H-ui.admin.js"></script>-->
+
+<script type="text/javascript" src="/template/lib/jquery.validation/1.14.0/jquery.validate.js"></script>
+<script type="text/javascript" src="/template/lib/jquery.validation/1.14.0/validate-methods.js"></script>
+<!--<script type="text/javascript" src="/lib/jquery.validation/1.14.0/messages_zh.js"></script>-->
+<!--<script type="text/javascript" src="/lib/jquery.validation/1.14.0/additional-methods.js"></script>-->
+<script type="text/javascript" src="/template/lib/js/bootstrap-switch.min.js"></script>
+
+<script type="text/javascript" src="/template/lib/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="/template/lib/js/plugins/canvas-to-blob.min.js"></script>
+<script type="text/javascript" src="/template/lib/js/plugins/sortable.min.js"></script>
+<script type="text/javascript" src="/template/lib/js/plugins/purify.min.js"></script>
+<script type="text/javascript" src="/template/lib/js/fileinput.min.js"></script>
+<script type="text/javascript" src="/template/static/themes/fa/theme.js"></script>
+<script type="text/javascript" src="/template/lib/js/locales/zh.js"></script>
+
+<script type="text/javascript">
+    /**
+     * 根据用户输入的字符获取相关的正则表达式
+     * @param  {string} sCharCode 用户输入的字符，如 'a'，'1'，'.' 等等
+     * @return {regexp} patt 正则表达式
+     */
+    function __getRegex(sCharCode) {
+        var patt;
+        if (/[]/g.test(sCharCode)) {
+            // 判断是否为空
+            patt = /^$/g;
+        } else if (/[.]/g.test(sCharCode)) {
+            // 判断是否已经包含 . 字符或者为空
+            patt = /((\.)|(^$))/g;
+        } else if (/[1-9]/g.test(sCharCode)) {
+            // 判断是否已经到达小数点后两位
+            patt = /\.\d{1}$/g;
+        }
+        return patt;
+    }
+
+    $('#size_min').on('keypress', function (e) {
+        var sCharCode = String.fromCharCode(e.charCode);
+        var sValue = this.value;
+
+        if (/[^0-9.]/g.test(sCharCode) || __getRegex(sCharCode).test(sValue)) {
+            return false;
+        }
+    });
+
+    $('#size_min').on('keyup paste', function (e) {
+        var patt = /^((?!0)\d+(\.\d{0,1})?)$/g;
+
+        if (!patt.test(this.value)) {
+            // 错误提示相关代码，边框变红、气泡提示什么的
+            console.log('输入格式不正确！');
+        }
+    });
+
+    $('#size_max').on('keypress', function (e) {
+        var sCharCode = String.fromCharCode(e.charCode);
+        var sValue = this.value;
+
+        if (/[^0-9.]/g.test(sCharCode) || __getRegex(sCharCode).test(sValue)) {
+            return false;
+        }
+    });
+
+    $('#size_max').on('keyup paste', function (e) {
+        var patt = /^((?!0)\d+(\.\d{0,1})?)$/g;
+
+        if (!patt.test(this.value)) {
+            // 错误提示相关代码，边框变红、气泡提示什么的
+            console.log('输入格式不正确！');
+        }
+    });
+
+    var c_r = $('#c-r');
+    var color_r = $('#color-r');
+
+    c_r.on('change', function () {
+        var c = c_r.val();
+        color_r.val(c.substring(1, c.length));
+    });
+
+    color_r.on('keyup', function () {
+        this.value = this.value.replace(/[^0-9a-fA-F]/g, '');
+        c_r.val('#' + this.value.toString(16));
+    });
+
+    var c_g = $('#c-g');
+    var color_g = $('#color-g');
+
+    c_g.on('change', function () {
+        var c = c_g.val();
+        color_g.val(c.substring(1, c.length));
+    });
+
+    color_g.on('keyup', function () {
+        this.value = this.value.replace(/[^0-9a-fA-F]/g, '');
+        c_g.val('#' + this.value.toString(16));
+    });
+
+    var c_b = $('#c-b');
+    var color_b = $('#color-b');
+
+    c_b.on('change', function () {
+        var c = c_b.val();
+        color_b.val(c.substring(1, c.length));
+    });
+
+    color_b.on('keyup', function () {
+        this.value = this.value.replace(/[^0-9a-fA-F]/g, '');
+        c_b.val('#' + this.value.toString(16));
+    });
+
+
+    var form = $('#form_add');
+    //
+    jQuery.validator.addMethod("isFloat", function (value, element) {
+        var length = value.length;
+        var floatstr = /^[0-9]+(.[0-9]{1})?$/;
+        return this.optional(element) || ( floatstr.test(value));
+    }, "格式为保留一位小数点的浮点数,如 3.5");
+
+    $(document).ready(function () {
+
+        $('#is_special').attr('checked', ($('#is_special').val() == 1) ? true : false);
+
+        $('[name="is_special"]').bootstrapSwitch({
+            onText: "YES",
+            offText: "NO",
+            onColor: "primary",
+//            offColor:"info",
+            size: "mini",
+            onSwitchChange: function (event, state) {
+                if (state == true) {
+//                    role.value |= $(this).val();
+//                    alert(role.value);
+                    $(this).val(1);
+                } else {
+//                    role.value -= $(this).val();
+//                    alert(role.value);
+                    $(this).val(0);
+                }
+
+//                alert($(this).val());
+            }
+        });
+
+
+        var file = $('#input-id');
+        file.fileinput({
+            uploadUrl: "/fileup/ajax_up",
+            allowedPreviewTypes: ['image'],
+            uploadAsync: true,
+            language: 'zh',
+            showUpload: true,
+            showRemove: false,
+            showCaption: false,
+            showPreview: true,
+            browseOnZoneClick: false,
+            overwriteInitial: true,
+            removeFromPreviewOnError: false,
+            maxFileCount: 2,
+//            fileActionSettings:{
+//                showRemove:true,
+//                showUpload:true
+//            },
+            initialPreview: [
+                "{$bigUrl}",
+                "{$smallUrl}"
+
+            ],
+            initialPreviewAsData: true,
+            initialPreviewConfig: [
+                {caption: "", width: '120px', url: '#', key: 0},
+                {caption: "", width: '120px', url: '#', key: 1}
+            ]
+        });
+
+        file.on('fileuploaded', function (event, data, previewId, index) {
+
+            var obj = eval(data.response);
+            if (obj) {
+                if (obj.ret == 0) {
+                    if (index == '0') {
+                        $('#file_id_big').val(obj.logo);
+                        console.log('fileuploaded' + index);
+                    }
+                    else if (index == '1') {
+                        $('#file_id_small').val(obj.logo);
+                        console.log('fileuploaded' + index);
+                    }
+                }
+                else {
+                    alert(obj.ret);
+                }
+            }
+
+        });
+
+        file.on('filesuccessremove', function (event, id) {
+            var index = id.charAt(id.length - 1);
+
+            if (index == '0') {
+                $('#file_id_big').val('');
+                console.log('filesuccessremove' + index);
+            }
+            else if (index == '1') {
+                $('#file_id_small').val('');
+                console.log('filesuccessremove' + index);
+            }
+
+//            console.log('filesuccessremove '+index);
+        });
+
+        file.on('filedeleted', function (event, key) {
+            console.log('filedeleted ' + key);
+
+            if (key == 0) {
+                $('#file_id_big').val('');
+            }
+            else if (key == 1) {
+                $('#file_id_small').val('');
+            }
+        });
+
+
+        form.validate({
+            rules: {
+                size_min: {
+                    isFloat: true
+                },
+                size_max: {
+                    isFloat: true
+                }
+            },
+            messages: {
+                size_min: {
+                    isFloat: "最多一位小数的浮点数"
+                },
+                size_max: {
+                    isFloat: "最多一位小数的浮点数"
+                }
+
+            }
+        });
+
+        $('#btnSubmit').on('click', function () {
+            if (form.valid()) {
+
+                var c_r = ($('#color-r').val().length == 6) ? ('ff' + $('#color-r').val()) : 0;
+                var c_g = ($('#color-g').val().length == 6) ? ('ff' + $('#color-g').val()) : 0;
+                var c_b = ($('#color-b').val().length == 6) ? ('ff' + $('#color-b').val()) : 0;
+
+                $.post('/outbloodtype/ajax_edit', {
+                    'cell_type': $('#cell_type').val(),
+                    'info_ver': $('#info_ver').val(),
+                    'cn_name': $('#cn_name').val(),
+                    'en_name': $('#en_name').val(),
+                    'abb_name': $('#abb_name').val(),
+                    'size_min': $('#size_min').val(),
+                    'size_max': $('#size_max').val(),
+                    'remark': $('#remark').val(),
+                    'file_id_big': $('#file_id_big').val(),
+                    'file_id_small': $('#file_id_small').val(),
+                    'color_r': parseInt(c_r, 16),
+                    'color_g': parseInt(c_g, 16),
+                    'color_b': parseInt(c_b, 16),
+                    'is_special': $('#is_special').val()
+                }, function (data) {
+                    if (data == 0) {
+                        layer.msg('修改成功');
+                        history.go(-1);
+                        var index = parent.layer.getFrameIndex(window.name);
+                        parent.layer.close(index);
+                    }
+                    else {
+                        alert(data);
+                    }
+                });
+            }
+
+        });
+
+    });
+
+
+</script>
+
+</html>

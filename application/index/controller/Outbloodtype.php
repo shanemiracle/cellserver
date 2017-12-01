@@ -92,7 +92,7 @@ class Outbloodtype extends Rest
         $cell_type = Request::instance()->param('cell_type');
         $data = [];
 
-        $retData = apiCellType::apiCellTypeGet(Session::get('attest'), 1, $cell_type);
+        $retData = apiCellType::apiCellTypeGet(Session::get('attest'), 2, $cell_type);
         if ($retData) {
             if ($retData['ret_code'] == 0) {
                 if(substr( $retData['file_id_big'],10,2)!='00'){
@@ -147,7 +147,7 @@ class Outbloodtype extends Rest
             }
         }
 
-        return (new View())->fetch('/celltype/edit', $data );
+        return (new View())->fetch('/outbloodtype/edit', $data );
     }
 
     public function index()

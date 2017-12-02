@@ -162,10 +162,13 @@
                 $('#this_table  tr td').find('.checkchild').each(function(){
                     if($(this).prop('checked')==true){
                         num++;
-                        checkValue= $(this).val();
-                        checkString += checkValue +',' ;
+                        if('' == checkString){
+                            checkString = $(this).val();
+                        }else{
+                            checkString = checkString + ','+ $(this).val();
+                        }
                     }
-                })
+                });
                 if(checkString=='') layer.msg('请至少选择一个项目');
                 if(num>1000) layer.msg('单次下载项目个数不要超过1000');
                 if(checkString!==''&&num<1000){

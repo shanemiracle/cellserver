@@ -59,10 +59,10 @@
                     </div>
                 </div>
 
-                <div class="text-c mt-20 size-big " id="down_file" style="font-size: 16px;;display: none">
-                    <a id="link_file" href="http://localhost:8888/file/08/6184a0fb4397d010e1fdb54516dfd6.png"
-                       download="赵丽颖.png" class="btn btn-primary radius">下载列表</a>
-                </div>
+                <!--<div class="text-c mt-20 size-big " id="down_file" style="font-size: 16px;">-->
+                    <!--<a id="link_file" href="http://localhost:8888/file/08/6184a0fb4397d010e1fdb54516dfd6.png"-->
+                       <!--download="赵丽颖.png" class="btn btn-primary radius">下载列表</a>-->
+                <!--</div>-->
             <!--</div>-->
             <div class="page-container" id="dv_search" style="padding:5px">
                 <div class="  bg-1 bk-gray ">
@@ -91,7 +91,7 @@
                                 </button>
                             </span>
                         <!--<a href="" class="btn btn-primary radius" id="down_package" style="display:none">下载</a>-->
-                            <span id="down_file" style="display:none">
+                            <span id="down_file" style="display:none" class="">
                             <a id="link_file" href="http://localhost:8888/file/08/6184a0fb4397d010e1fdb54516dfd6.png"
                                download="赵丽颖.png" class="btn btn-primary radius">下载列表</a>
                             </span>
@@ -144,6 +144,8 @@
             var progressValue =$('#progressValue');
             var down_file = document.getElementById("down_file");
             var link_file = document.getElementById("link_file");
+            var allNum;
+            var checkString='';
 
             function initDown() {
                 allNum = 0;
@@ -157,9 +159,9 @@
             $('#pre_download').on('click', function (e) {
                 e.preventDefault();
                 var checkValue='',
-                    checkString='',
                             num=0;
-                $('#this_table  tr td').find('.checkchild').each(function(){
+                    checkString='';
+                    $('#this_table  tr td').find('.checkchild').each(function(){
                     if($(this).prop('checked')==true){
                         num++;
                         if('' == checkString){
@@ -213,9 +215,16 @@
 //                    alert("请先勾选项目");
 //                }
             });
+            $('#down_file').on('click',function(){
+                allNum = 0;
+                $('#down_file').hide();
+                $('#pre_download').show();
+                $('#progress_gen').hide();
+            })
 
             function successGen(file_path, name) {
-                btn_download.disabled = false;
+//                btn_download.disabled = false;
+                pre_download.disabled = false;
                 $('#progress_gen').hide();
                 $('#down_file').show();
                 $('#btn_download').hide();
@@ -232,7 +241,6 @@
             }
 
             //获取生成进度
-            var allNum = 0;
 
 
             function progresssGet(get_id) {
@@ -264,6 +272,7 @@
                         }
                         else {
                             successGen(d['file_path'], d['request_id']);
+
                         }
                     }
                     else {

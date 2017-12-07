@@ -260,7 +260,7 @@
 //                        progressValue.style.width = d['download_per'] + "%";
                         progressValue.css('width',d['download_per'] +'%');
                         if (d['download_per'] <= 99) {
-                            setTimeout(progress(req_id), 100);
+                            setTimeout(progress(req_id), 1000);
                         }
                         else {
                             successGen(d['file_path'], d['request_id']);

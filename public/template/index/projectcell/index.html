@@ -7,8 +7,13 @@
     <link rel="stylesheet" type="text/css" href="/template/static/css/chosen.css"/>
     <link rel="stylesheet" type="text/css" href="/template/static/css/jquery.steps.css">
     <style>
-        .progress,.progress-bar,.sr-only{height:10px; font-size:0;line-height:0}
-        .progress{overflow:hidden; width:400px;-khtml-border-radius:6px;-ms-border-radius:6px;-o-border-radius:6px;-moz-border-radius:6px;-webkit-border-radius:6px;border-radius:6px}
+        .progress,.progress-bar,.sr-only{height:14px; line-height:0}
+        .progress{ overflow:hidden;width:400px;-khtml-border-radius:6px;-ms-border-radius:6px;-o-border-radius:6px;-moz-border-radius:6px;-webkit-border-radius:6px;border-radius:6px}
+        .progress i{
+            position:absolute;
+            left:-60px;
+            top:5px;
+        }
         .progress-bar{width:100%;background-color:#ccc}
         .sr-only{display:inline-block; background-color:#58b957}
 
@@ -51,10 +56,11 @@
                     <!--<input type="button" id="btn_download" class="btn btn-primary radius mt-20 text-c " value="生成项目压缩包">-->
                 <!--</div>-->
 
-                <div id="progress_gen" style="display:none">
+                <div id="progress_gen"  style="display:none">
                     <div  class="progress">
+                        <i class="f-l">压缩中...</i>
                         <div class="progress-bar ">
-                            <span class="sr-only" id="progressValue" style="width:0%"></span>
+                           <span class="sr-only" id="progressValue" style="width:0%"></span>
                         </div>
                     </div>
                 </div>
@@ -87,7 +93,7 @@
                             </span>
                             <span class="ml-5">
                                 <button  class="btn btn-primary radius" id="pre_download" name="pre_download" style="display:inline-block">
-                                    <i class="Hui-iconfont Hui-iconfont-down product-rar">生成项目压缩包</i>
+                                    <i class="Hui-iconfont Hui-iconfont-down product-rar"></i>项目压缩及下载
                                 </button>
                             </span>
                         <!--<a href="" class="btn btn-primary radius" id="down_package" style="display:none">下载</a>-->
@@ -132,15 +138,11 @@
 
     <script>
         $(document).ready(function () {
-//        $('#dv_search').show();
-//        $('#dv_down').hide();
+
             var step_search = document.getElementById("step_search");
             var step_down = document.getElementById("step_down");
-            var textpro = document.getElementById("info_data");
 
             var pre_download = document.getElementById("pre_download");
-
-//            var progressValue = document.getElementById("progressValue");
             var progressValue =$('#progressValue');
             var down_file = document.getElementById("down_file");
             var link_file = document.getElementById("link_file");
@@ -174,7 +176,7 @@
                 if(checkString=='') layer.msg('请至少选择一个项目');
                 if(num>1000) layer.msg('单次下载项目个数不要超过1000');
                 if(checkString!==''&&num<1000){
-//                    $('#pre_download .product-rar').html('下载');
+
                     $('#pre_download').hide();
                     $('#progress_gen').show();
 
@@ -183,7 +185,7 @@
                     var request_id = SparkMD5.hash(checkString);
                     $.post('/projectcell/ajax_download_create?request_id=' + request_id + "&id_list=" + checkString, null, function (d) {
                         if (d != 0) {
-                            alert("创建下载失败" + d);
+                            layer.msg("创建下载失败" + d);
                             return;
                         }
                         else {
@@ -191,8 +193,6 @@
                         }
                     });
                 }
-
-
 //                if (textpro.value != "") {
 //                    $('#pre_download').hide();
 //                    btn_download.disabled = true;
@@ -220,6 +220,8 @@
                 $('#down_file').hide();
                 $('#pre_download').show();
                 $('#progress_gen').hide();
+                $('#this_table  tr td').find('.checkchild').prop('checked',false);
+                progressValue.css('width', 0 +'%');
             })
 
             function successGen(file_path, name) {
@@ -231,17 +233,14 @@
 
                 //获取生成文件路径和名称生成链接
                 var request_id = SparkMD5.hash(checkString);
-
                 link_file.download = name + ".zip";
-                link_file.text = "压缩包下载";
+                link_file.text = "";
                 link_file.href = file_path;
-
+                link_file.click();
                 console.log("download href" + link_file.href);
-
             }
 
             //获取生成进度
-
 
             function progresssGet(get_id) {
                 var result;
@@ -258,14 +257,12 @@
 
             //进度条
             function progress(req_id) {
-//                console.log("progress");
                 $.post('/projectcell/ajax_download_progress?request_id=' + req_id, null, function (d) {
                     if (!d) {
                         return null;
                     }
                     console.log(d);
                     if (d['ret_code'] == 0) {
-//                        progressValue.style.width = d['download_per'] + "%";
                         progressValue.css('width',d['download_per'] +'%');
                         if (d['download_per'] <= 99) {
                             setTimeout(progress(req_id), 100);
@@ -280,9 +277,7 @@
 
                         initDown();
                     }
-//                    console.log("progress " + d['download_per']);
                 });
-
 //            var valNumber =  progresssGet(req_id);
 //
 //            if(valNumber == null) {
@@ -301,10 +296,8 @@
 //                successGen(valNumber['file_path']);
 //            }
             }
-
 //
 ////===========================医院选择框================================
-//
             var hos = $("#s_hospital");
             $.post('/hospital/ajax_list', null, function (d) {
                 //这里要拼接下e 如果显示不出来 记得是 eval('+e+');
@@ -327,8 +320,6 @@
 
 
             });
-
-
 //===========================表格================================
 
             var date_min = $('#t_datemin');
@@ -398,19 +389,15 @@
             $("button[name='btn_search']").bind("click", function () { //按钮 触发table重新请求服务器
                 table.ajax.url("/projectcell/ajax_list?hos_no=" + hos.val() + "&s_time=" + date_min.val() + "&e_time=" + date_max.val()).load(function (e) {
                     $('[name="checkchild"]').bind("click", function (e) { //按钮 触发table重新请求服务器
-//            e.preventDefault();
                         e.stopPropagation();
                     });
                 }, false);
-//            alert(1);
             });
 
-//
             $(".checkall").click(function () {
                 var check = $(this).prop("checked");
                 $(".checkchild").prop("checked", check);
             });
-
 //            $('#this_table tbody ').on('click', 'tr', function () {
 ////                var tr = $(this);
 //                var checkedTd = $(this).find('.checkchild');
@@ -424,7 +411,6 @@
 ////            var index = tr.index();
 ////                checked.prop("checked", !checkedValue);
 //            });
-
             //选择的项目
 //            function tableGetCheck() {
 //                var oldVal = textpro.value;
@@ -459,33 +445,30 @@
 //                return -1;
 //            }
 
-            ///////////////////////////////tab//////////////
-
-
-            function jumpSearch() {
-                step_down.className = "step";
-                step_search.className = "active step";
-
-                $('#dv_search').show();
-                $('#dv_down').hide();
-            }
-
-            function jumpDown() {
-                if (0 == tableGetCheck()) {
-                    step_down.className = "active step";
-                    step_search.className = "step";
-
-                    $('#dv_search').hide();
-                    $('#dv_down').show();
-                }
-                else {
-                    alert("单次下载项目个数不要超过1千");
-                }
-
-            }
+//            ///////////////////////////////tab//////////////
+//            function jumpSearch() {
+//                step_down.className = "step";
+//                step_search.className = "active step";
+//
+//                $('#dv_search').show();
+//                $('#dv_down').hide();
+//            }
+//
+//            function jumpDown() {
+//                if (0 == tableGetCheck()) {
+//                    step_down.className = "active step";
+//                    step_search.className = "step";
+//
+//                    $('#dv_search').hide();
+//                    $('#dv_down').show();
+//                }
+//                else {
+//                    alert("单次下载项目个数不要超过1千");
+//                }
+//
+//            }
 //            step_search.onclick = jumpSearch;
 //            step_down.onclick = jumpDown;
-
         });
     </script>
 

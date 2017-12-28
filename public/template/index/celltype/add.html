@@ -401,13 +401,13 @@
 
 
                 $.post('/celltype/ajax_add', {
-                    'father_cell_type': $('#father_cell_type').val(),
+                    'father_cell_type':$('#father_cell_type').val(),
                     'cn_name': $('#cn_name').val(),
                     'en_name': $('#en_name').val(),
                     'abb_name': $('#abb_name').val(),
                     'size_min': $('#size_min').val(),
                     'size_max': $('#size_max').val(),
-                    'remark': $('#remark').val(),
+                    'remark': $('#info_data').val(),
                     'file_id_big': $('#file_id_big').val(),
                     'file_id_small': $('#file_id_small').val(),
                     'color_r': parseInt(c_r, 16),

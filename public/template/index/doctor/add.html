@@ -220,7 +220,6 @@
 
 
     $(document).ready(function () {
-
         var logo = $('#input-id');
         var sign = $('#input-id2');
         logo.fileinput({
@@ -362,7 +361,7 @@
         $('#btnSubmit').on('click', function () {
             if (form.valid()) {
                 $.post('/doctor/ajax_add', {
-                    'doctor_name': $('#doctor_name').val(),
+                    'doctor_name': removeAllSpace($('#doctor_name').val()),
                     'pwd': $('#pwd').val(),
                     'hospital_no': $('#hospital_no').val(),
                     'level': $('#level').val(),
@@ -388,7 +387,12 @@
 
         });
 
+        function removeAllSpace(str) {
+            return str.replace(/\s+/g, "");
+        }
+
     });
+
 
 
 </script>

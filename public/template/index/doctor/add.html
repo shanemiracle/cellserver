@@ -359,6 +359,7 @@
         });
 
         $('#btnSubmit').on('click', function () {
+            console.log($('#logo').val());
             if (form.valid()) {
                 $.post('/doctor/ajax_add', {
                     'doctor_name': removeAllSpace($('#doctor_name').val()),
@@ -366,7 +367,8 @@
                     'hospital_no': $('#hospital_no').val(),
                     'level': $('#level').val(),
                     'department': $('#department').val(),
-                    'logo': $('#logo').val(),
+//                    'logo': $('#logo').val(),
+                    'logo':$('#logo').val()===''?'0100000d9e08d8ccfeb4d2238714c85a915a2e6a2004':$('#logo').val(),
                     'sign_pic': $('#sign_pic').val(),
                     'mobile_no': $('#mobile').val(),
                     'role': $('#role').val(),
@@ -374,8 +376,8 @@
                     'info_data': $('#info_data').val()
                 }, function (data) {
                     if (data == 0) {
-                        layer.msg('添加成功');
-                        location.href='/doctor/index';
+//                        layer.msg('添加成功');
+//                        location.href='/doctor/index';
                         var index = parent.layer.getFrameIndex(window.name);
                         parent.layer.close(index);
                     }

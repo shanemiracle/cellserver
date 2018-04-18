@@ -282,6 +282,7 @@
             if( obj ) {
                 if(obj.ret == 0 ) {
                     $('#logo').val(obj.logo) ;
+                    alert(obj.logo);
 
                 }
                 else{
@@ -387,13 +388,14 @@
                     'hospital_no': $('#hospital_no').val(),
                     'level': $('#level').val(),
                     'department': $('#department').val(),
-                    'logo': $('#logo').val(),
+                    'logo':$('#logo').val(),
                     'sign_pic': $('#sign_pic').val(),
                     'mobile_no': $('#mobile').val(),
                     'role': $('#role').val(),
                     'learn_level': $('#learn_level').val(),
                     'info_data': $('#info_data').val()
                 }, function (data) {
+                    console.log($('#logo').val());
                     if (data == 0) {
                         alert('添加成功');
                         var index = parent.layer.getFrameIndex(window.name);
@@ -401,6 +403,7 @@
                     }
                     else {
                         alert(data);
+
                     }
                 });
             }

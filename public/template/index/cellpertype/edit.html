@@ -1,18 +1,20 @@
 ﻿<!DOCTYPE HTML>
 <html>
+
 <head>
     {include file='../public/template/index/common/commonStyle.html'/}
     <title>编辑细胞比例</title>
 </head>
+
 <body>
-{include file='../public/template/index/common/top.html'/}
-{include file='../public/template/index/common/sideBar.html'/}
+    {include file='../public/template/index/common/top.html'/} {include file='../public/template/index/common/sideBar.html'/}
     <section class="Hui-article-box">
-        <nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页
+        <nav class="breadcrumb">
+            <i class="Hui-iconfont">&#xe67f;</i> 首页
             <span class="c-gray en">&gt;</span> 细胞比例管理
             <span class="c-gray en">&gt;</span> 编辑细胞比例
-            <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px"
-               href="javascript:location.replace(location.href);" title="刷新">
+            <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);"
+                title="刷新">
                 <i class="Hui-iconfont">&#xe68f;</i>
             </a>
         </nav>
@@ -23,41 +25,35 @@
                     <div class="row cl">
                         <label class="form-label col-xs-4 col-sm-2 col-sm-offset-1">细胞比例编号:</label>
                         <div class="formControls col-xs-8 col-sm-6">
-                            <input type="text" class="input-text radius" value="{$cell_per_type}" id="cell_per_type"
-                                   name="cell_per_type" readonly>
+                            <input type="text" class="input-text radius" value="{$cell_per_type}" id="cell_per_type" name="cell_per_type" readonly>
                         </div>
                     </div>
 
                     <div class="row cl">
                         <label class="form-label col-xs-4 col-sm-2 col-sm-offset-1">信息版本:</label>
                         <div class="formControls col-xs-8 col-sm-6">
-                            <input type="text" class="input-text radius" value="{$info_ver}" id="info_ver"
-                                   name="info_ver" readonly>
+                            <input type="text" class="input-text radius" value="{$info_ver}" id="info_ver" name="info_ver" readonly>
                         </div>
                     </div>
                     <div class="row cl">
                         <label class="form-label col-xs-4 col-sm-2 col-sm-offset-1">细胞比例中文名:</label>
                         <div class="formControls col-xs-8 col-sm-6">
-                            <input type="text" class="input-text radius" value="{$per_name}" id="per_name"
-                                   name="per_name" maxlength="42" required autofocus>
+                            <input type="text" class="input-text radius" value="{$per_name}" id="per_name" name="per_name" maxlength="42" required autofocus>
                         </div>
                     </div>
 
                     <div class="row cl">
                         <label class="form-label col-xs-4 col-sm-2 col-sm-offset-1">细胞比例英文名:</label>
                         <div class="formControls col-xs-8 col-sm-6">
-                            <input type="text" class="input-text radius" value="{$en_name}" id="en_name" name="en_name"
-                                   maxlength="120">
+                            <input type="text" class="input-text radius" value="{$en_name}" id="en_name" name="en_name" maxlength="120">
                         </div>
                     </div>
                     <div class="row cl">
                         <label class="form-label col-xs-4 col-sm-2 col-sm-offset-1">表达式:</label>
                         <div class="formControls col-xs-8 col-sm-6">
-                           <textarea id="expression" name="expression" cols rows class="textarea" placeholder="..."
-                           datatype="*10-510"
-                           maxlength="510"
-                           onkeypress="$.Huitextarealength(this,510)" onkeyup="$.Huitextarealength(this,510)">{$expression}
-                           </textarea>
+                            <textarea id="expression" name="expression" cols rows class="textarea" placeholder="..." datatype="*10-510" maxlength="510"
+                                onkeypress="$.Huitextarealength(this,510)" onkeyup="$.Huitextarealength(this,510)">{$expression}
+                            </textarea>
                             <p class="textarea-numberbar">
                                 <em class="textarea-length">*</em>/510
                             </p>
@@ -67,10 +63,9 @@
                     <div class="row cl">
                         <label class="form-label col-xs-4 col-sm-2 col-sm-offset-1">描述:</label>
                         <div class="formControls col-xs-8 col-sm-6">
-                          <textarea id="remark" name="remark" cols rows class="textarea" placeholder="..." datatype="*10-1000"
-                           maxlength="1000"
-                           onkeypress="$.Huitextarealength(this,1000)" onkeyup="$.Huitextarealength(this,1000)">{$remark}
-                          </textarea>
+                            <textarea id="remark" name="remark" cols rows class="textarea" placeholder="..." datatype="*10-1000" maxlength="1000" onkeypress="$.Huitextarealength(this,1000)"
+                                onkeyup="$.Huitextarealength(this,1000)">{$remark}
+                            </textarea>
                             <p class="textarea-numberbar">
                                 <em class="textarea-length">*</em>/1000
                             </p>
@@ -84,70 +79,66 @@
                 </form>
             </article>
         </div>
-</section>
+    </section>
 
-{include file='../public/template/index/common/commonJs.html'/}
+    {include file='../public/template/index/common/commonJs.html'/}
 
 
 
-<script type="text/javascript" src="/template/lib/jquery.validation/1.14.0/jquery.validate.js"></script>
-<script type="text/javascript" src="/template/lib/jquery.validation/1.14.0/validate-methods.js"></script>
+    <script type="text/javascript" src="/template/lib/jquery.validation/1.14.0/jquery.validate.js"></script>
+    <script type="text/javascript" src="/template/lib/jquery.validation/1.14.0/validate-methods.js"></script>
 
-<script type="text/javascript">
-    var form = $('#form_add');
+    <script type="text/javascript">
+        var form = $('#form_add');
 
-    jQuery.validator.addMethod("isChines", function (value, element) {
-        var chn = /[\u4E00-\u9FA5]/;
-        return !chn.test(value);
-    }, "表达式不能包含中文");
+        jQuery.validator.addMethod("isChines", function (value, element) {
+            var chn = /[\u4E00-\u9FA5]/;
+            return !chn.test(value);
+        }, "表达式不能包含中文");
 
-    $(document).ready(function () {
-        form.validate({
-            rules: {
-                expression: {
-                    isChines: false
-                },
-                en_name: {
-                    isChines: true
-                }
-            },
-            messages: {
-                expression: {
-                    isChines: "表达式不能包含中文"
-                },
-                en_name: {
-                    isChines: "不能包含中文"
-                }
-            }
-        });
-
-        $('#btnSubmit').on('click', function () {
-            if (form.valid()) {
-                $.post('/cellpertype/ajax_edit', {
-                    'cell_per_type': $('#cell_per_type').val(),
-                    'info_ver': $('#info_ver').val(),
-                    'per_name': $('#per_name').val(),
-                    'en_name': $('#en_name').val(),
-                    'expression': $('#expression').val(),
-                    'remark': $('#remark').val()
-                }, function (data) {
-                    if (data == 0) {
-                        layer.msg('修改成功');
-                        location.href='/cellpertype/index';
-                        var index = parent.layer.getFrameIndex(window.name);
-                        parent.layer.close(index);
+        $(document).ready(function () {
+            form.validate({
+                rules: {
+                    expression: {
+                        isChines: false
+                    },
+                    en_name: {
+                        isChines: true
                     }
-                    else {
-                        alert(data);
+                },
+                messages: {
+                    expression: {
+                        isChines: "表达式不能包含中文"
+                    },
+                    en_name: {
+                        isChines: "不能包含中文"
                     }
-                });
-            }
+                }
+            });
 
+            $('#btnSubmit').on('click', function () {
+                if (form.valid()) {
+                    $.post('/cellpertype/ajax_edit', {
+                        'cell_per_type': $('#cell_per_type').val(),
+                        'info_ver': $('#info_ver').val(),
+                        'per_name': $('#per_name').val(),
+                        'en_name': $('#en_name').val(),
+                        'expression': $('#expression').val(),
+                        'remark': $('#remark').val()
+                    }, function (data) {
+                        if (data == 0) {
+                            layer.msg('修改成功');
+                            location.href = '/cellpertype/index';
+                            var index = parent.layer.getFrameIndex(window.name);
+                            parent.layer.close(index);
+                        } else {
+                            layer.msg(data);
+                        }
+                    });
+                }
+            });
         });
-
-    });
-
-
-</script>
+    </script>
 </body>
+
 </html>

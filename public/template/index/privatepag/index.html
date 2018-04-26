@@ -62,7 +62,7 @@
     </div>
 </section>
 {include file='../public/template/index/common/commonJs.html'/}
- <script type="text/javascript" src="/template/lib/js/chosen.jquery.js"></script>
+ <script type="text/javascript" src="/template/lib/js/chosen.jquery.min.js"></script>
 
  <script type="text/javascript">
     var table;
@@ -171,20 +171,6 @@
                 layer.msg('请选择要添加私有包的医院', {icon: 7, time: 1500}, null);
                 return;
             }
-//            var index = layer.open({
-//                type: 2,
-//                title: false,
-//                closeBtn: 0,
-////                area: ['800px', '480px'],
-//                content: '/privatepag/add?hard_ver=' + hard_ver + '&hospital_no=' + hos.val() + '&hospital_name=' + hos.find('option:selected').text(),
-//                end: function () {
-//                    table.ajax.reload(function () {
-//                        $.post('/privatepag/ajax_count?hard_ver=' + hard_ver + '&hospital_no=' + hos.val(), null, function (d) {
-//                            $('#total_num').html(d);
-//                        });
-//                    }, false);
-//                }
-//            });
             $(this).attr('href','/privatepag/add?hard_ver=' + hard_ver + '&hospital_no=' + hos.val() + '&hospital_name=' + hos.find('option:selected').text())
 
         }

@@ -3,7 +3,7 @@
 <head>
     <title >诊断列表</title>
     {include file='../public/template/index/common/commonStyle.html'/}
-    <link rel="stylesheet" type="text/css" href="/template/static/css/chosen.css"/>
+    <link rel="stylesheet" type="text/css" href="/template/static/css/chosen.min.css"/>
 </head>
 <body>
 {include file='../public/template/index/common/top.html'/}
@@ -38,7 +38,7 @@
     </div>
 </section>
   {include file='../public/template/index/common/commonJs.html'/}
-  <script type="text/javascript" src="/template/lib/js/chosen.jquery.js"></script>
+  <script type="text/javascript" src="/template/lib/js/chosen.jquery.min.js"></script>
 <script >
     var table;
     $(document).ready(function () {
@@ -86,42 +86,15 @@
         $('#btnAdd').on('click', addRow);
 
         function addRow() {
-//            var index= layer.open({
-//                type: 2,
-////                maxmin:true,
-//                title: false,
-//                closeBtn: 0,
-////                area: ['800px', '480px'],
-//                content: '/diagcheck/add',
-//                end: function () {
-//                    table.ajax.reload(function () {
-//                        $.post('/diagcheck/ajax_count', null, function (d) {
-//                            $('#total_num').html(d);
-//                        });
-//                    },false);
-//                }
-//            });
           $(this).attr('href','/diagcheck/add');
         }
          //编辑
         $('#hos_table tbody').on('click','a#edit',function () {
             var data = table.row($(this).parents('tr')).data();
-//            var index= layer.open({
-//                type: 2,
-////                title: '编辑诊断比例',
-//                closeBtn: 0,
-//                title:false,
-//                area: ['800px', '480px'],
-//                content: '/diagcheck/edit?'+'diag_check_type='+data['diag_check_type'],
-//                end: function () {
-//                    table.ajax.reload(null,false);
-//                }
-//            });
            $(this).attr('href','/diagcheck/edit?'+'diag_check_type='+data['diag_check_type']);
         });
 
         $('#hos_table tbody').on('click','a#del',function () {
-//            alert('del');
             var data = table.row($(this).parents('tr')).data();
             layer.confirm('是否删除?',{icon:3,title:'提示'},function(index){
                 $.post('/diagcheck/ajax_drop',{'diag_check_type':data['diag_check_type']},function (d) {

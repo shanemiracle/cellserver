@@ -1,111 +1,100 @@
 ﻿<!DOCTYPE HTML>
 <html>
+
 <head>
-    <!--[if IE 6]>
     {include file='../public/template/index/common/commonStyle.html'/}
-    <![endif]-->
     <title>细胞类型列表</title>
 </head>
+
 <body>
-{include file='../public/template/index/common/top.html'/}
-{include file='../public/template/index/common/sideBar.html'/}
-<section class="Hui-article-box">
-    <nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页
-        <span class="c-gray en">&gt;</span> 检测类型管理
-        <span class="c-gray en">&gt;</span> 检测类型列表
-        <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新">
-            <i class="Hui-iconfont">&#xe68f;</i>
-        </a>
-    </nav>
-    <div class="Hui-article">
-        <article class="cl pd-20">
-            <div class="mt-20">
-                <table id='this_table'
-                       class="table table-bg table-border table-bordered th radius table-hover table-sort">
-                    <thead class="text-c">
-                    <th>检测类型编号</th>
-                    <th>信息版本</th>
-                    <th>名称</th>
-                    <th>操作</th>
-                    </thead>
-                    <tbody class="text-c">
+    {include file='../public/template/index/common/top.html'/} {include file='../public/template/index/common/sideBar.html'/}
+    <section class="Hui-article-box">
+        <nav class="breadcrumb">
+            <i class="Hui-iconfont">&#xe67f;</i> 首页
+            <span class="c-gray en">&gt;</span> 检测类型管理
+            <span class="c-gray en">&gt;</span> 检测类型列表
+            <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);"
+                title="刷新">
+                <i class="Hui-iconfont">&#xe68f;</i>
+            </a>
+        </nav>
+        <div class="Hui-article">
+            <article class="cl pd-20">
+                <div class="mt-20">
+                    <table id='this_table' class="table table-bg table-border table-bordered th radius table-hover table-sort">
+                        <thead class="text-c">
+                            <th>检测类型编号</th>
+                            <th>信息版本</th>
+                            <th>名称</th>
+                            <th>操作</th>
+                        </thead>
+                        <tbody class="text-c">
 
-                    </tbody>
+                        </tbody>
 
-                </table>
-            </div>
-        </article>
-    </div>
-</section>
+                    </table>
+                </div>
+            </article>
+        </div>
+    </section>
+    {include file='../public/template/index/common/commonJs.html'/}
+    <script type="text/javascript">
+        var table;
+        $(document).ready(function () {
 
-{include file='../public/template/index/common/commonJs.html'/}
-<script type="text/javascript">
-    var table;
-    $(document).ready(function () {
-
-        table = $('.table-sort').DataTable({
-            ajax: {
-                url: "/checktype/ajax_list"
-            },
-            bStateSave: true,//状态保存
-            aoColumnDefs: [
-                //{"bVisible": false, "aTargets": [ 3 ]} //控制列的隐藏显示
-                {"orderable": false, "aTargets": [1,2,3]}// 不参与排序的列
-            ],
-            columns: [
-                {data: 'check_type'},
-                {data: 'info_ver'},
-                {data:'name'},
-                {
-                    targets: -1,
-                    data: null,
-                    defaultContent: '<a href="javascript:void(0);" id="edit" class="btn btn-primary radius"><i class="Hui-iconfont Hui-iconfont-edit"></i>详情</a>'
-                }
-            ],
-            language: {
-                'emptyTable': '没有数据',
-                'loadingRecords': '加载中...',
-                'processing': '查询中...',
-                'search': '检索:',
-                'lengthMenu': '每页 _MENU_ 条',
-                'zeroRecords': '没有数据',
-                'paginate': {
-                    'first': '第一页',
-                    'last': '最后一页',
-                    'next': '后一页',
-                    'previous': '前一页'
+            table = $('.table-sort').DataTable({
+                ajax: {
+                    url: "/checktype/ajax_list"
                 },
-                'info': '第 _PAGE_ 页 / 总 _PAGES_ 页 / 共 _TOTAL_ 条',
-                'infoEmpty': '没有数据',
-                'infoFiltered': '(过滤总件数 _MAX_ 条)'
-            }
+                bStateSave: true, //状态保存
+                aoColumnDefs: [
+                    //{"bVisible": false, "aTargets": [ 3 ]} //控制列的隐藏显示
+                    {
+                        "orderable": false,
+                        "aTargets": [1, 2, 3]
+                    } // 不参与排序的列
+                ],
+                columns: [{
+                        data: 'check_type'
+                    },
+                    {
+                        data: 'info_ver'
+                    },
+                    {
+                        data: 'name'
+                    },
+                    {
+                        targets: -1,
+                        data: null,
+                        defaultContent: '<a href="javascript:void(0);" id="edit" class="btn btn-primary radius"><i class="Hui-iconfont Hui-iconfont-edit"></i>详情</a>'
+                    }
+                ],
+                language: {
+                    'emptyTable': '没有数据',
+                    'loadingRecords': '加载中...',
+                    'processing': '查询中...',
+                    'search': '检索:',
+                    'lengthMenu': '每页 _MENU_ 条',
+                    'zeroRecords': '没有数据',
+                    'paginate': {
+                        'first': '第一页',
+                        'last': '最后一页',
+                        'next': '后一页',
+                        'previous': '前一页'
+                    },
+                    'info': '第 _PAGE_ 页 / 总 _PAGES_ 页 / 共 _TOTAL_ 条',
+                    'infoEmpty': '没有数据',
+                    'infoFiltered': '(过滤总件数 _MAX_ 条)'
+                }
 
+            });
+
+            $('#this_table tbody').on('click', 'a#edit', function () {
+                var data = table.row($(this).parents('tr')).data();
+                $(this).attr('href', 'checktype/edit?' + 'check_type=' + data['check_type'])
+            });
         });
-
-        $('#this_table tbody').on('click', 'a#edit', function () {
-
-            var data = table.row($(this).parents('tr')).data();
-//           alert(data['hospital_number']);
-//            var index = layer.open({
-//                type: 2,
-////                maxmin: true,
-//                title: false,
-//                closeBtn: 0,
-////                area: ['800px', '300px'],
-//                content: 'checktype/edit?' + 'check_type=' + data['check_type'],
-//                end: function () {
-//                    table.ajax.reload(null, false);
-//                }
-//            });
-//
-//            layer.full(index);
-            $(this).attr('href','checktype/edit?' + 'check_type=' + data['check_type'])
-
-         }
-        );
-    });
-
-
-</script>
+    </script>
 </body>
+
 </html>

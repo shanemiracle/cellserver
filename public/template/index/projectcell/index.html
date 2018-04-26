@@ -1,476 +1,409 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>projectcell</title>
     {include file='../public/template/index/common/commonStyle.html'/}
-    <link rel="stylesheet" type="text/css" href="/template/static/css/chosen.css"/>
+    <link rel="stylesheet" type="text/css" href="/template/static/css/chosen.min.css" />
     <link rel="stylesheet" type="text/css" href="/template/static/css/jquery.steps.css">
     <style>
-        .progress,.progress-bar,.sr-only{height:14px; line-height:0}
-        .progress{ overflow:hidden;width:400px;-khtml-border-radius:6px;-ms-border-radius:6px;-o-border-radius:6px;-moz-border-radius:6px;-webkit-border-radius:6px;border-radius:6px}
-        .progress i{
-            position:absolute;
-            left:-60px;
-            top:5px;
+        .progress,
+        .progress-bar,
+        .sr-only {
+            height: 14px;
+            line-height: 0
         }
-        .progress-bar{width:100%;background-color:#ccc}
-        .sr-only{display:inline-block; background-color:#58b957}
 
-        #progress_gen{
-            position:absolute;
-            top:55px;
-            left:25%;
+        .progress {
+            overflow: hidden;
+            width: 400px;
+            -khtml-border-radius: 6px;
+            -ms-border-radius: 6px;
+            -o-border-radius: 6px;
+            -moz-border-radius: 6px;
+            -webkit-border-radius: 6px;
+            border-radius: 6px
+        }
+
+        .progress i {
+            position: absolute;
+            left: -60px;
+            top: 5px;
+        }
+
+        .progress-bar {
+            width: 100%;
+            background-color: #ccc
+        }
+
+        .sr-only {
+            display: inline-block;
+            background-color: #58b957
+        }
+
+        #progress_gen {
+            position: absolute;
+            top: 55px;
+            left: 25%;
         }
     </style>
 </head>
+
 <body>
-{include file='../public/template/index/common/top.html'/}
-{include file='../public/template/index/common/sideBar.html'/}
-<section class="Hui-article-box">
-    <nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页
-        <span class="c-gray en">&gt;</span> 学习库管理
-        <span class="c-gray en">&gt;</span> 项目细胞下载
-        <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新">
-            <i class="Hui-iconfont">&#xe68f;</i>
-        </a>
-    </nav>
-    <div class="Hui-article">
-        <article class="cl pd-5">
+    {include file='../public/template/index/common/top.html'/} {include file='../public/template/index/common/sideBar.html'/}
+    <section class="Hui-article-box">
+        <nav class="breadcrumb">
+            <i class="Hui-iconfont">&#xe67f;</i> 首页
+            <span class="c-gray en">&gt;</span> 学习库管理
+            <span class="c-gray en">&gt;</span> 项目细胞下载
+            <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);"
+                title="刷新">
+                <i class="Hui-iconfont">&#xe68f;</i>
+            </a>
+        </nav>
+        <div class="Hui-article">
+            <article class="cl pd-5">
 
-
-            <!--<div class="progress"><div class="progress-bar"><span class="sr-only" style="width:25%"></span></div></div>-->
-            <!--<div class="two steps">-->
-                <!--<span class="active step" id="step_search">查询</span>-->
-                <!--<span class="step" id="step_down">下载</span>-->
-            <!--&lt;!&ndash;</div>&ndash;&gt;-->
-            <!--<div class="page-container" id="dv_down" style="display: none; padding:5px">-->
-                <!--<h5>勾选的项目ID列表:-->
-                    <!--<small>(共计<span id="total_num">0</span>个项目)</small>-->
-                <!--</h5>-->
-                <!--<div>-->
-                    <!--<textarea id="info_data" name="info_data" class="textarea"></textarea>-->
-                <!--</div>-->
-
-                <!--<div class="text-c">-->
-                    <!--<input type="button" id="btn_download" class="btn btn-primary radius mt-20 text-c " value="生成项目压缩包">-->
-                <!--</div>-->
-
-                <div id="progress_gen"  style="display:none">
-                    <div  class="progress">
+                <div id="progress_gen" style="display:none">
+                    <div class="progress">
                         <i class="f-l">压缩中...</i>
                         <div class="progress-bar ">
-                           <span class="sr-only" id="progressValue" style="width:0%"></span>
+                            <span class="sr-only" id="progressValue" style="width:0%"></span>
                         </div>
                     </div>
                 </div>
-
-                <!--<div class="text-c mt-20 size-big " id="down_file" style="font-size: 16px;">-->
-                    <!--<a id="link_file" href="http://localhost:8888/file/08/6184a0fb4397d010e1fdb54516dfd6.png"-->
-                       <!--download="赵丽颖.png" class="btn btn-primary radius">下载列表</a>-->
-                <!--</div>-->
-            <!--</div>-->
-            <div class="page-container" id="dv_search" style="padding:5px">
-                <div class="  bg-1 bk-gray ">
-                    <div>
-                        <i class="Hui-iconfont ml-5">选择医院 </i>
-                        <select id="s_hospital" data-placeholder="支持按名字搜索(不选则搜索全部医院)" style="width:360px;">
-                        </select>
+                <div class="page-container" id="dv_search" style="padding:5px">
+                    <div class="  bg-1 bk-gray ">
+                        <div>
+                            <i class="Hui-iconfont ml-5">选择医院 </i>
+                            <select id="s_hospital" data-placeholder="支持按名字搜索(不选则搜索全部医院)" style="width:360px;">
+                            </select>
                             <span>
                                 <i class="Hui-iconfont ml-5">开始日期 </i>
                             </span>
-                            <input type="text" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd',maxDate:'%y-%M-%d'})"
-                                   id="t_datemin" class="input-text Wdate" style="width:120px;">
+                            <input type="text" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd',maxDate:'%y-%M-%d'})" id="t_datemin" class="input-text Wdate"
+                                style="width:120px;">
                             <span>
-                              <i class="Hui-iconfont ">-结束日期 </i>
+                                <i class="Hui-iconfont ">-结束日期 </i>
                             </span>
-                            <input type="text" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd',minDate:$('#t_datemin').val(),maxDate:'%y-%M-%d'})"
-                                   id="t_datemax" class="input-text Wdate" style="width:120px;">
+                            <input type="text" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd',minDate:$('#t_datemin').val(),maxDate:'%y-%M-%d'})" id="t_datemax"
+                                class="input-text Wdate" style="width:120px;">
                             <span class=" ml-5">
                                 <button type="submit" class="btn btn-primary radius" id="btn_search" name="btn_search">
                                     <i class="Hui-iconfont Hui-iconfont-search"></i>查询
                                 </button>
                             </span>
                             <span class="ml-5">
-                                <button  class="btn btn-primary radius" id="pre_download" name="pre_download" style="display:inline-block">
+                                <button class="btn btn-primary radius" id="pre_download" name="pre_download" style="display:inline-block">
                                     <i class="Hui-iconfont Hui-iconfont-down product-rar"></i>项目压缩及下载
                                 </button>
                             </span>
-                        <!--<a href="" class="btn btn-primary radius" id="down_package" style="display:none">下载</a>-->
+                            <!--<a href="" class="btn btn-primary radius" id="down_package" style="display:none">下载</a>-->
                             <span id="down_file" style="display:none" class="">
-                            <a id="link_file" href="http://localhost:8888/file/08/6184a0fb4397d010e1fdb54516dfd6.png"
-                               download="赵丽颖.png" class="btn btn-primary radius">下载列表</a>
+                                <a id="link_file" href="http://localhost:8888/file/08/6184a0fb4397d010e1fdb54516dfd6.png" download="赵丽颖.png" class="btn btn-primary radius">下载列表</a>
                             </span>
 
+                        </div>
+                    </div>
+
+                    <div class="mt-5">
+                        <table id='this_table' class="table table-border table-bordered table-bg th radius table-hover table-sort">
+                            <thead>
+                                <tr class="text-c">
+                                    <th width="20">
+                                        <input type="checkbox" class="checkall">
+                                    </th>
+                                    <th width="40">ID</th>
+                                    <th width="180">项目编号</th>
+                                    <th width="130">项目时间</th>
+                                    <th width="130">审核医生</th>
+                                    <th width="80">病人姓名</th>
+                                    <th width="40">病人年龄</th>
+                                    <th width="40">病人性别</th>
+                                    <th width="80">玻片编号</th>
+                                    <th width="80">取材部位</th>
+                                </tr>
+                            </thead>
+                            <tbody class="text-c">
+
+                            </tbody>
+                        </table>
                     </div>
                 </div>
+            </article>
+        </div>
 
-                <div class="mt-10">
-                    <table id='this_table'
-                           class="table table-border table-bordered table-bg th radius table-hover table-sort">
-                        <thead>
-                        <tr class="text-c">
-                            <th width="20"><input type="checkbox" class="checkall"></th>
-                            <th width="40">ID</th>
-                            <th width="180">项目编号</th>
-                            <th width="130">项目时间</th>
-                            <th width="130">审核医生</th>
-                            <th width="80">病人姓名</th>
-                            <th width="40">病人年龄</th>
-                            <th width="40">病人性别</th>
-                            <th width="80">玻片编号</th>
-                            <th width="80">取材部位</th>
-                        </tr>
-                        </thead>
-                        <tbody class="text-c">
+        {include file='../public/template/index/common/commonJs.html'/}
+        <script type="text/javascript" src="/template/lib/js/chosen.jquery.min.js"></script>
+        <script type="text/javascript" src="/template/lib/js/jquery.steps.min.js"></script>
+        <script type="text/javascript" src="/template/lib/js/spark-md5.min.js"></script>
 
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </article>
-    </div>
+        <script>
+            $(document).ready(function () {
 
-    {include file='../public/template/index/common/commonJs.html'/}
-    <script type="text/javascript" src="/template/lib/js/chosen.jquery.js"></script>
-    <script type="text/javascript" src="/template/lib/js/jquery.steps.js"></script>
-    <script type="text/javascript" src="/template/lib/js/spark-md5.min.js"></script>
+                var step_search = document.getElementById("step_search");
+                var step_down = document.getElementById("step_down");
 
-    <script>
-        $(document).ready(function () {
+                var pre_download = document.getElementById("pre_download");
+                var progressValue = $('#progressValue');
+                var down_file = document.getElementById("down_file");
+                var link_file = document.getElementById("link_file");
+                var allNum;
+                var checkString = '';
 
-            var step_search = document.getElementById("step_search");
-            var step_down = document.getElementById("step_down");
+                function initDown() {
+                    allNum = 0;
+                    $('#down_file').hide();
+                    $('#pre_download').show();
+                    $('#progress_gen').hide();
+                    pre_download.disabled = false;
 
-            var pre_download = document.getElementById("pre_download");
-            var progressValue =$('#progressValue');
-            var down_file = document.getElementById("down_file");
-            var link_file = document.getElementById("link_file");
-            var allNum;
-            var checkString='';
+                }
 
-            function initDown() {
-                allNum = 0;
-                $('#down_file').hide();
-                $('#pre_download').show();
-                $('#progress_gen').hide();
-                pre_download.disabled = false;
-
-            }
-
-            $('#pre_download').on('click', function (e) {
-                e.preventDefault();
-                var checkValue='',
-                            num=0;
-                    checkString='';
-                    $('#this_table  tr td').find('.checkchild').each(function(){
-                    if($(this).prop('checked')==true){
-                        num++;
-                        if('' == checkString){
-                            checkString = $(this).val();
-                        }else{
-                            checkString = checkString + ','+ $(this).val();
+                $('#pre_download').on('click', function (e) {
+                    e.preventDefault();
+                    var checkValue = '',
+                        num = 0;
+                    checkString = '';
+                    $('#this_table  tr td').find('.checkchild').each(function () {
+                        if ($(this).prop('checked') == true) {
+                            num++;
+                            if ('' == checkString) {
+                                checkString = $(this).val();
+                            } else {
+                                checkString = checkString + ',' + $(this).val();
+                            }
                         }
+                    });
+                    if (checkString == '') layer.msg('请至少选择一个项目');
+                    if (num > 1000) layer.msg('单次下载项目个数不要超过1000');
+                    if (checkString !== '' && num < 1000) {
+
+                        $('#pre_download').hide();
+                        $('#progress_gen').show();
+
+                        var request_id = SparkMD5.hash(checkString);
+                        $.post('/projectcell/ajax_download_create?request_id=' + request_id +
+                            "&id_list=" + checkString, null,
+                            function (d) {
+                                if (d != 0) {
+                                    layer.msg("创建下载失败" + d);
+                                    return;
+                                } else {
+                                    progress(request_id);
+                                }
+                            });
                     }
                 });
-                if(checkString=='') layer.msg('请至少选择一个项目');
-                if(num>1000) layer.msg('单次下载项目个数不要超过1000');
-                if(checkString!==''&&num<1000){
+                $('#down_file').on('click', function () {
+                    allNum = 0;
+                    $('#down_file').hide();
+                    $('#pre_download').show();
+                    $('#progress_gen').hide();
+                    $('#this_table  tr td').find('.checkchild').prop('checked', false);
+                    progressValue.css('width', 0 + '%');
+                })
 
-                    $('#pre_download').hide();
-                    $('#progress_gen').show();
+                function successGen(file_path, name) {
+                    // btn_download.disabled = false;
+                    pre_download.disabled = false;
+                    $('#progress_gen').hide();
+                    $('#down_file').show();
+                    $('#btn_download').hide();
 
-//                    $('#down_package').css('display','inline-block');
-
+                    //获取生成文件路径和名称生成链接
                     var request_id = SparkMD5.hash(checkString);
-                    $.post('/projectcell/ajax_download_create?request_id=' + request_id + "&id_list=" + checkString, null, function (d) {
-                        if (d != 0) {
-                            layer.msg("创建下载失败" + d);
-                            return;
-                        }
-                        else {
-                            progress(request_id);
+                    link_file.download = name + ".zip";
+                    link_file.text = "";
+                    link_file.href = file_path;
+                    link_file.click();
+                    console.log("download href" + link_file.href);
+                }
+
+                //获取生成进度
+                function progresssGet(get_id) {
+                    var result;
+                    $.ajax({
+                        url: '/projectcell/ajax_download_progress?request_id=' + get_id,
+                        async: false, //这里选择异true步为false，那么这个程序执行到这里的时候会暂停，等待
+                        //数据加载完成后才继续执行
+                        success: function (data) {
+                            result = data;
                         }
                     });
+                    return result;
                 }
-//                if (textpro.value != "") {
-//                    $('#pre_download').hide();
-//                    btn_download.disabled = true;
-//                    $('#down_file').hide();
-//
-//                    var request_id = SparkMD5.hash(textpro.value);
-//
-//                    $.post('/projectcell/ajax_download_create?request_id=' + request_id + "&id_list=" + textpro.value, null, function (d) {
-//                        if (d != 0) {
-//                            alert("创建下载失败" + d);
-//                            return;
-//                        }
-//                        else {
-//                            progress(request_id);
-//                        }
-//                    });
-//
-//                }
-//                else {
-//                    alert("请先勾选项目");
-//                }
-            });
-            $('#down_file').on('click',function(){
-                allNum = 0;
-                $('#down_file').hide();
-                $('#pre_download').show();
-                $('#progress_gen').hide();
-                $('#this_table  tr td').find('.checkchild').prop('checked',false);
-                progressValue.css('width', 0 +'%');
-            })
 
-            function successGen(file_path, name) {
-//                btn_download.disabled = false;
-                pre_download.disabled = false;
-                $('#progress_gen').hide();
-                $('#down_file').show();
-                $('#btn_download').hide();
-
-                //获取生成文件路径和名称生成链接
-                var request_id = SparkMD5.hash(checkString);
-                link_file.download = name + ".zip";
-                link_file.text = "";
-                link_file.href = file_path;
-                link_file.click();
-                console.log("download href" + link_file.href);
-            }
-
-            //获取生成进度
-
-            function progresssGet(get_id) {
-                var result;
-                $.ajax({
-                    url: '/projectcell/ajax_download_progress?request_id=' + get_id,
-                    async: false,//这里选择异true步为false，那么这个程序执行到这里的时候会暂停，等待
-                                 //数据加载完成后才继续执行
-                    success: function (data) {
-                        result = data;
-                    }
-                });
-                return result;
-            }
-
-            //进度条
-            function progress(req_id) {
-                $.post('/projectcell/ajax_download_progress?request_id=' + req_id, null, function (d) {
-                    if (!d) {
-                        return null;
-                    }
-                    console.log(d);
-                    if (d['ret_code'] == 0) {
-                        progressValue.css('width',d['download_per'] +'%');
-                        if (d['download_per'] <= 99) {
-                            setTimeout(progress(req_id), 1000);
+                //进度条
+                function progress(req_id) {
+                    // $.ajax({
+                    //     type: 'post',
+                    //     url: '/projectcell/ajax_download_progress',
+                    //     data: 'request_id=' + req_id,
+                    //     success: function (d) {
+                    //         if (!d) {
+                    //             return null;
+                    //         }
+                    //         if (d['ret_code'] == 0) {
+                    //             progressValue.css('width', d['download_per'] + '%');
+                    //             if (d['download_per'] <= 99) {
+                    //                 setTimeout(progress(req_id), 1000);
+                    //             } else {
+                    //                 successGen(d['file_path'], d['request_id']);
+                    //             }
+                    //         } else {
+                    //             layer.msg("err " + d['ret_code'] + d['err_desc']);
+                    //             initDown();
+                    //         }
+                    //     },
+                    //     timeout: 3000,
+                    //     error: function () {
+                    //         setTimeout(progress(req_id), 1000);
+                    //     }
+                    // });
+                    $.post('/projectcell/ajax_download_progress?request_id=' + req_id, null, function (d) {
+                        if (!d) {
+                            return null;
                         }
-                        else {
-                            successGen(d['file_path'], d['request_id']);
+                        console.log(d);
+                        if (d['ret_code'] == 0) {
+                            progressValue.css('width', d['download_per'] + '%');
+                            if (d['download_per'] <= 99) {
+                                setTimeout(progress(req_id), 1000);
+                            } else {
+                                successGen(d['file_path'], d['request_id']);
 
+                            }
+                        } else {
+                            layer.msg("err " + d['ret_code'] + d['err_desc']);
+
+                            initDown();
                         }
-                    }
-                    else {
-                        layer.msg("err " + d['ret_code'] + d['err_desc']);
+                    });
 
-                        initDown();
-                    }
+                }
+
+                ////===========================医院选择框================================
+                var hos = $("#s_hospital");
+                $.post('/hospital/ajax_list', null, function (d) {
+                    //这里要拼接下e 如果显示不出来 记得是 eval('+e+');
+                    var i = 0; //和for循环一样 i做计数
+                    var jsonData = eval(d); //接收到的数据转化为JQuery对象，由JQuery为我们处理
+                    var jData = jsonData['data'];
+                    $("<option>").attr("value", "-1").html("全选").appendTo(hos);
+                    $.each(jData, function (index, objVal) { //遍历对象数组，index是数组的索引号，objVal是遍历的一个对象。
+                        //val["属性"]可取到对应的属性值。
+                        $("<option>").attr("value", objVal["hospital_no"]).html(objVal[
+                                "hospital_name"] + "(" + objVal["hospital_no"].toString(16) +
+                            ")").appendTo(hos);
+
+                    });
+
+                    hos.chosen({
+                        no_results_text: '没有数据',
+                        search_contains: true,
+                        allow_single_deselect: true,
+                        display_disabled_options: false
+                    });
                 });
-//            var valNumber =  progresssGet(req_id);
-//
-//            if(valNumber == null) {
-//                alert("progressGet null");
-//                return;
-//            }
-//
-//            if(valNumber['ret_code'] == 0 ) {
-//                progressValue.style.width = valNumber['download_per']+"%";
-//            }
-//            console.log("progress"+valNumber['download_per']);
-//            if(valNumber['download_per'] <= 99) {
-//                setTimeout(progress,500);
-//            }
-//            else{
-//                successGen(valNumber['file_path']);
-//            }
-            }
-//
-////===========================医院选择框================================
-            var hos = $("#s_hospital");
-            $.post('/hospital/ajax_list', null, function (d) {
-                //这里要拼接下e 如果显示不出来 记得是 eval('+e+');
-                var i = 0;//和for循环一样 i做计数
-                var jsonData = eval(d);//接收到的数据转化为JQuery对象，由JQuery为我们处理
-                var jData = jsonData['data'];
-                $("<option>").attr("value", "-1").html("全选").appendTo(hos);
-                $.each(jData, function (index, objVal) { //遍历对象数组，index是数组的索引号，objVal是遍历的一个对象。
-                    //val["属性"]可取到对应的属性值。
-                    $("<option>").attr("value", objVal["hospital_no"]).html(objVal["hospital_name"] + "(" + objVal["hospital_no"].toString(16) + ")").appendTo(hos);
+                //===========================表格================================
 
-                });
+                var date_min = $('#t_datemin');
+                var date_max = $('#t_datemax');
 
-                hos.chosen({
-                    no_results_text: '没有数据',
-                    search_contains: true,
-                    allow_single_deselect: true,
-                    display_disabled_options: false
-                });
-
-
-            });
-//===========================表格================================
-
-            var date_min = $('#t_datemin');
-            var date_max = $('#t_datemax');
-
-            var table = $('#this_table').DataTable({
-//            ajax: {
-//                url: "",
-//                data: function (d) {
-//                    d.hos_no = hos.val();
-//                    d.s_time = date_min.val();
-//                    d.e_time = date_max.val();
-//                }
-//            },
-
-                scrollY: 370,
-                paging: false,
-//            serverSide:true,
-                processing: true,
-                autoWidth: true,
-                info: true,
-                aaSorting: [[1, "asc"]],//默认第几个排序
-                bStateSave: true,//状态保存
-                aoColumnDefs: [
-                    //{"bVisible": false, "aTargets": [ 3 ]} //控制列的隐藏显示
-                    {"orderable": false, "aTargets": [0]}// 不参与排序的列
-                ],
-                columns: [
-                    {
-                        "sClass": "text-center",
-                        "data": "id",
-                        "render": function (data, type, full, meta) {
-                            return "<input type='checkbox'  class='checkchild' name='checkchild' value=" + data + " />";
+                var table = $('#this_table').DataTable({
+                    scrollY: 410,
+                    paging: false,
+                    //            serverSide:true,
+                    processing: true,
+                    autoWidth: true,
+                    info: true,
+                    aaSorting: [
+                        [1, "asc"]
+                    ], //默认第几个排序
+                    bStateSave: true, //状态保存
+                    aoColumnDefs: [
+                        //{"bVisible": false, "aTargets": [ 3 ]} //控制列的隐藏显示
+                        {
+                            "orderable": false,
+                            "aTargets": [0]
+                        } // 不参与排序的列
+                    ],
+                    columns: [{
+                            "sClass": "text-center",
+                            "data": "id",
+                            "render": function (data, type, full, meta) {
+                                return "<input type='checkbox'  class='checkchild' name='checkchild' value=" +
+                                    data + " />";
+                            },
+                            "bSortable": false
                         },
-                        "bSortable": false
-                    },
-                    {data: 'id'},
-                    {data: 'project_no'},
-                    {data: 'end_time'},
-                    {data: 'sign_doctor'},
-                    {data: 'patient_name'},
-                    {data: 'patient_age'},
-                    {data: 'patient_gender'},
-                    {data: 'section_id'},
-                    {data: 'sample_part'}
-                ],
-                language: {
-                    'emptyTable': '没有数据',
-                    'loadingRecords': '加载中...',
-                    'processing': '查询中...',
-                    'search': '检索:',
-                    'lengthMenu': '每页 _MENU_ 条',
-                    'zeroRecords': '没有数据',
-                    'paginate': {
-                        'first': '第一页',
-                        'last': '最后一页',
-                        'next': '后一页',
-                        'previous': '前一页'
-                    },
-                    'info': '共 _TOTAL_ 条',
-                    'infoEmpty': '没有数据',
-                    'infoFiltered': '(过滤总件数 _MAX_ 条)'
-                }
+                        {
+                            data: 'id'
+                        },
+                        {
+                            data: 'project_no'
+                        },
+                        {
+                            data: 'end_time'
+                        },
+                        {
+                            data: 'sign_doctor'
+                        },
+                        {
+                            data: 'patient_name'
+                        },
+                        {
+                            data: 'patient_age'
+                        },
+                        {
+                            data: 'patient_gender'
+                        },
+                        {
+                            data: 'section_id'
+                        },
+                        {
+                            data: 'sample_part'
+                        }
+                    ],
+                    language: {
+                        'emptyTable': '没有数据',
+                        'loadingRecords': '加载中...',
+                        'processing': '查询中...',
+                        'search': '检索:',
+                        'lengthMenu': '每页 _MENU_ 条',
+                        'zeroRecords': '没有数据',
+                        'paginate': {
+                            'first': '第一页',
+                            'last': '最后一页',
+                            'next': '后一页',
+                            'previous': '前一页'
+                        },
+                        'info': '共 _TOTAL_ 条',
+                        'infoEmpty': '没有数据',
+                        'infoFiltered': '(过滤总件数 _MAX_ 条)'
+                    }
+
+                });
+
+                $("button[name='btn_search']").bind("click", function () { //按钮 触发table重新请求服务器
+                    table.ajax.url("/projectcell/ajax_list?hos_no=" + hos.val() + "&s_time=" + date_min
+                        .val() + "&e_time=" + date_max.val()).load(function (e) {
+                        $('[name="checkchild"]').bind("click", function (e) { //按钮 触发table重新请求服务器
+                            e.stopPropagation();
+                        });
+                    }, false);
+                });
+
+                $(".checkall").click(function () {
+                    var check = $(this).prop("checked");
+                    $(".checkchild").prop("checked", check);
+                });
 
             });
-
-            $("button[name='btn_search']").bind("click", function () { //按钮 触发table重新请求服务器
-                table.ajax.url("/projectcell/ajax_list?hos_no=" + hos.val() + "&s_time=" + date_min.val() + "&e_time=" + date_max.val()).load(function (e) {
-                    $('[name="checkchild"]').bind("click", function (e) { //按钮 触发table重新请求服务器
-                        e.stopPropagation();
-                    });
-                }, false);
-            });
-
-            $(".checkall").click(function () {
-                var check = $(this).prop("checked");
-                $(".checkchild").prop("checked", check);
-            });
-//            $('#this_table tbody ').on('click', 'tr', function () {
-////                var tr = $(this);
-//                var checkedTd = $(this).find('.checkchild');
-//                var isChecked = checkedTd.prop('checked');
-////                var checkedValue = checked.prop("checked");
-//                if(isChecked){
-//                    console.log(checkedTd.val());
-//                }
-//
-////                console.log(checkedValue);
-////            var index = tr.index();
-////                checked.prop("checked", !checkedValue);
-//            });
-            //选择的项目
-//            function tableGetCheck() {
-//                var oldVal = textpro.value;
-//                var v_data = "";
-//
-////                textpro.value = '';
-//
-//                var num = 0;
-//
-//                $('[name="checkchild"]').each(function () {
-//                    if ($(this).prop('checked') == true) {
-//                        num++;
-//                        if (v_data == "") {
-//                            v_data = $(this).val();
-//                        }
-//                        else {
-//                            v_data = v_data + "," + $(this).val();
-//                            console.log(v_data);
-//                        }
-//                    }
-//                });
-//                if (num <= 1000) {
-//                    textpro.value = v_data;
-//                    $('#total_num').html(num);
-//
-//                    if (oldVal != v_data) {
-//                        initDown();
-//                    }
-//
-//                    return 0;
-//                }
-//                return -1;
-//            }
-
-//            ///////////////////////////////tab//////////////
-//            function jumpSearch() {
-//                step_down.className = "step";
-//                step_search.className = "active step";
-//
-//                $('#dv_search').show();
-//                $('#dv_down').hide();
-//            }
-//
-//            function jumpDown() {
-//                if (0 == tableGetCheck()) {
-//                    step_down.className = "active step";
-//                    step_search.className = "step";
-//
-//                    $('#dv_search').hide();
-//                    $('#dv_down').show();
-//                }
-//                else {
-//                    alert("单次下载项目个数不要超过1千");
-//                }
-//
-//            }
-//            step_search.onclick = jumpSearch;
-//            step_down.onclick = jumpDown;
-        });
-    </script>
+        </script>
 
 </body>
+
 </html>

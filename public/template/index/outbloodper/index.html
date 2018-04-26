@@ -95,39 +95,12 @@
 
         //添加
         function addRow() {
-//            var index = layer.open({
-//                type: 2,
-////                maxmin: true,
-//                closeBtn: 0,
-//                title: false,
-//                area: ['800px', '480px'],
-//                content: '/outbloodPer/add',
-//                end: function () {
-//                    table.ajax.reload(function () {
-//                        $.post('/outbloodPer/ajax_count', null, function (d) {
-//                            $('#total_num').html(d);
-//                        });
-//                    }, false);
-//
-//                }
-//            });
             $(this).attr('href','/outbloodPer/add');
         }
 
         //编辑
         $('#hos_table tbody').on('click', 'a#edit', function () {
             var data = table.row($(this).parents('tr')).data();
-//            var index = layer.open({
-//                type: 2,
-////                maxmin: true,
-////                title: '编辑细胞比例',
-//                title:false,
-//                area: ['800px', '480px'],
-//                content: '/outbloodPer/edit?' + 'cell_per_type=' + data['cell_per_type'],
-//                end: function () {
-//                    tasble.ajax.reload(null, false);
-//                }
-//            });
             $(this).attr('href','/outbloodPer/edit?' + 'cell_per_type=' + data['cell_per_type']);
 
         });

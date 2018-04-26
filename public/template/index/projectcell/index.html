@@ -151,6 +151,8 @@
                 var link_file = document.getElementById("link_file");
                 var allNum;
                 var checkString = '';
+                var request_id ='';
+                var timer;
 
                 function initDown() {
                     allNum = 0;
@@ -183,7 +185,7 @@
                         $('#pre_download').hide();
                         $('#progress_gen').show();
 
-                        var request_id = SparkMD5.hash(checkString);
+                        request_id = SparkMD5.hash(checkString);
                         $.post('/projectcell/ajax_download_create?request_id=' + request_id +
                             "&id_list=" + checkString, null,
                             function (d) {
@@ -191,7 +193,7 @@
                                     layer.msg("创建下载失败" + d);
                                     return;
                                 } else {
-                                    progress(request_id);
+                                  timer=setInterval(progress,1000);  
                                 }
                             });
                     }
@@ -236,34 +238,28 @@
                 }
 
                 //进度条
-                function progress(req_id) {
+                function progress() {
                     $.ajax({
                         type: 'post',
                         url: '/projectcell/ajax_download_progress',
-                        data: 'request_id=' + req_id,
+                        data: 'request_id=' + request_id,
                         success: function (d) {
-                            if (!d) {
-                                return null;
-                            }
-                            console.log(d);
-                            if (d['ret_code'] == 0) {
+                            // console.log(d);
+                            if (d && d['ret_code'] == 0) {
                                 progressValue.css('width', d['download_per'] + '%');
                                 if (d['download_per'] <= 99) {
-                                    setTimeout(progress(req_id), 1000);
+                                   // setTimeout(progress(req_id), 1000);
                                 } else {
                                     successGen(d['file_path'], d['request_id']);
+                                    clearInterval(timer);
                                 }
                             } else {
                                 layer.msg("err " + d['ret_code'] + d['err_desc']);
                                 initDown();
                             }
-                        },
-                        timesout: 3000,
-                        error: function () {
-                            console.log('超时了')
-                            setTimeout(progress(req_id), 1000);
                         }
                     });
+                
                     // $.post('/projectcell/ajax_download_progress?request_id=' + req_id, null, function (d) {
                     //     if (!d) {
                     //         return null;

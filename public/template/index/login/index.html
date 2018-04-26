@@ -54,7 +54,7 @@
                 <div class="row cl">
                     <div class="text-c">
                         <input name="" id='loginBtn' type="button" class="btn btn-success radius " value="&nbsp;登 录&nbsp;">
-                        <input name="" type="reset" class="btn btn-default radius " value="&nbsp;取 消&nbsp;">
+                        <input name="" type="reset" class="btn btn-default radius " value="&nbsp;重 置&nbsp;">
                     </div>
                 </div>
             </form>
@@ -67,17 +67,21 @@
     <script>
         $('#loginBtn').on('click', function () {
             var param = {
-                'user_name': $('#user_name').val(),
-                'pwd': $('#pwd').val()
+                'user_name': $.trim($('#user_name').val()),
+                'pwd': $.trim($('#pwd').val())
             }
-            $.post('/index/login', param, function (res) {
-                if (res.ret_code == 0) {
-                    layer.msg('登录成功');
-                    location.href = '/index';
-                } else {
-                    layer.msg(res.err_desc);
-                }
-            })
+            if (param.user_name == '') {
+                layer.msg('请输入账户名')
+            } else {
+                $.post('/index/login', param, function (res) {
+                    if (res.ret_code == 0) {
+                        layer.msg('登录成功');
+                        location.href = '/index';
+                    } else {
+                        layer.msg('账号不存在或密码错误');
+                    }
+                })
+            }
         })
     </script>
 </body>

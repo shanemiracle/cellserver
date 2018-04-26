@@ -237,50 +237,52 @@
 
                 //进度条
                 function progress(req_id) {
-                    // $.ajax({
-                    //     type: 'post',
-                    //     url: '/projectcell/ajax_download_progress',
-                    //     data: 'request_id=' + req_id,
-                    //     success: function (d) {
-                    //         if (!d) {
-                    //             return null;
-                    //         }
-                    //         if (d['ret_code'] == 0) {
-                    //             progressValue.css('width', d['download_per'] + '%');
-                    //             if (d['download_per'] <= 99) {
-                    //                 setTimeout(progress(req_id), 1000);
-                    //             } else {
-                    //                 successGen(d['file_path'], d['request_id']);
-                    //             }
-                    //         } else {
-                    //             layer.msg("err " + d['ret_code'] + d['err_desc']);
-                    //             initDown();
-                    //         }
-                    //     },
-                    //     timeout: 3000,
-                    //     error: function () {
-                    //         setTimeout(progress(req_id), 1000);
-                    //     }
-                    // });
-                    $.post('/projectcell/ajax_download_progress?request_id=' + req_id, null, function (d) {
-                        if (!d) {
-                            return null;
-                        }
-                        console.log(d);
-                        if (d['ret_code'] == 0) {
-                            progressValue.css('width', d['download_per'] + '%');
-                            if (d['download_per'] <= 99) {
-                                setTimeout(progress(req_id), 1000);
-                            } else {
-                                successGen(d['file_path'], d['request_id']);
-
+                    $.ajax({
+                        type: 'post',
+                        url: '/projectcell/ajax_download_progress',
+                        data: 'request_id=' + req_id,
+                        success: function (d) {
+                            if (!d) {
+                                return null;
                             }
-                        } else {
-                            layer.msg("err " + d['ret_code'] + d['err_desc']);
-
-                            initDown();
+                            console.log(d);
+                            if (d['ret_code'] == 0) {
+                                progressValue.css('width', d['download_per'] + '%');
+                                if (d['download_per'] <= 99) {
+                                    setTimeout(progress(req_id), 1000);
+                                } else {
+                                    successGen(d['file_path'], d['request_id']);
+                                }
+                            } else {
+                                layer.msg("err " + d['ret_code'] + d['err_desc']);
+                                initDown();
+                            }
+                        },
+                        timesout: 3000,
+                        error: function () {
+                            console.log('超时了')
+                            setTimeout(progress(req_id), 1000);
                         }
                     });
+                    // $.post('/projectcell/ajax_download_progress?request_id=' + req_id, null, function (d) {
+                    //     if (!d) {
+                    //         return null;
+                    //     }
+                    //     console.log(d);
+                    //     if (d['ret_code'] == 0) {
+                    //         progressValue.css('width', d['download_per'] + '%');
+                    //         if (d['download_per'] <= 99) {
+                    //             setTimeout(progress(req_id), 1000);
+                    //         } else {
+                    //             successGen(d['file_path'], d['request_id']);
+
+                    //         }
+                    //     } else {
+                    //         layer.msg("err " + d['ret_code'] + d['err_desc']);
+
+                    //         initDown();
+                    //     }
+                    // });
 
                 }
 

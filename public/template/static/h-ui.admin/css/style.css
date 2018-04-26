@@ -9,23 +9,28 @@
 
 
 .show-container{
-    padding:30px 200px;
+    padding:30px 50px;
     margin: 0 auto;
+    text-align:center;
 
 }
 .show-item{
     margin: 0 auto;
-    /*border:1px solid;*/
-    /*text-align:center;*/
+    display: inline-block;
+
 }
 .show-item li{
-    /*border:1px solid #3270c9;*/
-    width:271px;
-    height:140px;
-    padding:20px 10px;
+    color:#fff;
+    width:150px;
+    height:80px;
+    padding:10px 20px;
     float:left;
-    margin-right:26px;
-    margin-bottom:25px;
-    background: #fff;
+    /* margin-right:26px;
+    margin-bottom:25px; */
     border-radius:5px;
+    margin-left:10px;
+}
+.show-item li span{
+    display:block;
+    margin-top:-10px;
 }

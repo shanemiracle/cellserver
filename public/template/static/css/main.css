@@ -1,11 +1,18 @@
 /*********公用样式部分**********/
 
-header{
-    // height:220px;
-    // background:#426374;
-    /*line-height:240px;*/
+.bg-default{
+    background:#6a8abe;
+    box-shadow: 0 5px 0 #5f7cab;
 }
-h2{
-    // padding-top:100px;
+.bg-warning{
+    background: #fc8675;
+    box-shadow: 0 5px 0 #e27869;
 }
-
+.bg-blue{
+    background:#5ab6df;
+    box-shadow:0 5px 0 #51a3c8;
+}
+.bg-green{
+    background: #4acacb;
+    box-shadow:0 5px 0 #42b5b6
+}

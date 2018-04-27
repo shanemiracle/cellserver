@@ -151,7 +151,7 @@
                 var link_file = document.getElementById("link_file");
                 var allNum;
                 var checkString = '';
-                var request_id ='';
+                var request_id = '';
                 var timer;
 
                 function initDown() {
@@ -193,7 +193,7 @@
                                     layer.msg("创建下载失败" + d);
                                     return;
                                 } else {
-                                  timer=setInterval(progress,3000);  
+                                    timer = setInterval(progress, 3000);
                                 }
                             });
                     }
@@ -245,21 +245,24 @@
                         data: 'request_id=' + request_id,
                         success: function (d) {
                             // console.log(d);
-                            if (d && d['ret_code'] == 0) {
-                                progressValue.css('width', d['download_per'] + '%');
-                                if (d['download_per'] <= 99) {
-                                   // setTimeout(progress(req_id), 1000);
+                            if (d) {
+                                if (d['ret_code'] == 0) {
+                                    progressValue.css('width', d['download_per'] + '%');
+                                    if (d['download_per'] <= 99) {
+                                        // setTimeout(progress(req_id), 1000);
+                                    } else {
+                                        successGen(d['file_path'], d['request_id']);
+                                        clearInterval(timer);
+                                    }
                                 } else {
-                                    successGen(d['file_path'], d['request_id']);
-                                    clearInterval(timer);
+                                    layer.alert("err " + d['ret_code'] + d['err_desc']);
+                                    initDown();
                                 }
-                            } else {
-                                layer.msg("err " + d['ret_code'] + d['err_desc']);
-                                initDown();
                             }
+
                         }
                     });
-                
+
                     // $.post('/projectcell/ajax_download_progress?request_id=' + req_id, null, function (d) {
                     //     if (!d) {
                     //         return null;

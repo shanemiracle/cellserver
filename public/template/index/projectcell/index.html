@@ -243,19 +243,20 @@
                         type: 'post',
                         url: '/projectcell/ajax_download_progress',
                         data: 'request_id=' + request_id,
-                        success: function (d) {
+                        success: function (res) {
                             // console.log(d);
-                            if (d) {
-                                if (d['ret_code'] == 0) {
-                                    progressValue.css('width', d['download_per'] + '%');
-                                    if (d['download_per'] <= 99) {
+                            if (res) {
+                                if (res['ret_code'] == 0) {
+                                    progressValue.css('width', res['download_per'] + '%');
+                                    if (res['download_per'] <= 99) {
                                         // setTimeout(progress(req_id), 1000);
                                     } else {
-                                        successGen(d['file_path'], d['request_id']);
+                                        successGen(res['file_path'], res['request_id']);
                                         clearInterval(timer);
                                     }
                                 } else {
-                                    layer.alert("err " + d['ret_code'] + d['err_desc']);
+                                    layer.alert("error " + res['ret_code'] + res['err_desc']);
+                                      clearInterval(timer);
                                     initDown();
                                 }
                             }

@@ -14,8 +14,8 @@
                         <a href="#" class="dropDown_A"><span id="user_name"></span><i class="Hui-iconfont">&#xe6d5;</i></a>
                         <ul class="dropDown-menu menu radius box-shadow">
                             <li><a href="#">个人信息</a></li>
-                            <li><a href="/login">切换账户</a></li>
-                            <li><a href="/login">退出</a></li>
+                            <li class='login-out'><a href="/login">切换账户</a></li>
+                            <li class='login-out'><a href="/login">退出</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -24,6 +24,17 @@
     </div>
 </header>
 <script type="text/javascript" src="/template/lib/jquery/1.9.1/jquery.min.js"></script>
+<script>
+    $('.login-out').on('click',function(){
+        $.post('/index/loginout','',function(res){
+            if(res.ret_code==0){
+                // layer.msg('退出登录')
+            }else{
+                layer.msg(res.ret_code);
+            }
+        })
+    })
+</script>
 
 
 

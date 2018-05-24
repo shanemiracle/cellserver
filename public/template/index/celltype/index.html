@@ -36,19 +36,34 @@
                     </span>
                     <input type="hidden" id="cur_cell_name" value="{$cur_cell_name}">
                 </div>
-                <div class="cl pd-5 bg-1 bk-gray ">
+                <div class="cl pd-5 bg-1 bk-gray clearfix ">
                     <span class="l">
                         <a href="javascript:void(0);" id="btnAdd" class="btn btn-primary radius">
                             <i class="Hui-iconfont Hui-iconfont-add"> 添加细胞类型</i>
                         </a>
                     </span>
-                    <span class="r">共有数据:
+                    <span class="r" style="padding-top:5px;">共有数据:
                         <strong>
                             <span id="total_num">{$total_num}</span>
-                        </strong>条</span>
+                        </strong>条
+                    </span>
+                    <span class="r mr-10" id="getAll" >
+                        <a href="javascript:void(0);"  class="btn btn-primary radius">
+                            <i class="Hui-iconfont ">* 获取全部</i>
+                        </a>
+                        （*所有骨髓细胞）
+                    </span>
+
+                    <span class="r mr-10" style="display:none" id="getSection">
+                        <a href="javascript:void(0);"  class="btn btn-primary radius">
+                            <i class="Hui-iconfont ">* 获取部分</i>
+                        </a>
+                        （*部分骨髓细胞）
+                    </span>
+
                 </div>
                 <div class="mt-20">
-                    <table id='this_table' class="table table-border table-bg th radius table-hover table-sort">
+                    <table id='this_table' class="table table-border table-bg th radius table-hover table-sort" style="width:100%">
                         <thead class="text-c">
                             <th>细胞类型编号</th>
                             <th>信息版本</th>
@@ -73,72 +88,76 @@
     <script type="text/javascript">
         var thistable;
         $(document).ready(function () {
-
+            var flag = false;
             $.post('/celltype/ajax_count', null, function (d) {
                 $('#total_num').html(d);
             });
-
-            thistable = $('.table-sort').DataTable({
-                ajax: {
-                    url: "/celltype/ajax_son_list",
-                    data: function (d) {
-                        d.cur_cell_type = $('#cur_cell_type').val();
-                    }
-                },
-                bStateSave: true, //状态保存
-                aoColumnDefs: [
-                    //{"bVisible": false, "aTargets": [ 3 ]} //控制列的隐藏显示
-                    {
-                        "orderable": false,
-                        "aTargets": [1, 2, 3, 4, 5, 6, 7]
-                    } // 不参与排序的列
-                ],
-                columns: [{
+            function cellTable(url) {
+                thistable = $('.table-sort').DataTable({
+                    "autoWidth":false,
+                    ajax: {
+                        url: url,
+                        data: function (d) {
+                            d.cur_cell_type = $('#cur_cell_type').val();
+                        }
+                    },
+                    bStateSave: true, //状态保存
+                    aoColumnDefs: [
+                        //{"bVisible": false, "aTargets": [ 3 ]} //控制列的隐藏显示
+                        {
+                            "orderable": false,
+                            "aTargets": [1, 2, 3, 4, 5, 6, 7]
+                        } // 不参与排序的列
+                    ],
+                    columns: [{
                         data: 'cell_type'
                     },
-                    {
-                        data: 'info_ver'
-                    },
-                    {
-                        data: 'cn_name'
-                    },
-                    {
-                        data: 'en_name'
-                    },
-                    {
-                        data: 'abb_name'
-                    },
-                    {
-                        data: 'size_min'
-                    },
-                    {
-                        data: 'size_max'
-                    },
-                    {
-                        targets: -1,
-                        data: null,
-                        defaultContent: '<a href="javascript:void(0);" id="edit" class="btn btn-primary radius"><i class="Hui-iconfont Hui-iconfont-edit"></i>详情</a>|<a href="javascript:void(0);" id="del" class="btn btn-primary radius"><i class="Hui-iconfont Hui-iconfont-del2"></i>删除</a>|<a href="javascript:void(0);" id="enter" class="btn btn-primary radius"><i class="Hui-iconfont Hui-iconfont-arrow3-bottom"></i>进入子级</a>'
+                        {
+                            data: 'info_ver'
+                        },
+                        {
+                            data: 'cn_name'
+                        },
+                        {
+                            data: 'en_name'
+                        },
+                        {
+                            data: 'abb_name'
+                        },
+                        {
+                            data: 'size_min'
+                        },
+                        {
+                            data: 'size_max'
+                        },
+                        {
+                            targets: -1,
+                            data: null,
+                            defaultContent: '<a href="javascript:void(0);" id="edit" class="btn btn-primary radius"><i class="Hui-iconfont Hui-iconfont-edit"></i>详情</a>|<a href="javascript:void(0);" id="del" class="btn btn-primary radius"><i class="Hui-iconfont Hui-iconfont-del2"></i>删除</a>|<a href="javascript:void(0);" id="enter" class="btn btn-primary radius"><i class="Hui-iconfont Hui-iconfont-arrow3-bottom"></i>进入子级</a>'
+                        }
+                    ],
+                    language: {
+                        'emptyTable': '没有数据',
+                        'loadingRecords': '加载中...',
+                        'processing': '查询中...',
+                        'search': '检索:',
+                        'lengthMenu': '每页 _MENU_ 条',
+                        'zeroRecords': '没有数据',
+                        'paginate': {
+                            'first': '第一页',
+                            'last': '最后一页',
+                            'next': '后一页',
+                            'previous': '前一页'
+                        },
+                        'info': '第 _PAGE_ 页 / 总 _PAGES_ 页 / 共 _TOTAL_ 条',
+                        'infoEmpty': '没有数据',
+                        'infoFiltered': '(过滤总件数 _MAX_ 条)'
                     }
-                ],
-                language: {
-                    'emptyTable': '没有数据',
-                    'loadingRecords': '加载中...',
-                    'processing': '查询中...',
-                    'search': '检索:',
-                    'lengthMenu': '每页 _MENU_ 条',
-                    'zeroRecords': '没有数据',
-                    'paginate': {
-                        'first': '第一页',
-                        'last': '最后一页',
-                        'next': '后一页',
-                        'previous': '前一页'
-                    },
-                    'info': '第 _PAGE_ 页 / 总 _PAGES_ 页 / 共 _TOTAL_ 条',
-                    'infoEmpty': '没有数据',
-                    'infoFiltered': '(过滤总件数 _MAX_ 条)'
-                }
 
-            });
+                });
+            }
+
+            cellTable('/celltype/ajax_son_list');
 
 
             $('#btnAdd').on('click', addRow);
@@ -181,6 +200,21 @@
                     layer.close(index);
                 });
             });
+
+            //获取所有数据
+            $('#getAll').on('click',function(){
+                    thistable.ajax.url('/celltype/ajax_list').load();
+                    $('#getAll').hide();
+                    $('#getSection').show();
+
+            });
+            //获取部分数据
+            $('#getSection').on('click',function(){
+                thistable.ajax.url('/celltype/ajax_son_list').load();
+                $('#getAll').show();
+                $('#getSection').hide();
+            })
+
 
             $('#this_table tbody').on('click', 'a#enter', function () {
                 var data = thistable.row($(this).parents('tr')).data();

@@ -9,7 +9,7 @@ use think\Request;
 use think\Session;
 use think\View;
 
-class Index
+class Index  extends Rest
 {
     public function login()
     {
@@ -29,6 +29,12 @@ class Index
 
         return $recv;
 
+    }
+
+    public function loginout()
+    {
+        Session::delete('user_name');
+        return $this->response(['ret_code'=>0],'json',200);
     }
     
     public function index()
@@ -55,13 +61,8 @@ class Index
         //         abort(401,'未登录');
         //     }
         // }
-
-
-
         // return (new View())->fetch('login/index');
            return (new View())->fetch('index');
-
-
     }
 
     public function test() {

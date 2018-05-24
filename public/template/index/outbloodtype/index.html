@@ -12,7 +12,7 @@
     <nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页
         <span class="c-gray en">&gt;</span> 细胞管理
         <span class="c-gray en">&gt;</span> 外周血细胞类型
-        <a class="btn btn-success radius r"  href="javascript:location.replace(location.href);" title="刷新">
+        <a class="btn btn-success radius r" href="javascript:location.replace(location.href);" title="刷新">
             <i class="Hui-iconfont">&#xe68f;</i>
         </a>
     </nav>
@@ -32,12 +32,26 @@
                     </span>
                 <input type="hidden" id="cur_cell_name" value="{$cur_cell_name}">
             </div>
-            <div class="cl pd-5 bg-1 bk-gray">
+            <div class="cl pd-5 bg-1 bk-gray clearfix">
                     <span class="l">
-                        <a href="javascript:void(0);" id="btnAdd" class="btn btn-primary radius"><i
-                                class="Hui-iconfont Hui-iconfont-add"> 添加细胞类型</i></a>
+                        <a href="javascript:void(0);" id="btnAdd" class="btn btn-primary radius">
+                            <i class="Hui-iconfont Hui-iconfont-add"> 添加细胞类型</i>
+                        </a>
                     </span>
-                <span class="r">共有数据: <strong><span id="total_num">{$total_num}</span></strong>条</span>
+                   <span class="r" style="padding-top:5px;">共有数据: <strong><span id="total_num">{$total_num}</span></strong>条</span>
+                    <span class="r mr-10" id="getAll">
+                        <a href="javascript:void(0);" class="btn btn-primary radius">
+                            <i class="Hui-iconfont ">* 获取全部</i>
+                        </a>
+                        （*所有外周血细胞）
+                    </span>
+
+                    <span class="r mr-10" style="display:none" id="getSection">
+                        <a href="javascript:void(0);" class="btn btn-primary radius">
+                            <i class="Hui-iconfont ">* 获取部分</i>
+                        </a>
+                        （*部分外周血细胞）
+                    </span>
             </div>
             <div class="mt-20">
                 <table id='this_table' class="table table-border table-bg th radius table-hover table-sort">
@@ -120,15 +134,15 @@
 
         function addRow() {
             var curCellType = $('#cur_cell_type').val();
-            var curCellName =$('#cur_cell_name').val();
-            $(this).attr('href','/outbloodtype/add?' + 'father_cell_type=' + curCellType + '&father_cell_name=' + curCellName);
+            var curCellName = $('#cur_cell_name').val();
+            $(this).attr('href', '/outbloodtype/add?' + 'father_cell_type=' + curCellType + '&father_cell_name=' + curCellName);
         }
 
         $('#this_table tbody').on('click', 'a#edit', function () {
             var data = thistable.row($(this).parents('tr')).data(),
                 curCellType = $('#cur_cell_type').val(),
-                curCellName =$('#cur_cell_name').val();
-            $(this).attr('href','/outbloodtype/edit?' + 'cell_type=' + data['cell_type'] + '&father_cell_type=' +  curCellType + '&father_cell_name=' + curCellName);
+                curCellName = $('#cur_cell_name').val();
+            $(this).attr('href', '/outbloodtype/edit?' + 'cell_type=' + data['cell_type'] + '&father_cell_type=' + curCellType + '&father_cell_name=' + curCellName);
         });
 
         $('#this_table tbody').on('click', 'a#del', function () {
@@ -148,6 +162,20 @@
                 layer.close(index);
             });
         });
+
+        //获取所有数据
+        $('#getAll').on('click', function () {
+            thistable.ajax.url('/outbloodtype/ajax_list').load();
+            $('#getAll').hide();
+            $('#getSection').show();
+
+        });
+        //获取部分数据
+        $('#getSection').on('click', function () {
+            thistable.ajax.url('/outbloodtype/ajax_son_list').load();
+            $('#getAll').show();
+            $('#getSection').hide();
+        })
 
         $('#this_table tbody').on('click', 'a#enter', function () {
             var data = thistable.row($(this).parents('tr')).data();

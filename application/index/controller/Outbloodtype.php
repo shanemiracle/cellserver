@@ -236,7 +236,7 @@ class Outbloodtype extends Rest
 
         $start = 0;
         for($i=0;$i<1000;$i++){
-            $retData = apiCellType::apiCellTypeList($attest, 2, $start, 250);
+            $retData = apiCellType::apiCellTypeList($attest, 2, $start, 100);
             if ($retData) {
                 if ($retData['ret_code'] == 0) {
                     $data = $retData['data'];

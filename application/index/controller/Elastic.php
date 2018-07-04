@@ -10,7 +10,6 @@ namespace app\index\controller;
 
 
 use app\index\api\apiElastic;
-use Elasticsearch\ClientBuilder;
 use think\Request;
 
 class Elastic
@@ -25,6 +24,7 @@ class Elastic
 
 //        print_r($data);
         //return json($data)->options(['json_encode_param'=>JSON_PRETTY_PRINT]);
+        return 0;
     }
 
     public function project()

@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | ThinkPHP [ WE CAN DO IT JUST THINK ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2006~2017 http://thinkphp.cn All rights reserved.
+// | Copyright (c) 2006~2018 http://thinkphp.cn All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed ( http://www.apache.org/licenses/LICENSE-2.0 )
 // +----------------------------------------------------------------------
@@ -35,6 +35,8 @@ class Think
         'view_depr'   => DS,
         // 是否开启模板编译缓存,设为false则每次都会重新编译
         'tpl_cache'   => true,
+        // 默认模板渲染规则 1 解析为小写+下划线 2 全部转换小写
+        'auto_rule'   => 1,
     ];
 
     public function __construct($config = [])
@@ -74,12 +76,10 @@ class Think
     {
         if ('' == pathinfo($template, PATHINFO_EXTENSION)) {
             // 获取模板文件名
-//            print "1111".$template;
             $template = $this->parseTemplate($template);
         }
         // 模板不存在 抛出异常
         if (!is_file($template)) {
-//            print '222'.$template;
             throw new TemplateNotFoundException('template not exists:' . $template, $template);
         }
         // 记录视图信息
@@ -115,23 +115,23 @@ class Think
             // 跨模块调用
             list($module, $template) = explode('@', $template);
         }
+//        if ($this->config['view_base']) {
+//            // 基础视图目录
+//            $module = isset($module) ? $module : $request->module();
+//            $path   = $this->config['view_base'] . ($module ? $module . DS : '');
+//        } else {
+//            $path = isset($module) ? APP_PATH . $module . DS . 'view' . DS : $this->config['view_path'];
+//        }
 
-//        print_r(Config::get('template'));
-
-//        if ($this->config['view_base'])
         $sysconfig = Config::get('template');
 
         if ($sysconfig['view_base'] != '')
         {
             // 基础视图目录
 
-//            print '11111'.$sysconfig['view_base'];
             $module = isset($module) ? $module : $request->module();
-//            print $module;
             $path   = $sysconfig['view_base'].($module ? $module . DS : '');
-//            print '#'.$path;
         } else {
-//            print '222';
             $path = isset($module) ? APP_PATH . $module . DS . 'view' . DS : $this->config['view_path'];
         }
 
@@ -142,7 +142,7 @@ class Think
             if ($controller) {
                 if ('' == $template) {
                     // 如果模板文件名为空 按照默认规则定位
-                    $template = str_replace('.', DS, $controller) . $depr . $request->action();
+                    $template = str_replace('.', DS, $controller) . $depr . (1 == $this->config['auto_rule'] ? Loader::parseName($request->action(true)) : $request->action());
                 } elseif (false === strpos($template, $depr)) {
                     $template = str_replace('.', DS, $controller) . $depr . $template;
                 }

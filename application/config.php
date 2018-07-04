@@ -142,10 +142,12 @@ return [
         'taglib_end'   => '}',
         'view_base'     => __DIR__ . '/../public/template/',
 
+
 //        'layout_on'=>false,
         //'layout_name'=>'layout',
         //'layout_item'=>'{__REPLACE__}'
     ],
+
 
     // 视图输出字符串内容替换
     'view_replace_str'=> ['__SERVER__'=>'../public/template/serverView'],
@@ -173,15 +175,15 @@ return [
 
     'log'                    => [
         // 日志记录方式，内置 file socket 支持扩展
-//        'type'  => 'File',
+       'type'  => 'File',
 //        // 日志保存目录
-//        'path'  => LOG_PATH,
+        'path'  => LOG_PATH,
 //        // 日志记录级别
-//        'level' => [],
-        'type'=>'socket',
-        'host'=>'localhost:8080',
-        'force_client_ids'=>['xiaoj'],
-        'allow_client_ids'=>['xiaoj'],
+        'level' => [],
+        //'type'=>'socket',
+       // 'host'=>'localhost:8080',
+       // 'force_client_ids'=>['xiaoj'],
+       // 'allow_client_ids'=>['xiaoj'],
     ],
 
     // +----------------------------------------------------------------------

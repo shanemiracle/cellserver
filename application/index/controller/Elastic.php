@@ -8,7 +8,6 @@
 
 namespace app\index\controller;
 
-
 use app\index\api\apiElastic;
 use think\Request;
 

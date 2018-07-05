@@ -13,7 +13,7 @@ use Elasticsearch\ClientBuilder;
 
 class apiElastic
 {
-    private $hosts = ['115.236.69.123:9200'];
+    private $hosts = ['127.0.0.1:9200'];
     private $client = null;
 
     /**

@@ -35,6 +35,9 @@ class Elastic
         if($time==null){
             $time = "2000-01-01 00:00:00";
         }
+        if($per == null){
+            $per = -1;
+        }
         $data = $es->getProject(0,500,$time,$hos,$per);
 
         return json($data)->options(['json_encode_param'=>JSON_PRETTY_PRINT|JSON_UNESCAPED_UNICODE]);

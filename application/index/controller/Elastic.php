@@ -83,5 +83,15 @@ class Elastic
         return json(['ret'=>'ok']);
     }
 
+    public function firstinit()
+    {
+        $es = new apiElastic();
+ 
+        print_r($es->apiAddIndexProject());
+        print_r($es->apiAddIndexPhoto());
+        print_r($es->apiAddIndexCell());
+
+        return json(['ret'=>'ok']);
+    }
 
 }

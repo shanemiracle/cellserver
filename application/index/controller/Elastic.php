@@ -53,10 +53,10 @@ class Elastic
         $d = $data['data'];
         for($i = 0; $i < count($d); $i++)
         {
-            array_push($d,[$d[$i]['end_time']=>$d[$i]['percent']]);
+            array_push($r_data,[$d[$i]['end_time']=>$d[$i]['percent']]);
         }
 
-        return json($d);
+        return json($r_data);
 
     }
 

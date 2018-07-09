@@ -43,6 +43,23 @@ class Elastic
         return json($data)->options(['json_encode_param'=>JSON_PRETTY_PRINT|JSON_UNESCAPED_UNICODE]);
     }
 
+    public function projectLine()
+    {
+        $es = new apiElastic();
+        $data = $es->getProject(0,500,"2000-01-01 00:00:00",null,0);
+
+        $r_data = [];
+
+        $d = $data['data'];
+        for($i = 0; $i < count($d); $i++)
+        {
+            array_push($d,[$d[$i]['end_time']=>$d[$i]['percent']]);
+        }
+
+        return json($d);
+
+    }
+
     public function photo()
     {
         $is_select = Request::instance()->param('is_select');
@@ -86,12 +103,14 @@ class Elastic
     public function firstinit()
     {
         $es = new apiElastic();
- 
+
         print_r($es->apiAddIndexProject());
         print_r($es->apiAddIndexPhoto());
         print_r($es->apiAddIndexCell());
 
         return json(['ret'=>'ok']);
     }
+
+
 
 }

@@ -59,7 +59,7 @@ class Elastic
         }
 
 
-        $data = $es->getProject(intval($from),intval($size),$time,intval($hos),intval($perst),intval($pered));
+        $data = $es->getProject(intval($from),intval($size),$time,$hos,intval($perst),intval($pered));
 
 
         return json($data)->options(['json_encode_param'=>JSON_PRETTY_PRINT|JSON_UNESCAPED_UNICODE]);

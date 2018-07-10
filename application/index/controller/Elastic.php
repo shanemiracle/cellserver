@@ -39,10 +39,10 @@ class Elastic
             $time = "00000000000000";
         }
         if($perst == null){
-            $per = 0;
+            $perst = 0;
         }
         if($pered == null){
-            $per = 100;
+            $pered = 100;
         }
         if($from == null){
             $from = 0;

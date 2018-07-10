@@ -54,6 +54,7 @@ class apiElastic
                         'properties'=>[
                             'project_no'=>['type'=>'keyword'],
                             'hospital_no'=>['type'=>'integer'],
+                            'hospital_name'=>['type'=>'keyword'],
                             'percent'=>['type'=>'integer'],
                             'end_time'=>['type'=>'keyword'],
                             'sign_doctor'=>['type'=>'keyword'],

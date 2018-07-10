@@ -71,7 +71,9 @@ class apiElastic
                             'shot_time'=>['type'=>'keyword'],
                             'suggest'=>['type'=>'text'],
                             'check_result'=>['type'=>'text'],
-                            'diag_data'=>['type'=>'text']
+                            'diag_data'=>['type'=>'text'],
+                            'project_db'=>['type'=>'integer'],
+                            'photo_db'=>['type'=>'integer']
                         ]
                     ]
                 ]
@@ -169,7 +171,7 @@ class apiElastic
                     ["end_time"=>  ["order"=> "asc" ]]
 
                 ],
-                '_source'=>['project_no','end_time','percent'],
+                '_source'=>['hospital_no','project_no','end_time','project_db','photo_db','percent'],
                 'from'=>$from,
                 'size'=>$size
             ]

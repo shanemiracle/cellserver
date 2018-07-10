@@ -30,8 +30,8 @@ class Elastic
     {
         $time = Request::instance()->param('time');
         $hos = Request::instance()->param('hos');
-        $perst = Request::instance()->param('per_st');
-        $pered = Request::instance()->param('per_ed');
+        $perst = Request::instance()->param('perst');
+        $pered = Request::instance()->param('pered');
         $es = new apiElastic();
         if($time==null){
             $time = "00000000000000";

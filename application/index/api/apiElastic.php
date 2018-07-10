@@ -146,7 +146,7 @@ class apiElastic
     }
 
 
-    public function getProject($from,$size,$start_time,$hos_no,$per)
+    public function getProject($from,$size,$start_time,$hos_no,$per_st,$per_ed)
     {
         $hos =  [];
         $params = [
@@ -158,7 +158,7 @@ class apiElastic
                         'must'=>[$hos_no!=null?["match"=>['hospital_no'=>$hos_no]]:["match_all"=>new \stdClass()]],
                         'filter'=>[
                             ['range'=>['end_time'=>['gt'=>$start_time]]],
-                            ['range'=>['percent'=>['gt'=>$per]]]
+                            ['range'=>['percent'=>['gt'=>$per_st,'lt'=>$per_ed]]]
                         ],
 
 
@@ -169,7 +169,7 @@ class apiElastic
                     ["end_time"=>  ["order"=> "asc" ]]
 
                 ],
-//                '_source'=>['project_no','end_time','percent'],
+                '_source'=>['project_no','end_time','percent'],
                 'from'=>$from,
                 'size'=>$size
             ]

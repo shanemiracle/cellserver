@@ -30,15 +30,19 @@ class Elastic
     {
         $time = Request::instance()->param('time');
         $hos = Request::instance()->param('hos');
-        $per = Request::instance()->param('per');
+        $perst = Request::instance()->param('per_st');
+        $pered = Request::instance()->param('per_ed');
         $es = new apiElastic();
         if($time==null){
             $time = "2000-01-01 00:00:00";
         }
-        if($per == null){
+        if($perst == null){
             $per = -1;
         }
-        $data = $es->getProject(0,500,$time,$hos,$per);
+        if($pered == null){
+            $per = 100;
+        }
+        $data = $es->getProject(0,500,$time,$hos,$perst,$pered);
 
         return json($data)->options(['json_encode_param'=>JSON_PRETTY_PRINT|JSON_UNESCAPED_UNICODE]);
     }

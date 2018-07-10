@@ -42,7 +42,12 @@ class Elastic
         if($pered == null){
             $per = 100;
         }
-        $data = $es->getProject(0,500,$time,$hos,$perst,$pered);
+        $data = $es->getProject(0,1,$time,$hos,$perst,$pered);
+        if($data)
+        {
+            $total = $data['total'];
+            $data = $es->getProject(0,$total,$time,$hos,$perst,$pered);
+        }
 
         return json($data)->options(['json_encode_param'=>JSON_PRETTY_PRINT|JSON_UNESCAPED_UNICODE]);
     }
@@ -72,7 +77,11 @@ class Elastic
         }
 
         $es = new apiElastic();
-        $data = $es->getPhoto(0,500,$is_select);
+        $data = $es->getPhoto(0,1,$is_select);
+        if($data)
+        {
+            $data = $es->getPhoto(0,$data['total'],$is_select);
+        }
 
         return json($data)->options(['json_encode_param'=>JSON_PRETTY_PRINT|JSON_UNESCAPED_UNICODE]);
     }
@@ -85,7 +94,11 @@ class Elastic
         }
 
         $es = new apiElastic();
-        $data = $es->getCell(0,500,$is_select);
+        $data = $es->getCell(0,1,$is_select);
+        if($data)
+        {
+            $data = $es->getPhoto(0,$data['total'],$is_select);
+        }
 
         return json($data)->options(['json_encode_param'=>JSON_PRETTY_PRINT|JSON_UNESCAPED_UNICODE]);
     }

@@ -42,7 +42,7 @@ class Elastic
             $perst = 0;
         }
         if($pered == null){
-            $pered = 100;
+            $pered = 10000;
         }
         if($from == null){
             $from = 0;

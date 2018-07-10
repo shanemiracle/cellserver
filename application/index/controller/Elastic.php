@@ -30,6 +30,7 @@ class Elastic
     {
         $time = Request::instance()->param('time');
         $hos = Request::instance()->param('hos');
+        $size = Request::instance()->param('size');
         $perst = Request::instance()->param('perst');
         $pered = Request::instance()->param('pered');
         $es = new apiElastic();
@@ -37,16 +38,20 @@ class Elastic
             $time = "00000000000000";
         }
         if($perst == null){
-            $per = -1;
+            $per = 0;
         }
         if($pered == null){
             $per = 100;
         }
+
         $data = $es->getProject(0,1,$time,$hos,$perst,$pered);
         if($data)
         {
-            $total = $data['total'];
-            $data = $es->getProject(0,$total,$time,$hos,$perst,$pered);
+            if($size == null )
+            {
+                $size = $data['total'];
+            }
+            $data = $es->getProject(0,$size,$time,$hos,$perst,$pered);
         }
 
         return json($data)->options(['json_encode_param'=>JSON_PRETTY_PRINT|JSON_UNESCAPED_UNICODE]);

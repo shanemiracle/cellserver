@@ -46,7 +46,8 @@ class apiElastic
             'body'=>[
                 'settings'=>[
                     'number_of_shards'=>3,
-                    'number_of_replicas'=>0
+                    'number_of_replicas'=>0,
+                    'max_result_window'=>1000000
 
                 ],
                 'mappings'=>[
@@ -91,7 +92,8 @@ class apiElastic
             'body'=>[
                 'settings'=>[
                     'number_of_shards'=>5,
-                    'number_of_replicas'=>0
+                    'number_of_replicas'=>0,
+                    'max_result_window'=>1000000
 
                 ],
                 'mappings'=>[
@@ -103,7 +105,8 @@ class apiElastic
                             'file_id'=>['type'=>'keyword'],
                             'file_name'=>['type'=>'keyword'],
                             'is_select_check'=>['type'=>'byte'],
-                            'slide_no'=>['type'=>'byte']
+                            'slide_no'=>['type'=>'byte'],
+                            'end_time'=>['type'=>'keyword']
                         ]
                     ]
                 ]
@@ -120,7 +123,8 @@ class apiElastic
             'body'=>[
                 'settings'=>[
                     'number_of_shards'=>5,
-                    'number_of_replicas'=>0
+                    'number_of_replicas'=>0,
+                    'max_result_window'=>1000000
 
                 ],
                 'mappings'=>[
@@ -138,7 +142,8 @@ class apiElastic
                             'cell_type'=>['type'=>'integer'],
                             'is_select_check'=>['type'=>'byte'],
                             'slide_no'=>['type'=>'byte'],
-                            'photo_type'=>['type'=>'byte']
+                            'photo_type'=>['type'=>'byte'],
+                            'end_time'=>['type'=>'keyword']
                         ]
                     ]
                 ]

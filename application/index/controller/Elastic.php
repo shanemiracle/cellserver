@@ -34,7 +34,7 @@ class Elastic
         $pered = Request::instance()->param('per_ed');
         $es = new apiElastic();
         if($time==null){
-            $time = "2000-01-01 00:00:00";
+            $time = "00000000000000";
         }
         if($perst == null){
             $per = -1;

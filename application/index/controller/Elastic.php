@@ -30,6 +30,7 @@ class Elastic
     {
         $time = Request::instance()->param('time');
         $hos = Request::instance()->param('hos');
+        $from = Request::instance()->param('from');
         $size = Request::instance()->param('size');
         $perst = Request::instance()->param('perst');
         $pered = Request::instance()->param('pered');
@@ -43,16 +44,23 @@ class Elastic
         if($pered == null){
             $per = 100;
         }
-
-        $data = $es->getProject(0,1,$time,$hos,$perst,$pered);
-        if($data)
-        {
-            if($size == null )
-            {
-                $size = $data['total'];
-            }
-            $data = $es->getProject(0,$size,$time,$hos,$perst,$pered);
+        if($from == null){
+            $from = 0;
         }
+
+        if($size == null){
+            $size = 10000;
+        }
+        else{
+            if($size > 10000)
+            {
+                $size = 10000;
+            }
+        }
+
+
+        $data = $es->getProject($from,$size,$time,$hos,$perst,$pered);
+
 
         return json($data)->options(['json_encode_param'=>JSON_PRETTY_PRINT|JSON_UNESCAPED_UNICODE]);
     }
@@ -76,35 +84,62 @@ class Elastic
 
     public function photo()
     {
+        $from = Request::instance()->param('from');
+        $size = Request::instance()->param('size');
         $is_select = Request::instance()->param('is_select');
         if( null == $is_select ){
             $is_select = 1;
         }
 
-        $es = new apiElastic();
-        $data = $es->getPhoto(0,1,$is_select);
-        if($data)
-        {
-            $data = $es->getPhoto(0,$data['total'],$is_select);
+        if($from == null){
+            $from = 0;
         }
+
+        if($size == null){
+            $size = 10000;
+        }
+        else{
+            if($size > 10000)
+            {
+                $size = 10000;
+            }
+        }
+
+        $es = new apiElastic();
+        $data = $es->getPhoto($from,$size,$is_select);
+
 
         return json($data)->options(['json_encode_param'=>JSON_PRETTY_PRINT|JSON_UNESCAPED_UNICODE]);
     }
 
     public function cell()
     {
+        $from = Request::instance()->param('from');
+        $size = Request::instance()->param('size');
         $is_select = Request::instance()->param('is_select');
         if( null == $is_select ){
             $is_select = 1;
         }
 
-        $es = new apiElastic();
-        $data = $es->getCell(0,1,$is_select);
-        if($data)
-        {
-            $data = $es->getCell(0,$data['total'],$is_select);
+        if($from == null){
+            $from = 0;
         }
 
+        if($size == null){
+            $size = 10000;
+        }
+        else{
+            if($size > 10000)
+            {
+                $size = 10000;
+            }
+        }
+
+
+        $es = new apiElastic();
+
+        $data = $es->getCell($from,$size,$is_select);
+        
         return json($data)->options(['json_encode_param'=>JSON_PRETTY_PRINT|JSON_UNESCAPED_UNICODE]);
     }
 

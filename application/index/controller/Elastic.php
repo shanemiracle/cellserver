@@ -97,7 +97,7 @@ class Elastic
         $data = $es->getCell(0,1,$is_select);
         if($data)
         {
-            $data = $es->getPhoto(0,$data['total'],$is_select);
+            $data = $es->getCell(0,$data['total'],$is_select);
         }
 
         return json($data)->options(['json_encode_param'=>JSON_PRETTY_PRINT|JSON_UNESCAPED_UNICODE]);

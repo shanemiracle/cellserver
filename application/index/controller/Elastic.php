@@ -55,7 +55,7 @@ class Elastic
     public function projectLine()
     {
         $es = new apiElastic();
-        $data = $es->getProject(0,500,"2000-01-01 00:00:00",null,0);
+        $data = $es->getProject(0,500,"00000000000000",null,0,100);
 
         $r_data = [];
 

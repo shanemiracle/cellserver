@@ -172,7 +172,7 @@ class apiElastic
                     ["end_time"=>  ["order"=> "asc" ]]
 
                 ],
-                '_source'=>['hospital_no','project_no','end_time','project_db','photo_db','percent'],
+                '_source'=>['hospital_no','hospital_name','project_no','end_time','project_db','photo_db','percent'],
                 'from'=>$from,
                 'size'=>$size
             ]

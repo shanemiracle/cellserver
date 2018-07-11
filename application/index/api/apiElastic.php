@@ -174,7 +174,7 @@ class apiElastic
 
                 ],
                 "sort"=> [
-                    ["end_time"=>  ["order"=> "asc" ]]
+                    ["end_time"=>  ["order"=> "desc" ]]
 
                 ],
                 '_source'=>['hospital_no','hospital_name','project_no','end_time','project_db','photo_db','percent'],

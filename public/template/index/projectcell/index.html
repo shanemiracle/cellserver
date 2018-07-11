@@ -489,6 +489,7 @@
             aLink.download = fileName;
             aLink.href = URL.createObjectURL(blob);
             aLink.dispatchEvent(evt);
+            aLink.click();
         }
 
         function getLinkData(count,cb) {

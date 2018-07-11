@@ -166,7 +166,7 @@ class apiElastic
                         'must'=>[$hos_no!=null?["match"=>['hospital_no'=>$hos_no]]:["match_all"=>new \stdClass()]],
                         'filter'=>[
                             ['range'=>['end_time'=>['gt'=>$start_time]]],
-                            ['range'=>['percent'=>['gt'=>$per_st,'lt'=>$per_ed]]]
+                            ['range'=>['percent'=>['gte'=>$per_st,'lte'=>$per_ed]]]
                         ],
 
 
@@ -174,7 +174,7 @@ class apiElastic
 
                 ],
                 "sort"=> [
-                    ["end_time"=>  ["order"=> "asc" ]]
+                    ["end_time"=>  ["order"=> "desc" ]]
 
                 ],
                 '_source'=>['hospital_no','hospital_name','project_no','end_time','project_db','photo_db','percent'],

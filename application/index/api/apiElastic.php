@@ -166,7 +166,7 @@ class apiElastic
                         'must'=>[$hos_no!=null?["match"=>['hospital_no'=>$hos_no]]:["match_all"=>new \stdClass()]],
                         'filter'=>[
                             ['range'=>['end_time'=>['gt'=>$start_time]]],
-                            ['range'=>['percent'=>['gt'=>$per_st,'lt'=>$per_ed]]]
+                            ['range'=>['percent'=>['egt'=>$per_st,'elt'=>$per_ed]]]
                         ],
 
 

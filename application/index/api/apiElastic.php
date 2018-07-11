@@ -193,6 +193,8 @@ class apiElastic
 
         if(array_key_exists('hits',$response))
         {
+            $ret_code = 0;
+            $ret_desc = 'ok';
             $all = $response['hits'];
             $total = $all['total'];
             $time = $response['took'];
@@ -201,9 +203,13 @@ class apiElastic
                 array_push($all_data,$r_data[$i]['_source']);
             }
         }
+        else{
+            $ret_code = -1;
+            $ret_desc = '失败';
+        }
 
 
-        return ['time'=>$time,'total'=>$total,'get_num'=>count($all_data),'data'=>$all_data];
+        return ['ret_code'=>$ret_code,'ret_desc'=>$ret_desc,'time'=>$time,'total'=>$total,'get_num'=>count($all_data),'data'=>$all_data];
     }
 
 

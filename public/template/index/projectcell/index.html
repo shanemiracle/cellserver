@@ -77,7 +77,7 @@
                                placeholder="请输入项目数量（<10000）">
                         <span class="ml-50">识别率区间:</span>
                         <input type="text" class="input-text radius rate-first" style="width:100px" placeholder="0"> ~
-                        <input type="text" class="input-text radius rate-last" style="width:100px" placeholder="100">
+                        <input type="text" class="input-text radius rate-last" style="width:100px" placeholder="10000">
                     </div>
                     <div class="filter-item">
                         <button class="btn btn-primary radius f-r ml-10" id="btn_download" name="btn_search">
@@ -477,7 +477,7 @@
                         $('.search-result').show();
                     }
                     if(cb) {
-                        var name =hosName + '在'+ $('.item-time').val()+'时间内'+'识别率在:'+param.perst+'-'+param.pered+'之间的项目.txt';
+                        var name =hosName + '在该'+ $('.item-time').val()+'时间内'+'识别率:'+param.perst+'-'+param.pered+'区间的项目.txt';
                         cb(name,JSON.stringify(res,null,4));
 
                     }

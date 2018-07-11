@@ -508,7 +508,9 @@
                 return;
             }
             $.post('/elastic/project', param, function (res) {
-                var name =hos.html() + '在'+ $('.item-time').val() + '时间内' +'识别率在:' + param.perst +'~'+param.pered+'之间的项目.txt';
+                var hosName =$('body').find('.choose-single span').html();
+                console.log(hosName);
+                var name =hosName + '在'+ $('.item-time').val() + '时间内' +'识别率在:' + param.perst +'~'+param.pered+'之间的项目.txt';
                 if (res.ret_code === 0) {
                     if (res.total) {
                         $('.res-count').html(res.total);

@@ -8,46 +8,6 @@
     <link rel="stylesheet" type="text/css" href="/template/static/css/chosen.min.css"/>
     <link rel="stylesheet" type="text/css" href="/template/static/css/jquery.steps.css">
     <style>
-        /*.progress,*/
-        /*.progress-bar,*/
-        /*.sr-only {*/
-        /*height: 14px;*/
-        /*line-height: 0*/
-        /*}*/
-
-        /*.progress {*/
-        /*overflow: hidden;*/
-        /*width: 400px;*/
-        /*border-radius: 6px;*/
-        /*-ms-border-radius: 6px;*/
-        /*-o-border-radius: 6px;*/
-        /*-moz-border-radius: 6px;*/
-        /*-webkit-border-radius: 6px;*/
-        /*border-radius: 6px*/
-        /*}*/
-
-        /*.progress i {*/
-        /*position: absolute;*/
-        /*left: -60px;*/
-        /*top: 5px;*/
-        /*}*/
-
-        /*.progress-bar {*/
-        /*width: 100%;*/
-        /*background-color: #ccc*/
-        /*}*/
-
-        /*.sr-only {*/
-        /*display: inline-block;*/
-        /*background-color: #58b957*/
-        /*}*/
-
-        /*#progress_gen {*/
-        /*position: absolute;*/
-        /*top: 55px;*/
-        /*left: 25%;*/
-        /*}*/
-
         .filter {
             padding: 20px 50px;
             text-align: center;
@@ -103,7 +63,7 @@
             </div>
             <div class="page-container" id="dv_search" style="padding:5px">
                 <!--<div class=" ">-->
-                <div class="filter  cl clearfix">
+                <div class="filter clearfix">
                     <div class="filter-item ">
                         <span class="">选择医院:</span>
                         <select id="hos_id" data-placeholder="支持按名字搜索(不选则搜索全部医院)" style="width:240px;">
@@ -353,12 +313,12 @@
             //这里要拼接下e 如果显示不出来 记得是 eval('+e+');
             var i = 0; //和for循环一样 i做计数
             var jsonData = eval(d); //接收到的数据转化为JQuery对象，由JQuery为我们处理
-            var jData = jsonData['data'];
+            var Data = jsonData['data'];
             $("<option>").attr("value", "-1").html("全选").appendTo(hos);
-            $.each(jData, function (index, objVal) { //遍历对象数组，index是数组的索引号，objVal是遍历的一个对象。
+            $.each(Data, function (index, arr) { //遍历对象数组，index是数组的索引号，objVal是遍历的一个对象。
                 //val["属性"]可取到对应的属性值。
-                $("<option>").attr("value", objVal["hospital_no"]).html(objVal[
-                        "hospital_name"] + "(" + objVal["hospital_no"].toString(16) +
+                $("<option>").attr("value", arr["hospital_no"]).html(arr[
+                        "hospital_name"] + "(" + arr["hospital_no"].toString(16) +
                     ")").appendTo(hos);
 
             });
@@ -370,9 +330,8 @@
                 display_disabled_options: false
             });
         });
+        var hosName =hos.find("option:selected").text();
 
-        //                var selectVal = $('.filter').find('#hos_id option:selected').val();
-        //                console.log(selectVal);
         //===========================表格================================
 
         //                var date_min = $('#t_datemin');
@@ -468,6 +427,8 @@
         //                });
 
         $('#btn_search').on('click', function () {
+//            console.log(hos.find('option:selected').text());
+            console.log(hosName);
             getLinkData(1);
         })
 
@@ -494,8 +455,8 @@
             var param = {
                 time: $('.item-time').val(),
                 hos: hos.val() === '-1' ? '' : hos.val(),
-                perst: $('.rate-first').val(),
-                pered: $('.rate-last').val(),
+                perst: $('.rate-first').val() ===''? 1:$('.rate-first').val(),
+                pered: $('.rate-last').val() ===''? 9999:$('.rate-last').val(),
                 size: count,
                 from: 0
             };
@@ -503,21 +464,22 @@
                 layer.msg('项目数不能超过10000')
                 return;
             }
-            if (param.perst < 0 || param.pered > 100) {
-                layer.msg('识别率不得小于0或大于100')
+            if (param.perst < 0 || param.pered > 10000) {
+                layer.msg('识别率不得小于0或大于10000')
                 return;
             }
             $.post('/elastic/project', param, function (res) {
+                var hosName =hos.find("option:selected").text();
+
                 if (res.ret_code === 0) {
-                    if (res.total) {
+                    if (res&&res.total) {
                         $('.res-count').html(res.total);
                         $('.search-result').show();
                     }
                     if(cb) {
-                        var name =res.data[0].hospital_name
-                        + '在'+ $('.item-time').val() + '时间内' +'识别率在:'+param.perst+'~'+param.pered+'之间的项目.txt';
+                        + '在'+ $('.item-time').val() + '时间内' +'识别率在:'+param.perst+'-'+param.pered+'之间的项目.txt';
 
-                        cb(name,JSON.stringify(res,null,4));
+                        cb(hosName,JSON.stringify(res,null,4));
 
 //                        downloadFile('b.txt',"123");
                     }

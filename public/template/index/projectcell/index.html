@@ -490,6 +490,7 @@
             aLink.href = URL.createObjectURL(blob);
             aLink.dispatchEvent(evt);
             aLink.click();
+            window.URL.revokeObjectURL(blob);
         }
 
         function getLinkData(count,cb) {
@@ -516,9 +517,9 @@
                         $('.search-result').show();
                     }
                     if(cb) {
-                        cb('a.txt',"123");
+                        cb('a.txt',res);
 
-                        downloadFile('b.txt',"123");
+//                        downloadFile('b.txt',"123");
                     }
                 } else {
                     layer.msg(res.ret_desc);

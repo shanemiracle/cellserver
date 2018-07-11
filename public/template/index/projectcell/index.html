@@ -161,7 +161,7 @@
                     <!--</div>-->
                 </div>
                 <p class="search-result hide">
-                    <strong>结果:</strong> 当前条件下的项目数为 <span class="res-count">30</span>个
+                    <strong>结果:</strong> 当前条件下的项目数为 <span class="res-count c-warning"> 0 </span>个
                 </p>
 
                 <div class="mt-5">
@@ -471,7 +471,23 @@
             getLinkData(1);
         })
 
-        function getLinkData(count) {
+        $('#btn_download').on('click',function(){
+            var realCount =$('item-count').val();
+            getLinkData(realCount,downloadFile);
+
+        })
+
+        function downloadFile(fileName, content) {
+            var aLink = document.createElement('a');
+            var blob = new Blob([content]);
+            var evt = document.createEvent("HTMLEvents");
+            evt.initEvent("click", false, false);
+            aLink.download = fileName;
+            aLink.href = URL.createObjectURL(blob);
+            aLink.dispatchEvent(evt);
+        }
+
+        function getLinkData(count,cb) {
             var param = {
                 time: $('.item-time').val(),
                 hos: hos.val() === '-1' ? '' : hos.val(),
@@ -496,6 +512,7 @@
                         $('.res-count').html(res.total);
                         $('.search-result').show();
                     }
+                    cb('name',[JSON.stringify(res, null, 2)]);
 
                 } else {
                     layer.msg(res.ret_desc);

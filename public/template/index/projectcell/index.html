@@ -472,16 +472,14 @@
                 var hosName =hos.find("option:selected").text();
 
                 if (res.ret_code === 0) {
-                    if (res && res.total) {
+                    if (res) {
                         $('.res-count').html(res.total);
                         $('.search-result').show();
                     }
                     if(cb) {
-                        var name =hosName + '在'+ $('.item-time').val() + '时间内' +'识别率在:'+param.perst+'-'+param.pered+'之间的项目.txt';
-
+                        var name =hosName + '在'+ $('.item-time').val()+'时间内'+'识别率在:'+param.perst+'-'+param.pered+'之间的项目.txt';
                         cb(name,JSON.stringify(res,null,4));
 
-//                        downloadFile('b.txt',"123");
                     }
                 } else {
                     layer.msg(res.ret_desc);

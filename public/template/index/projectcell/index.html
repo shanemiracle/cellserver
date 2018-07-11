@@ -474,7 +474,7 @@
                 function getLinkData(count) {
                     var param = {
                         time: $('.item-time').val(),
-                        hos: hos.val(),
+                        hos: hos.val()==='-1' ?'':hos.val(),
                         perst: $('.rate-first').val(),
                         pered: $('.rate-last').val(),
                         size: count,
@@ -488,11 +488,8 @@
                         layer.msg('识别率不得小于0或大于100')
                         return;
                     }
-                    if(param.hos ===-1){
-                        param.host ='';
-                    }
-                    console.log(param);
                     $.post('/elastic/project',param,function (res) {
+                        console.log(res);
                         if (res.ret_code === 0) {
                             console.log(res);
                             $('.res-count').text(res.total);

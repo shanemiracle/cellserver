@@ -472,10 +472,13 @@
         })
 
         $('#btn_download').on('click',function(){
-            var realCount =$('item-count').val();
+            var realCount =$('.item-count').val();
             getLinkData(realCount,downloadFile);
 
         })
+        function foo(){
+
+        }
 
         function downloadFile(fileName, content) {
             var aLink = document.createElement('a');
@@ -506,14 +509,13 @@
             }
             $.post('/elastic/project', param, function (res) {
                 if (res.ret_code === 0) {
-                    console.log(res);
                     if (res.total) {
-                        console.log(0);
                         $('.res-count').html(res.total);
                         $('.search-result').show();
                     }
-                    cb('name',[JSON.stringify(res, null, 2)]);
-
+                    if(cb) {
+                        cb('', [JSON.stringify(res, null, 2)]);
+                    }
                 } else {
                     layer.msg(res.ret_desc);
                 }

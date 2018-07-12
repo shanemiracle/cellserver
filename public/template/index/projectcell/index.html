@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <title>projectcell</title>
@@ -10,10 +9,7 @@
     <style>
         .filter {
             padding: 20px 50px;
-            text-align: center;
-            /*border:1px solid #ccc;*/
-            /*border-radius:2px ;*/
-            /*background: #ccc;*/
+            text-align: center
         }
 
         .filter .filter-item {
@@ -92,7 +88,6 @@
 <script type="text/javascript" src="/template/lib/js/chosen.jquery.min.js"></script>
 <script type="text/javascript" src="/template/lib/js/jquery.steps.min.js"></script>
 <script type="text/javascript" src="/template/lib/js/spark-md5.min.js"></script>
-
 <script>
     $(document).ready(function () {
 
@@ -152,7 +147,7 @@
 
         function getLinkData(count, cb) {
             var param = {
-                time: $('.item-time').val(),
+                time: $('.item-time').val()===''? 0 :$('.item-time').val()
                 hos: hos.val() === '-1' ? '' : hos.val(),
                 perst: $('.rate-first').val() === '' ? 1 : $('.rate-first').val(),
                 pered: $('.rate-last').val() === '' ? 9999 : $('.rate-last').val(),
@@ -176,7 +171,7 @@
                         $('.search-result').show();
                     }
                     if (cb) {
-                        var name = hosName + '在' + $('.item-time').val() +'起始时间' + '识别率:' + param.perst + '-' + param.pered + '区间的项目.txt';
+                        var name = hosName + '在' + param.time+'起始时间识别率在:' + param.perst + '-' + param.pered + '区间的项目.txt';
                         cb(name, JSON.stringify(res, null, 4));
 
                     }
@@ -186,7 +181,6 @@
 
             })
         }
-
     });
 
 

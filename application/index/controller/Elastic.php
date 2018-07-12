@@ -36,7 +36,7 @@ class Elastic
         $pered = Request::instance()->param('pered');
         $es = new apiElastic();
         if($time==null){
-            $time = "00000000000000";
+            $time = "0000000000000000";
         }
         if($perst == null){
             $perst = 0;
@@ -68,7 +68,7 @@ class Elastic
     public function projectLine()
     {
         $es = new apiElastic();
-        $data = $es->getProject(0,500,"00000000000000",null,0,100);
+        $data = $es->getProject(0,1000000,"0000000000000000",null,0,100);
 
         $r_data = [];
 

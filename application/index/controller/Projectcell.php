@@ -9,6 +9,7 @@
 namespace app\index\controller;
 
 
+use app\index\api\apiHospital;
 use app\index\api\apiProjectCell;
 use app\index\table\tableSearchProject;
 use think\controller\Rest;
@@ -18,9 +19,25 @@ use think\View;
 
 class Projectcell extends Rest
 {
+    private function attest(){
+        $attest = Session::get('attest');
+        $retData = apiHospital::apiHospitalGet($attest,0,0);
+        if( $retData ) {
+            if( $retData['ret_code'] == 0 ) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     public function index() {
+        if ($this->attest() != true) {
+            return (new View())->fetch('login/index');
+        }
 
         return (new View())->fetch('/projectcell/index');
+
     }
 
     public function ajax_list() {

@@ -11,6 +11,9 @@
         .filter {
             padding: 20px 50px;
             text-align: center;
+            /*border:1px solid #ccc;*/
+            /*border-radius:2px ;*/
+            /*background: #ccc;*/
         }
 
         .filter .filter-item {
@@ -173,7 +176,7 @@
                         $('.search-result').show();
                     }
                     if (cb) {
-                        var name = hosName + '在起始' + $('.item-time').val() + '时间' + '识别率:' + param.perst + '-' + param.pered + '区间的项目.txt';
+                        var name = hosName + '在' + $('.item-time').val() +'起始时间' + '识别率:' + param.perst + '-' + param.pered + '区间的项目.txt';
                         cb(name, JSON.stringify(res, null, 4));
 
                     }

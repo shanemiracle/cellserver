@@ -67,8 +67,38 @@ class Elastic
 
     public function projectLine()
     {
+        $time = Request::instance()->param('time');
+        $hos = Request::instance()->param('hos');
+        $from = Request::instance()->param('from');
+        $size = Request::instance()->param('size');
+        $perst = Request::instance()->param('perst');
+        $pered = Request::instance()->param('pered');
         $es = new apiElastic();
-        $data = $es->getProject(0,1000000,"0000000000000000",null,0,100);
+        if($time==null){
+            $time = "0000000000000000";
+        }
+        if($perst == null){
+            $perst = 0;
+        }
+        if($pered == null){
+            $pered = 10000;
+        }
+        if($from == null){
+            $from = 0;
+        }
+
+        if($size == null){
+            $size = 10000;
+        }
+        else{
+            if($size > 10000)
+            {
+                $size = 10000;
+            }
+        }
+
+
+        $data = $es->getProject(intval($from),intval($size),$time,$hos,intval($perst),intval($pered));
 
         $r_data = [];
 

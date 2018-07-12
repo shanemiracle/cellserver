@@ -107,7 +107,7 @@
         //医院选择框
         var hos = $("#hos_id");
         $.post('/hospital/ajax_list', null, function (d) {
-            var i = 0;
+//            var i = 0;
             var jsonData = eval(d); //接收到的数据转化为JQuery对象，由JQuery为我们处理
             var Data = jsonData['data'];
             $("<option>").attr("value", "-1").html("全部医院").appendTo(hos);

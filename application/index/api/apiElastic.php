@@ -224,7 +224,7 @@ class apiElastic
 
         if($type!= null)
         {
-            array_push($match,["match"=>['cell_type'=>$project]]);
+            array_push($match,["match"=>['cell_type'=>$type]]);
         }
 
         array_push($match,["match"=>['is_select_check'=>$is_select]]);

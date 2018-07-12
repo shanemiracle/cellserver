@@ -148,6 +148,8 @@ class Elastic
     {
         $from = Request::instance()->param('from');
         $size = Request::instance()->param('size');
+        $project = Request::instance()->param('project');
+        $type = Request::instance()->param('type');
         $is_select = Request::instance()->param('is_select');
         if( null == $is_select ){
             $is_select = 1;
@@ -170,7 +172,7 @@ class Elastic
 
         $es = new apiElastic();
 
-        $data = $es->getCell(intval($from),intval($size),intval($is_select));
+        $data = $es->getCell(intval($from),intval($size),intval($is_select),$project,$type);
 
         return json($data)->options(['json_encode_param'=>JSON_PRETTY_PRINT|JSON_UNESCAPED_UNICODE]);
     }

@@ -213,16 +213,29 @@ class apiElastic
     }
 
 
-    public function getCell($from,$size,$is_select)
+    public function getCell($from,$size,$is_select,$project,$type)
     {
         $hos =  [];
+        $match = [];
+        if($project!= null)
+        {
+            array_push($match,["match"=>['project_no'=>$project]]);
+        }
+
+        if($type!= null)
+        {
+            array_push($match,["match"=>['cell_type'=>$project]]);
+        }
+
+        array_push($match,["match"=>['is_select_check'=>$is_select]]);
+
         $params = [
             'index'=>'cell',
             'type'=>'cell',
             'body'=>[
                 'query'=>[
                     'bool'=>[
-                        'must'=>["match"=>['is_select_check'=>$is_select]],
+                        'must'=>$match,
                     ],
 
                 ],

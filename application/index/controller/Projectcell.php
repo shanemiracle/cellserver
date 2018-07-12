@@ -39,6 +39,14 @@ class Projectcell extends Rest
         return (new View())->fetch('/projectcell/index');
 
     }
+    public function chart() {
+        if ($this->attest() != true) {
+            return (new View())->fetch('login/index');
+        }
+
+        return (new View())->fetch('/projectcell/chart');
+
+    }
 
     public function ajax_list() {
         $hospital_no = Request::instance()->param('hos_no');

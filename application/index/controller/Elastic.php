@@ -143,18 +143,49 @@ class Elastic
         return json($data)->options(['json_encode_param'=>JSON_PRETTY_PRINT|JSON_UNESCAPED_UNICODE]);
     }
 
-    public function init()
+    public function initProject()
     {
         $es = new apiElastic();
         print_r($es->apiDelIndex('project'));
-        print_r($es->apiDelIndex('photo'));
-        print_r($es->apiDelIndex('cell'));
 
         print_r($es->apiAddIndexProject());
+
+        return json(['ret'=>'ok']);
+    }
+
+    public function initPhoto()
+    {
+        $es = new apiElastic();
+        print_r($es->apiDelIndex('photo'));
+
         print_r($es->apiAddIndexPhoto());
+
+        return json(['ret'=>'ok']);
+    }
+
+    public function initCell()
+    {
+        $es = new apiElastic();
+        print_r($es->apiDelIndex('cell'));
+
         print_r($es->apiAddIndexCell());
 
         return json(['ret'=>'ok']);
+    }
+
+    public function init()
+    {
+        $es = new apiElastic();
+        print_r($es->apiDelIndex('cell'));
+        print_r($es->apiDelIndex('photo'));
+        print_r($es->apiDelIndex('project'));
+
+        print_r($es->apiAddIndexCell());
+        print_r($es->apiAddIndexPhoto());
+        print_r($es->apiAddIndexProject());
+
+        return json(['ret'=>'ok']);
+
     }
 
     public function firstinit()

@@ -107,7 +107,7 @@
         //医院选择框
         var hos = $("#hos_id");
         $.post('/hospital/ajax_list', null, function (d) {
-            var i = 0; //和for循环一样 i做计数
+//            var i = 0;
             var jsonData = eval(d); //接收到的数据转化为JQuery对象，由JQuery为我们处理
             var Data = jsonData['data'];
             $("<option>").attr("value", "-1").html("全部医院").appendTo(hos);
@@ -152,7 +152,7 @@
 
         function getLinkData(count, cb) {
             var param = {
-                time: $('.item-time').val() ==='' ? 0 : $('.item-time').val(),
+                time: $('.item-time').val(),
                 hos: hos.val() === '-1' ? '' : hos.val(),
                 perst: $('.rate-first').val() === '' ? 1 : $('.rate-first').val(),
                 pered: $('.rate-last').val() === '' ? 9999 : $('.rate-last').val(),
@@ -176,8 +176,9 @@
                         $('.search-result').show();
                     }
                     if (cb) {
-                        var name = hosName + '在' + param.tiem +'起始时间,识别率:'+ param.perst + '-' + param.pered + '区间的项目.txt';
+                        var name = hosName + '在' + $('.item-time').val() +'起始时间' + '识别率:' + param.perst + '-' + param.pered + '区间的项目.txt';
                         cb(name, JSON.stringify(res, null, 4));
+
                     }
                 } else {
                     layer.msg(res.ret_desc);

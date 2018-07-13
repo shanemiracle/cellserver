@@ -429,14 +429,14 @@
     // ];
     function renderChart() {
         var param = {};
-        param.hos = hos.val();
+        param.hos = hos.val()==='-1'? '':hos.val();
         var hosName = hos.find("option:selected").text();
         $.post('/elastic/projectLine', param, function(data) {
                 console.log(hosName);
-            if(hosName){
+            // if(hosName){
             myEchart.setOption(option = {
                 title: {
-                    text: hosName + '细胞识别率',
+                    text: hosName+  '细胞识别率',
                     x: 'center'
 
                 },
@@ -527,7 +527,6 @@
                     }]
                 }
             });
-        }
 
         })
     }

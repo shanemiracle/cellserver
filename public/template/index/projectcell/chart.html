@@ -432,10 +432,11 @@
         param.hos = hos.val();
         var hosName = hos.find("option:selected").text();
         $.post('/elastic/projectLine', param, function(data) {
-                console.log(hosName);
+                // console.log(hosName);
+            if(hosName){
             myEchart.setOption(option = {
                 title: {
-                    text: '细胞识别率',
+                    text: hosName + '细胞识别率',
                     x: 'center'
 
                 },
@@ -455,8 +456,8 @@
                     },
                 },
                 legend: {
-                    right: 240,
-                    data:[hosName],
+                    right: 200,
+                    data:['识别率'],
                     backgroundColor: '#eee'
                 },
                 xAxis: {
@@ -498,7 +499,7 @@
                     type: 'inside'
                 }],
                 series: [{
-                    name:hosName,
+                    name:'识别率',
                     type: 'line',
                     smooth: true,
                     itemStyle: {
@@ -526,6 +527,7 @@
                     }]
                 }
             });
+        }
 
         })
     }

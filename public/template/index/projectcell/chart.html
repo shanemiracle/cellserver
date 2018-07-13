@@ -492,21 +492,6 @@
                 }, {
                     type: 'inside'
                 }],
-                series: {
-                    name: '识别率',
-                    type: 'line',
-                    itemStyle: {
-                        normal: {
-                            color: '#green',
-                            color0: '#333',
-                            borderColor: 'red',
-                            border0Color: '#fff'
-                        }
-                    },
-                    data: data.map(function(item) {
-                        return Math.Round(item[1] / 100);
-                    })
-                },
                 series: [{
                     name: '上海医院的',
                     type: 'line',
@@ -539,6 +524,7 @@
 
         })
     }
+    renderChart();
 
 
 

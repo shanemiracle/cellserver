@@ -445,12 +445,12 @@
                 },
                 legend: {
                     right: 200,
-                    data: hosName,
+                    data: [hosName],
                     backgroundColor: '#eee'
                 },
                 grid: {
-                    left: '15%',
-                    right: '15%',
+                    left: '25%',
+                    right: '25%',
                     bottom: '5%',
                     containLabel: true
                 },
@@ -460,9 +460,9 @@
                     })
                 },
                 yAxis: {
-                    splitLine: {
-                        show: false
-                    }
+                    // splitLine: {
+                    //     show: false
+                    // }
                 },
                 toolbox: {
                     show: true,
@@ -493,7 +493,7 @@
                     type: 'inside'
                 }],
                 series: [{
-                    name: '上海医院的',
+                    name: '识别率',
                     type: 'line',
                     smooth: true,
                     itemStyle: {

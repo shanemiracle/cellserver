@@ -432,7 +432,7 @@
         param.hos = hos.val();
         var hosName = hos.find("option:selected").text();
         $.post('/elastic/projectLine', param, function(data) {
-                // console.log(hosName);
+                console.log(hosName);
             if(hosName){
             myEchart.setOption(option = {
                 title: {

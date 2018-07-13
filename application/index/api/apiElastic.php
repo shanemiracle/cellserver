@@ -27,16 +27,16 @@ class apiElastic
     }
 
 
-    public function apiDelIndex($name)
-    {
-        $params = ['index'=>$name];
-
-        if($this->client == null){
-            return 0;
-        }
-
-        return $this->client->indices()->delete($params);
-    }
+//    public function apiDelIndex($name)
+//    {
+//        $params = ['index'=>$name];
+//
+//        if($this->client == null){
+//            return 0;
+//        }
+//
+//        return $this->client->indices()->delete($params);
+//    }
     
 
     public function apiAddIndexProject()

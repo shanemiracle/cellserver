@@ -180,7 +180,7 @@ class Elastic
     public function initProject()
     {
         $es = new apiElastic();
-        print_r($es->apiDelIndex('project'));
+       // print_r($es->apiDelIndex('project'));
 
         print_r($es->apiAddIndexProject());
 
@@ -190,7 +190,7 @@ class Elastic
     public function initPhoto()
     {
         $es = new apiElastic();
-        print_r($es->apiDelIndex('photo'));
+     //   print_r($es->apiDelIndex('photo'));
 
         print_r($es->apiAddIndexPhoto());
 
@@ -200,7 +200,7 @@ class Elastic
     public function initCell()
     {
         $es = new apiElastic();
-        print_r($es->apiDelIndex('cell'));
+      //  print_r($es->apiDelIndex('cell'));
 
         print_r($es->apiAddIndexCell());
 
@@ -210,9 +210,9 @@ class Elastic
     public function init()
     {
         $es = new apiElastic();
-        print_r($es->apiDelIndex('cell'));
-        print_r($es->apiDelIndex('photo'));
-        print_r($es->apiDelIndex('project'));
+     //   print_r($es->apiDelIndex('cell'));
+     //   print_r($es->apiDelIndex('photo'));
+     //   print_r($es->apiDelIndex('project'));
 
         print_r($es->apiAddIndexCell());
         print_r($es->apiAddIndexPhoto());

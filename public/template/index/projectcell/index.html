@@ -133,7 +133,7 @@
 
         //下载文件
         function downloadFile(fileName, content) {
-            console.log(fileName);
+            // console.log(fileName);
             var aLink = document.createElement('a');
             var blob = new Blob([content]);
             var evt = document.createEvent("HTMLEvents");
@@ -164,7 +164,6 @@
             }
             $.post('/elastic/project', param, function (res) {
                 var hosName = hos.find("option:selected").text();
-
                 if (res.ret_code === 0) {
                     if (res) {
                         $('.res-count').html(res.total);

@@ -17,7 +17,7 @@ return [
     // 应用命名空间
     'app_namespace'          => 'app',
     // 应用调试模式
-    'app_debug'              => true,
+    'app_debug'              => false,
     // 应用Trace
     'app_trace'              => true,
     // 应用模式状态
@@ -184,6 +184,12 @@ return [
        // 'host'=>'localhost:8080',
        // 'force_client_ids'=>['xiaoj'],
        // 'allow_client_ids'=>['xiaoj'],
+    ],
+
+    //配置404
+    'http_exception_template'  => [
+         404 => APP_PATH.'404.html'
+         // 500 => APP_PATH.'500.html'
     ],
 
     // +----------------------------------------------------------------------

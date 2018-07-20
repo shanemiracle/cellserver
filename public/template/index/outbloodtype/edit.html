@@ -24,10 +24,10 @@
     </nav>
     <div class="Hui-article">
         <article class="cl pd-20">
-            <h4 class='text-c'>编辑细胞类型</h4>
+            <h4 class='text-c c-yellow'>编辑细胞类型</h4>
             <form class="form form-vertical" id="form_add" action="">
                 <div class="row cl">
-                    <label class="form-label col-xs-4 col-sm-2 col-sm-offset-1">父级细胞名称:</label>
+                    <label class="form-label col-xs-4 col-sm-2 col-sm-offset-1 text-r">父级细胞名称:</label>
                     <div class="formControls col-xs-8 col-sm-6">
                         <input type="text" class="input-text radius" style="color: #7e8795" value="{$father_cell_name}"
                                id="father_cell_name" readonly>
@@ -35,7 +35,7 @@
                 </div>
 
                 <div class="row cl">
-                    <label class="form-label col-xs-4 col-sm-2 col-sm-offset-1">本细胞编号:</label>
+                    <label class="form-label col-xs-4 col-sm-2 col-sm-offset-1 text-r">本细胞编号:</label>
                     <div class="formControls col-xs-8 col-sm-6">
                         <input type="text" class="input-text radius" style="color: #7e8795" value="{$cell_type}"
                                id="cell_type" readonly>
@@ -43,7 +43,7 @@
                 </div>
 
                 <div class="row cl">
-                    <label class="form-label col-xs-4 col-sm-2 col-sm-offset-1">信息版本:</label>
+                    <label class="form-label col-xs-4 col-sm-2 col-sm-offset-1 text-r">信息版本:</label>
                     <div class="formControls col-xs-8 col-sm-6">
                         <input type="text" class="input-text radius" style="color: #7e8795" id="info_ver"
                                value="{$info_ver}" readonly>
@@ -51,7 +51,7 @@
                 </div>
 
                 <div class="row cl">
-                    <label class="form-label col-xs-4 col-sm-2 col-sm-offset-1">中文名:</label>
+                    <label class="form-label col-xs-4 col-sm-2 col-sm-offset-1 text-r">中文名:</label>
                     <div class="formControls col-xs-8 col-sm-6">
                         <input type="text" class="input-text radius" id="cn_name" value="{$cn_name}" maxlength="21"
                                autofocus required>
@@ -59,14 +59,14 @@
                 </div>
 
                 <div class="row cl">
-                    <label class="form-label col-xs-4 col-sm-2 col-sm-offset-1">英文名:</label>
+                    <label class="form-label col-xs-4 col-sm-2 col-sm-offset-1 text-r">英文名:</label>
                     <div class="formControls col-xs-8 col-sm-6">
                         <input type="text" class="input-text radius" id="en_name" value="{$en_name}" maxlength="64">
                     </div>
                 </div>
 
                 <div class="row cl">
-                    <label class="form-label col-xs-4 col-sm-2 col-sm-offset-1">是否典型细胞:</label>
+                    <label class="form-label col-xs-4 col-sm-2 col-sm-offset-1 text-r">是否典型细胞:</label>
                     <div class="formControls col-xs-8 col-sm-6">
                         <div class="">
                             <input type="checkbox" id="is_special" value="{$is_special}" name="is_special">
@@ -76,14 +76,14 @@
                 </div>
 
                 <div class="row cl">
-                    <label class="form-label col-xs-4 col-sm-2 col-sm-offset-1">缩写:</label>
+                    <label class="form-label col-xs-4 col-sm-2 col-sm-offset-1 text-r">缩写:</label>
                     <div class="formControls col-xs-8 col-sm-3">
                         <input type="text" class="input-text radius" id="abb_name" value="{$abb_name}" maxlength="7">
                     </div>
                 </div>
 
                 <div class="row cl">
-                    <label class="form-label col-xs-4 col-sm-2 col-sm-offset-1">最小尺寸:</label>
+                    <label class="form-label col-xs-4 col-sm-2 col-sm-offset-1 text-r">最小尺寸:</label>
                     <div class="formControls col-xs-3 col-sm-3">
                         <div class="input-group">
                             <input type="text" class="input-text " id="size_min" maxlength="8" value="{$size_min}"
@@ -94,7 +94,7 @@
                 </div>
 
                 <div class="row cl">
-                    <label class="form-label col-xs-4 col-sm-2 col-sm-offset-1">最大尺寸:</label>
+                    <label class="form-label col-xs-4 col-sm-2 col-sm-offset-1 text-r">最大尺寸:</label>
                     <div class="formControls col-xs-3 col-sm-3">
                         <div class="input-group">
                             <input type="text" class="input-text " id="size_max" maxlength="8" value="{$size_max}"
@@ -105,7 +105,7 @@
                 </div>
 
                 <div class="row cl">
-                    <label class="form-label col-xs-4 col-sm-2 col-sm-offset-1">颜色:</label>
+                    <label class="form-label col-xs-4 col-sm-2 col-sm-offset-1 text-r">颜色:</label>
                     <div class="formControls col-xs-3 col-sm-3">
 
                         <div class="input-group">
@@ -130,7 +130,7 @@
                 </div>
 
                 <div class="row cl">
-                    <label class="form-label col-xs-4 col-sm-2 col-sm-offset-1">图片:</label>
+                    <label class="form-label col-xs-4 col-sm-2 col-sm-offset-1 text-r">图片:</label>
                     <span class=" col-xs-8 col-sm-6">
                         <input id="input-id" name="file" type="file" multiple class="file-input">
                     </span>
@@ -140,7 +140,7 @@
 
 
                 <div class="row cl">
-                    <label class="form-label col-xs-4 col-sm-2 col-sm-offset-1">详情:</label>
+                    <label class="form-label col-xs-4 col-sm-2 col-sm-offset-1 text-r">详情:</label>
                     <div class="formControls col-xs-8 col-sm-6">
                         <!--<input type="text" class="textarea radius  text-left" value="" id="desc" placeholder="详情描述..." autofocus >-->
                         <textarea id="remark" cols rows class="textarea" placeholder="详情描述..." datatype="*10-2000"

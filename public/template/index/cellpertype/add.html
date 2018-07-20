@@ -20,23 +20,23 @@
         </nav>
         <div class="Hui-article">
             <article class="cl pd-20">
-                <h4 class='text-c'>添加细胞比例</h4>
+                <h4 class='text-c c-yellow'>添加细胞比例</h4>
 
                 <form class="form form-vertical" id="form_add" action="/cellpertype/ajax_add">
                     <div class="row cl">
-                        <label class="form-label col-xs-4 col-sm-2 col-sm-offset-1">细胞比例中文名:</label>
+                        <label class="form-label col-xs-4 col-sm-2 col-sm-offset-1 text-r">细胞比例中文名:</label>
                         <div class="formControls col-xs-8 col-sm-6">
                             <input type="text" class="input-text radius" value="" id="per_name" name="per_name" maxlength="42" required autofocus>
                         </div>
                     </div>
                     <div class="row cl">
-                        <label class="form-label col-xs-4 col-sm-2 col-sm-offset-1">细胞比例英文名:</label>
+                        <label class="form-label col-xs-4 col-sm-2 col-sm-offset-1 text-r">细胞比例英文名:</label>
                         <div class="formControls col-xs-8 col-sm-6">
                             <input type="text" class="input-text radius" value="" id="en_name" name="en_name" maxlength="120">
                         </div>
                     </div>
                     <div class="row cl">
-                        <label class="form-label col-xs-4 col-sm-2 col-sm-offset-1">表达式:</label>
+                        <label class="form-label col-xs-4 col-sm-2 col-sm-offset-1 text-r">表达式:</label>
                         <div class="formControls col-xs-8 col-sm-6">
                             <textarea id="expression" name="expression" cols rows class="textarea" placeholder="..." datatype="*10-510" maxlength="510"
                                 onkeypress="$.Huitextarealength(this,510)" onkeyup="$.Huitextarealength(this,510)">
@@ -47,7 +47,7 @@
                         </div>
                     </div>
                     <div class="row cl">
-                        <label class="form-label col-xs-4 col-sm-2 col-sm-offset-1">描述:</label>
+                        <label class="form-label col-xs-4 col-sm-2 col-sm-offset-1 text-r">描述:</label>
                         <div class="formControls col-xs-8 col-sm-6">
                             <textarea id="remark" name="remark" cols rows class="textarea" placeholder="..." datatype="*10-1000" maxlength="1000" onkeypress="$.Huitextarealength(this,1000)"
                                 onkeyup="$.Huitextarealength(this,1000)"></textarea>
@@ -59,8 +59,8 @@
 
 
                     <div class="row cl">
-                        <div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-3">
-                            <input type="button" id="btnSubmit" class="btn btn-primary radius text-c" value="提交">
+                        <div class="text-c">
+                            <input type="button" id="btnSubmit" class="btn btn-primary radius text-c" value="提交" style='width:10%'>
                         </div>
                     </div>
                 </form>

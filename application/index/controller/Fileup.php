@@ -36,11 +36,9 @@ class Fileup
 
             $retArray = apiFile::apiFileUp($md5,$size,$tpye);
             if($retArray){
-
                 if( $retArray['ret_code'] != 0) {
                     return json_encode($retArray);
                 }
-
                 $retArray1 = apiFile::apiFileDataUp($md5,$size,$tpye,$retArray['web_name'],$retArray['server_id'],$retArray['flag_index']);
 
                 if($retArray1) {

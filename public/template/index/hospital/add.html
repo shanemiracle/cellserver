@@ -24,10 +24,10 @@
 
         <div class="Hui-article">
             <article class="cl pd-20">
-                <h4 class='text-c'>添加医院</h4>
+                <h4 class='text-c c-yellow'>添加医院</h4>
                 <form class="form form-vertical" id="hos_add" action="/hospital/ajax_add">
                     <div class="row cl">
-                        <label class="form-label col-xs-4 col-sm-2 col-sm-offset-1">
+                        <label class="form-label col-xs-4 col-sm-2 col-sm-offset-1 text-r">
                             <span class="c-red">*</span>医院编码:</label>
                         <div class="formControls col-xs-8 col-sm-6">
                             <input type="text" class="input-text radius" value="" id="hos_number" name="hos_number" maxlength="32" required>
@@ -38,14 +38,14 @@
                     </div>
 
                     <div class="row cl">
-                        <label class="form-label col-xs-4 col-sm-2 col-sm-offset-1">医院名称:</label>
+                        <label class="form-label col-xs-4 col-sm-2 col-sm-offset-1 text-r">医院名称:</label>
                         <div class="formControls col-xs-8 col-sm-6">
                             <input type="text" class="input-text radius" value="" id="hos_name" maxlength="40">
                         </div>
                     </div>
 
                     <div class="row cl">
-                        <label class="form-label col-xs-4 col-sm-2 col-sm-offset-1">地区:</label>
+                        <label class="form-label col-xs-4 col-sm-2 col-sm-offset-1 text-r">地区:</label>
                         <div class="formControls col-xs-8 col-sm-6">
                             <span class="select-box radius">
                                 <select class="select" size="1" id="zone">
@@ -54,13 +54,14 @@
                                     <option value="大连">大连</option>
                                     <option value="上海">上海</option>
                                     <option value="北京">北京</option>
+                                    <option value="成都">成都</option>
                                 </select>
                             </span>
                         </div>
                     </div>
 
                     <div class="row cl">
-                        <label class="form-label col-xs-4 col-sm-2 col-sm-offset-1">等级:</label>
+                        <label class="form-label col-xs-4 col-sm-2 col-sm-offset-1 text-r">等级:</label>
                         <div class="formControls col-xs-8 col-sm-6">
                             <span class="select-box radius">
                                 <select class="select" size="1" id="level">
@@ -81,9 +82,9 @@
                     </div>
 
                     <div class="row cl">
-                        <label class="form-label col-xs-4 col-sm-2 col-sm-offset-1">图片:</label>
+                        <label class="form-label col-xs-4 col-sm-2 col-sm-offset-1 text-r">图片:</label>
                         <span class=" col-xs-8 col-sm-6">
-                            <input id="input-id" name="file" type="file" class="file-input">
+                            <input id="input-id" name="file" type="file" class="btn-success file-input">
                         </span>
                         <input type="hidden" id="logo" value="">
                     </div>
@@ -91,7 +92,7 @@
 
                     <div class="row cl">
                         <div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-3">
-                            <input type="button" id="btnSubmit" class="btn btn-primary radius text-c" value="提交">
+                            <input type="button" id="btnSubmit" class="btn btn-primary radius text-c" value="提交" style='width:10%'>
                         </div>
                     </div>
                 </form>

@@ -25,29 +25,29 @@
             <form class="form form-vertical" id="form_add" action="">
                 <div class="row cl ">
                     <div class="text-c ">
-                        <h2 class="c-999">{$hospital_name}</h2>
-                        <h3 class="c-666">{$hard_name}</h3>
+                        <h3 class="c-999">{$hospital_name}</h2>
+                        <h4 class="c-yellow">{$hard_name}</h4>
                     </div>
                     <input type="hidden" id="hard_ver" value="{$hard_ver}">
                     <input type="hidden" id="hospital_no" value="{$hospital_no}">
                 </div>
 
                 <div class="row cl ">
-                    <label class="form-label col-xs-4 col-sm-2 col-sm-offset-1">app版本:</label>
+                    <label class="form-label text-r col-xs-4 col-sm-2 col-sm-offset-1">app版本:</label>
                     <div class="formControls col-xs-8 col-sm-6">
                         <input type="text" class="input-text radius" value="" id="app_ver" name="app_ver">
                     </div>
                 </div>
 
                 <div class="row cl ">
-                    <label class="form-label col-xs-4 col-sm-2 col-sm-offset-1">mid版本:</label>
+                    <label class="form-label text-r col-xs-4 col-sm-2 col-sm-offset-1">mid版本:</label>
                     <div class="formControls col-xs-8 col-sm-6">
                         <input type="text" class="input-text radius" value="" id="mid_ver" name="mid_ver">
                     </div>
                 </div>
 
                 <div class="row cl">
-                    <label class="form-label col-xs-4 col-sm-2 col-sm-offset-1">升级描述:</label>
+                    <label class="form-label  text-r col-xs-4 col-sm-2 col-sm-offset-1">升级描述:</label>
                     <div class="formControls col-xs-8 col-sm-6">
                         <!--<input type="text" class="textarea radius  text-left" value="" id="desc" placeholder="详情描述..." autofocus >-->
                         <textarea id="remark" name="remark" cols rows class="textarea" placeholder="升级描述..."
@@ -61,22 +61,22 @@
                     </div>
                 </div>
                 <div class="row cl">
-                    <label class="form-label col-xs-4 col-sm-2 col-sm-offset-1">配置文件:</label>
+                    <label class="form-label text-r col-xs-4 col-sm-2 col-sm-offset-1">配置文件:</label>
                     <span class=" col-xs-8 col-sm-6">
                       <input id="input-id" name="file" type="file" class="file-input">
                     </span>
                     <input type="hidden" id="up_file_id" name="up_file_id" value="" required>
                 </div>
                 <div class="row cl">
-                    <label class="form-label col-xs-4 col-sm-2 col-sm-offset-1">文件清单:</label>
+                    <label class="form-label  text-r col-xs-4 col-sm-2 col-sm-offset-1">文件清单:</label>
                     <span class=" col-xs-8 col-sm-6">
                        <input id="input-id2" name="file" type="file" multiple class="file-input">
                     </span>
                 </div>
                 <div class="row cl">
-                    <div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-3">
-                        <input type="button" id="btnSubmit" name="btnSubmit" class="btn btn-primary radius text-c"
-                               value="提交">
+                    <div class="text-c">
+                        <input type="button" id="btnSubmit" name="btnSubmit" class="btn btn-primary radius text-c "
+                               value="提交"  style='width:15%'>
                     </div>
                 </div>
             </form>

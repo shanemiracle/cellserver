@@ -62,7 +62,9 @@ class Index  extends Rest
         //     }
         // }
         // return (new View())->fetch('login/index');
-           return (new View())->fetch('index');
+//           return (new View())->fetch('index');
+
+        return phpinfo();
     }
 
     public function test() {

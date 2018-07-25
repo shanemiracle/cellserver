@@ -179,7 +179,7 @@
                     layer.alert('配置文件必须上传');
                     return;
                 }
-
+                $(this).attr("disabled","true");
                 $.post('/privatepag/ajax_add', {
                     'hospital_no': $('#hospital_no').val(),
                     'hard_ver': $('#hard_ver').val(),

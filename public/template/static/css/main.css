@@ -19,3 +19,16 @@
 .c-yellow{
   color:#eea236;
 }
+
+.tag-title{
+	background:#f9fbf7;
+	padding:5px;
+	margin-bottom:5px;
+/*	color:#fff;
+*/}
+.tag-title a{
+/*color:#fff;
+*/}
+.tag-title  span.active{
+	color:#eea236;
+}

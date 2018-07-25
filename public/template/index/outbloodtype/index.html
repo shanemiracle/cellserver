@@ -22,13 +22,13 @@
                     <span class="l">
                         <!--<a href="javascript:void(0);" id="btnAdd" class="btn btn-primary radius"><i-->
                         <!--class="Hui-iconfont Hui-iconfont-add"></i>添加细胞类型</a>-->
-                        <ol class="breadcrumb">
+                        <div class="tag-title">
                             <i class="Hui-iconfont Hui-iconfont-menu"></i>
                             <?php for($i=0;$i<$count;$i++){?>
-                            <li><a href="/outbloodtype/index?cur_cell_type={$data[$count-$i-1]['cell_type']}&cur_cell_name={$data[$count-$i-1]['cn_name']}">{$data[$count-$i-1]['cn_name']}</a></li>
+                            <a href="/outbloodtype/index?cur_cell_type={$data[$count-$i-1]['cell_type']}&cur_cell_name={$data[$count-$i-1]['cn_name']}">{$data[$count-$i-1]['cn_name']}</a>
                             <?php }?>
-                            <li class="active" id="cur_cell_type" value="{$cur_cell_type}">{$cur_cell_name}</li>
-                        </ol>
+                            <span class="active" id="cur_cell_type" value="{$cur_cell_type}">{$cur_cell_name}</span>
+                        </div>
                     </span>
                 <input type="hidden" id="cur_cell_name" value="{$cur_cell_name}">
             </div>

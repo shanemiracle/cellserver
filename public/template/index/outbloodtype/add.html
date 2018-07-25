@@ -250,7 +250,7 @@
 
         if (!patt.test(this.value)) {
             // 错误提示相关代码，边框变红、气泡提示什么的
-            console.log('输入格式不正确！');
+            layer.alert('输入格式不正确！');
         }
     });
 
@@ -268,7 +268,7 @@
 
         if (!patt.test(this.value)) {
             // 错误提示相关代码，边框变红、气泡提示什么的
-            console.log('输入格式不正确！');
+            layer.alert('输入格式不正确！');
         }
     });
 
@@ -427,7 +427,7 @@
                         parent.layer.close(index);
                     }
                     else {
-                        alert(data);
+                        layer.alert(data);
                     }
                 });
             }

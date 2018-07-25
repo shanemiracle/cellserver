@@ -75,8 +75,10 @@
                 </div>
                 <div class="row cl">
                     <div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-3">
-                        <input type="button" id="btnSubmit" name="btnSubmit" class="btn btn-primary radius text-c "
-                               value="提交"  style='width:10%'>
+                        <button type="button" id="btnSubmit" name="btnSubmit" class="btn btn-primary radius text-c "
+                          style='width:10%'>
+                               提交
+                        </button>       
                     </div>
                 </div>
             </form>
@@ -174,7 +176,7 @@
             if (form.valid()) {
 
                 if (upFile.val() == '') {
-                    alert('配置文件必须上传');
+                    layer.alert('配置文件必须上传');
                     return;
                 }
 
@@ -187,13 +189,13 @@
                     'remark': $('#remark').val()
                 }, function (data) {
                     if (data == 0) {
-                        alert('添加成功');
+                        layer.msg('添加成功');
                         location.href='/privatepag/index';
                         var index = parent.layer.getFrameIndex(window.name);
                         parent.layer.close(index);
                     }
                     else {
-                        alert(data);
+                        layer.alert(data);
                     }
                 });
             }

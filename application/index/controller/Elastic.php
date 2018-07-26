@@ -30,6 +30,7 @@ class Elastic
     {
         $time = Request::instance()->param('time');
         $hos = Request::instance()->param('hos');
+        $user = Request::instance()->param('user');
         $from = Request::instance()->param('from');
         $size = Request::instance()->param('size');
         $perst = Request::instance()->param('perst');
@@ -58,9 +59,7 @@ class Elastic
             }
         }
 
-
-        $data = $es->getProject(intval($from),intval($size),$time,$hos,intval($perst),intval($pered));
-
+        $data = $es->getProject(intval($from),intval($size),$time,$hos,$user,intval($perst),intval($pered));
 
         return json($data)->options(['json_encode_param'=>JSON_PRETTY_PRINT|JSON_UNESCAPED_UNICODE]);
     }
@@ -71,6 +70,7 @@ class Elastic
         $hos = Request::instance()->param('hos');
         $from = Request::instance()->param('from');
         $size = Request::instance()->param('size');
+        $user = Request::instance()->param('user');
         $perst = Request::instance()->param('perst');
         $pered = Request::instance()->param('pered');
         $es = new apiElastic();
@@ -98,7 +98,7 @@ class Elastic
         }
 
 
-        $data = $es->getProject(intval($from),intval($size),$time,$hos,intval($perst),intval($pered));
+        $data = $es->getProject(intval($from),intval($size),$time,$hos,$user,intval($perst),intval($pered));
 
         $r_data = [];
 

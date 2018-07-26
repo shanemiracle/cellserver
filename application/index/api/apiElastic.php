@@ -154,16 +154,27 @@ class apiElastic
     }
 
 
-    public function getProject($from,$size,$start_time,$hos_no,$per_st,$per_ed)
+    public function getProject($from,$size,$start_time,$hos_no,$user,$per_st,$per_ed)
     {
-        $hos =  [];
+        $match =  [];
+        if($hos_no!=null)
+        {
+            array_push($match,["match"=>['hospital_no'=>$hos_no]]);
+        }
+        if($user != null )
+        {
+            array_push($match,["match"=>['sign_doctor'=>$user]]);
+        }
+
         $params = [
             'index'=>'project',
             'type'=>'project',
             'body'=>[
                 'query'=>[
                     'bool'=>[
-                        'must'=>[$hos_no!=null?["match"=>['hospital_no'=>$hos_no]]:["match_all"=>new \stdClass()]],
+                        'must'=>[
+                            count($match)!=0?["match"=>$match]:["match_all"=>new \stdClass()],
+                        ],
                         'filter'=>[
                             ['range'=>['end_time'=>['gt'=>$start_time]]],
                             ['range'=>['percent'=>['gte'=>$per_st,'lte'=>$per_ed]]]

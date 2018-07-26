@@ -166,7 +166,7 @@ class apiElastic
             array_push($match,["match"=>['sign_doctor'=>$user]]);
         }
 
-        print_r($match);
+        //print(json_encode($match));
 
         $params = [
             'index'=>'project',
@@ -175,7 +175,9 @@ class apiElastic
                 'query'=>[
                     'bool'=>[
                         'must'=>[
-                            count($match)!=0?["match"=>$match]:["match_all"=>new \stdClass()],
+                            //count($match)!=0?["match"=>$match]:["match_all"=>new \stdClass()],
+                            ['match'=>['hospital_no'=>$hos_no]],
+                            ['match'=>['sign_doctor'=>$user]]
                         ],
                         'filter'=>[
                             ['range'=>['end_time'=>['gt'=>$start_time]]],

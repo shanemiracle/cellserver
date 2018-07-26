@@ -166,6 +166,8 @@ class apiElastic
             array_push($match,["match"=>['sign_doctor'=>$user]]);
         }
 
+        print_r($match);
+
         $params = [
             'index'=>'project',
             'type'=>'project',

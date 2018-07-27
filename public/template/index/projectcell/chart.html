@@ -92,8 +92,10 @@
         param.hospital_no= hos.val()== -1 ? '':hos.val()
         $.post('/doctor/ajax_list/',param, function(res) {
           var arrData = res.data;
-          $("<option>").attr("value", "0").html("全部医生").appendTo(renderDoctor);
           $('#doctor').empty();
+
+          $("<option>").attr("value", "0").html("全部医生").appendTo(renderDoctor);
+
             $.each(arrData, function(index, arr) {
                 $("<option>").attr("value", arr["doctor_no"]).html(arr[
                 "doctor_name"] +
@@ -352,7 +354,7 @@
         var hosName = hos.find("option:selected").text();
         param.hos = hos.val() === '-1' ? '' : hos.val();
         param.time = selectTime.val() === '0' ? getTime() : ''
-        param.user = hos.val() === '-1'? '':renderDoctor.val()
+        param.user = renderDoctor.val() === '0'? '':renderDoctor.val()
         $.post('/elastic/projectLine', param, function(data) {
             // console.log(data);
           // if(data.length==0){
@@ -362,14 +364,6 @@
             title: {
               text: hosName + '细胞识别率',
               x: 'center'
-            },
-            noDataLoadingOption: {
-                text: '暂无数据',
-                effectOption: {
-                    effect: {
-                        n: 0
-                    }
-                }
             },
             tooltip: {
               trigger: 'axis',

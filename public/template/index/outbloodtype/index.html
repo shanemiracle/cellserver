@@ -12,7 +12,7 @@
     <nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页
         <span class="c-gray en">&gt;</span> 细胞管理
         <span class="c-gray en">&gt;</span> 外周血细胞类型
-        <a class="btn btn-success radius r" href="javascript:location.replace(location.href);" title="刷新" style='line-height:1.6em;margin-top:3px'>
+        <a class="btn btn-success radius r" href="javascript:location.replace(location.href);" title="刷新" style="line-height:1.6em;margin-top:3px">
             <i class="Hui-iconfont">&#xe68f;</i>
         </a>
     </nav>
@@ -22,13 +22,13 @@
                     <span class="l">
                         <!--<a href="javascript:void(0);" id="btnAdd" class="btn btn-primary radius"><i-->
                         <!--class="Hui-iconfont Hui-iconfont-add"></i>添加细胞类型</a>-->
-                        <div class="tag-title">
+                        <ol class="breadcrumb">
                             <i class="Hui-iconfont Hui-iconfont-menu"></i>
                             <?php for($i=0;$i<$count;$i++){?>
-                            <a href="/outbloodtype/index?cur_cell_type={$data[$count-$i-1]['cell_type']}&cur_cell_name={$data[$count-$i-1]['cn_name']}">{$data[$count-$i-1]['cn_name']}</a>
+                            <li><a href="/outbloodtype/index?cur_cell_type={$data[$count-$i-1]['cell_type']}&cur_cell_name={$data[$count-$i-1]['cn_name']}">{$data[$count-$i-1]['cn_name']}</a></li>
                             <?php }?>
-                            <span class="active" id="cur_cell_type" value="{$cur_cell_type}">{$cur_cell_name}</span>
-                        </div>
+                            <li class="active" id="cur_cell_type" value="{$cur_cell_type}">{$cur_cell_name}</li>
+                        </ol>
                     </span>
                 <input type="hidden" id="cur_cell_name" value="{$cur_cell_name}">
             </div>
@@ -106,7 +106,7 @@
                 {
                     targets: -1,
                     data: null,
-                    defaultContent: '<a href="javascript:void(0);" id="edit" class="btn btn-primary radius"><i class="Hui-iconfont Hui-iconfont-edit"></i>详情</a>|<a href="javascript:void(0);" id="del" class="btn btn-danger radius"><i class="Hui-iconfont Hui-iconfont-del2"></i>删除</a>|<a href="javascript:void(0);" id="enter" class="btn btn-success radius"><i class="Hui-iconfont Hui-iconfont-arrow3-bottom"></i>进入子级</a>'
+                    defaultContent: '<a href="javascript:void(0);" id="edit" class="btn btn-primary radius "><i class="Hui-iconfont Hui-iconfont-edit"></i>详情</a><a href="javascript:void(0);" id="enter" class="btn btn-success radius ml-5"><i class="Hui-iconfont Hui-iconfont-arrow3-bottom"></i>进入子级</a><a href="javascript:void(0);" id="del" class="btn btn-danger radius ml-5"><i class="Hui-iconfont Hui-iconfont-del2"></i>删除</a>'
                 }
             ],
             language: {

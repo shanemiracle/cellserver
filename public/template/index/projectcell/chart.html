@@ -29,6 +29,8 @@
           <span class="">医院切换:</span>
           <select id="hos_id" data-placeholder="支持按名字搜索(不选则搜索全部医院)" style="width:240px;">
           </select>
+          <select id="doctor" data-placeholder="请选择医生" style="width:120px;">
+          </select>
           <span class="ml-10">项目范围:</span>
           <select id='date_select' class="chosen-select" style='width:120px'>
             <option value="0">最近一月</option>
@@ -42,496 +44,413 @@
   {include file='../public/template/index/common/commonJs.html'/}
   <script type="text/javascript" src="/template/lib/js/chosen.jquery.min.js"></script>
   <script type="text/javascript" src="/template/lib/echarts/3.4.0/echarts.common.min.js"></script>
-  <script type="text/javascript">
-  $('#date_select').chosen({
+    <script type="text/javascript">
+      //渲染chosen
+      $('#date_select').chosen({
+        disable_search_threshold: 10,
+        disable_search: false,
+        nherit_select_classes: true
+      })
 
-    disable_search_threshold: 10,
-    disable_search: false,
-    nherit_select_classes: true
+      var hos = $("#hos_id");
+      var selectTime = $('#date_select');
+      var renderDoctor = $('#doctor');
+      var container = document.getElementById('main');
+      var myEchart = echarts.init(container);
 
-  })
-  var hos = $("#hos_id");
-  var selectTime = $('#date_select');
-  $.post('/hospital/ajax_list', null, function(d) {
-    var jsonData = eval(d); //
-    var Data = jsonData['data'];
-    $("<option>").attr("value", "-1").html("全部医院").appendTo(hos);
-    $.each(Data, function(index, arr) { //遍历对象数组，index是数组的索引号，objVal是遍历的一个对象。
-      $("<option>").attr("value", arr["hospital_no"]).html(arr[
-          "hospital_name"] + "(" + arr["hospital_no"].toString(16) +
-        ")").appendTo(hos);
+      $.post('/hospital/ajax_list', null, function(d) {
+        if (d) {
+          var jsonData = eval(d); //
+          var Data = jsonData['data'];
+          $("<option>").attr("value", "-1").html("全部医院").appendTo(hos);
+          $.each(Data, function(index, arr) { //
+            $("<option>").attr("value", arr["hospital_no"]).html(arr[
+                "hospital_name"] + "(" + arr["hospital_no"].toString(16) +
+              ")").appendTo(hos);
+          });
+        }
+        hos.chosen({
+          no_results_text: '没有数据',
+          search_contains: true,
+          allow_single_deselect: true,
+          display_disabled_options: false
+        });
+      });
+      renderChart();
+      getDoctor();
 
-    });
-    hos.chosen({
-      no_results_text: '没有数据',
-      search_contains: true,
-      allow_single_deselect: true,
-      display_disabled_options: false
-    });
-  });
-  renderChart();
+      //切换医院时
+      hos.change(function() {
+        getDoctor()
+        renderChart();
+      })
 
-  //切换医院时
-  hos.change(function() {
-    renderChart();
-  })
-  //切换项目范围
-  selectTime.change(function() {
-    renderChart();
-  })
+      //获取医生
+      function getDoctor() {
+        var param ={};
+        param.hospital_no= hos.val()== -1 ? '':hos.val()
+        $.post('/doctor/ajax_list/',param, function(res) {
+          var arrData = res.data;
+          $('#doctor').empty();
+            $("<option>").attr("value", "0").html("全部医生").appendTo(hos);
+            $.each(arrData, function(index, arr) {
+                $("<option>").attr("value", arr["doctor_no"]).html(arr[
+                "doctor_name"] +
+                "").appendTo(renderDoctor);
+                $('#doctor').trigger("chosen:updated");
+            })
+            renderDoctor.chosen({
+                no_results_text: '没有数据',
+                search_contains: true,
+                allow_single_deselect: true,
+                display_disabled_options: false,
+            });
+
+          renderDoctor.trigger("chosen:updated")
+        })
+      }
+
+      //切换项目范围
+      selectTime.change(function() {
+        renderChart();
+      })
+
+      //切换医生时
+      renderDoctor.change(function() {
+        renderChart();
+      })
 
 
-  var container = document.getElementById('main');
-  var myEchart = echarts.init(container);
+      // var data = [
+      //     [
+      //         "2017-09-29 11:13:58 9720",
+      //         7320
+      //     ],
+      //     [
+      //         "2017-10-20 11:21:22 890000",
+      //         2012
+      //     ],
+      //     [
+      //         "2017-10-20 11:22:45 200000",
+      //         6476
+      //     ],
+      //     [
+      //         "2017-10-20 11:23:00 740000",
+      //         7120
+      //     ],
+      //     [
+      //         "2017-10-23 10:46:33 450000",
+      //         6367
+      //     ],
+      //     [
+      //         "2017-10-23 10:46:45 930000",
+      //         7299
+      //     ],
+      //     [
+      //         "2017-10-23 10:47:12 650000",
+      //         6155
+      //     ],
+      //     [
+      //         "2017-10-24 16:33:41 800000",
+      //         6932
+      //     ],
+      //     [
+      //         "2017-10-24 16:33:53 820000",
+      //         6415
+      //     ],
+      //     [
+      //         "2017-10-24 16:34:05 750000",
+      //         7570
+      //     ],
+      //     [
+      //         "2017-10-24 16:34:34 550000",
+      //         4641
+      //     ],
+      //     [
+      //         "2017-10-25 10:48:42 40000",
+      //         4618
+      //     ],
+      //     [
+      //         "2017-10-25 17:07:39 90210",
+      //         5041
+      //     ],
+      //     [
+      //         "2017-10-25 17:07:59 390000",
+      //         7641
+      //     ],
+      //     [
+      //         "2017-10-25 17:08:22 300000",
+      //         8789
+      //     ],
+      //     [
+      //         "2017-10-25 17:08:47 170000",
+      //         6666
+      //     ],
+      //     [
+      //         "2017-10-26 09:11:16 80000",
+      //         6826
+      //     ],
+      //     [
+      //         "2017-10-26 15:02:43 130000",
+      //         6769
+      //     ],
+      //     [
+      //         "2017-10-30 10:53:40 80000",
+      //         7865
+      //     ],
+      //     [
+      //         "2017-10-30 10:55:17 180000",
+      //         7008
+      //     ],
+      //     [
+      //         "2017-10-30 10:56:38 450000",
+      //         6475
+      //     ],
+      //     [
+      //         "2017-10-30 10:57:54 730000",
+      //         6597
+      //     ],
+      //     [
+      //         "2017-10-30 10:58:24 310000",
+      //         7740
+      //     ],
+      //     [
+      //         "2017-10-30 10:59:32 440000",
+      //         7432
+      //     ],
+      //     [
+      //         "2017-10-30 11:00:04 950000",
+      //         5136
+      //     ],
+      //     [
+      //         "2017-10-30 14:37:37 790000",
+      //         6356
+      //     ],
+      //     [
+      //         "2017-11-14 15:25:34 440000",
+      //         6900
+      //     ],
+      //     [
+      //         "2017-11-14 15:26:09 230000",
+      //         4966
+      //     ],
+      //     [
+      //         "2017-11-14 15:26:52 760000",
+      //         6744
+      //     ],
+      //     [
+      //         "2017-11-14 15:27:19 400000",
+      //         5344
+      //     ],
+      //     [
+      //         "2017-11-14 15:27:41 840000",
+      //         7242
+      //     ],
+      //     [
+      //         "2017-11-14 15:29:29 710000",
+      //         6520
+      //     ],
+      //     [
+      //         "2017-11-14 16:06:04 540000",
+      //         5780
+      //     ],
+      //     [
+      //         "2017-11-14 16:48:54 820000",
+      //         5640
+      //     ],
+      //     [
+      //         "2017-11-15 15:10:37 440000",
+      //         8444
+      //     ],
+      //     [
+      //         "2017-11-15 15:47:08 150000",
+      //         5404
+      //     ],
+      //     [
+      //         "2017-11-15 17:28:52 60300",
+      //         7848
+      //     ],
+      //     [
+      //         "2017-11-16 15:23:06 380000",
+      //         5618
+      //     ],
+      //     [
+      //         "2017-11-17 09:07:52 700000",
+      //         7432
+      //     ],
+      //     [
+      //         "2017-11-17 17:13:42 800000",
+      //         6461
+      //     ],
+      //     [
+      //         "2017-11-20 08:48:38 150000",
+      //         7618
+      //     ],
+      //     [
+      //         "2017-11-20 09:19:24 670000",
+      //         6932
+      //     ],
+      //     [
+      //         "2017-11-20 09:19:34 250000",
+      //         5708
+      //     ],
+      //     [
+      //         "2017-11-20 16:03:51 330000",
+      //         6120
+      //     ],
+      //     [
+      //         "2017-11-21 16:28:07 560000",
+      //         4085
+      //     ],
+      //     [
+      //         "2017-11-21 16:28:57 880000",
+      //         6709
+      //     ],
+      //     [
+      //         "2017-11-21 16:29:45 190000",
+      //         5413
+      //     ],
+      //     [
+      //         "2017-11-21 16:30:16 0000",
+      //         6232
+      //     ],
+      //     [
+      //         "2017-11-22 14:16:14 410000",
+      //         5259
+      //     ],
+      //     [
+      //         "2017-11-23 15:09:13 310000",
+      //         6694
+      //     ]
+      // ];
+      function formal(t) {
+        if (t < 10) {
+          return '0' + t
+        }
+        return t;
+      }
 
+      function getTime() {
+        var d = new Date();
+        d.setMonth(d.getMonth() - 1);
+        var t = {
+          y: d.getFullYear(),
+          M: formal(d.getMonth() + 1) + '',
+          dd: formal(d.getDate()) + '',
+          h: formal(d.getHours()) + '',
+          min: formal(d.getMinutes()) + '',
+          s: formal(d.getSeconds()) + '',
+          ms: formal(d.getMilliseconds()) + ''
+        }
+        return t.y + t.M + t.dd + t.h + t.min + t.s
+      }
+      getTime();
 
-  // app.title = '2015 年上证指数';
-  // // var data = [
-
-  //     [
-  //         "2017-09-29 11:13:58 9720",
-  //         7320
-  //     ],
-  //     [
-  //         "2017-10-20 11:21:22 890000",
-  //         2012
-  //     ],
-  //     [
-  //         "2017-10-20 11:22:45 200000",
-  //         6476
-  //     ],
-  //     [
-  //         "2017-10-20 11:23:00 740000",
-  //         7120
-  //     ],
-  //     [
-  //         "2017-10-23 10:46:33 450000",
-  //         6367
-  //     ],
-  //     [
-  //         "2017-10-23 10:46:45 930000",
-  //         7299
-  //     ],
-  //     [
-  //         "2017-10-23 10:47:12 650000",
-  //         6155
-  //     ],
-  //     [
-  //         "2017-10-24 16:33:41 800000",
-  //         6932
-  //     ],
-  //     [
-  //         "2017-10-24 16:33:53 820000",
-  //         6415
-  //     ],
-  //     [
-  //         "2017-10-24 16:34:05 750000",
-  //         7570
-  //     ],
-  //     [
-  //         "2017-10-24 16:34:34 550000",
-  //         4641
-  //     ],
-  //     [
-  //         "2017-10-25 10:48:42 40000",
-  //         4618
-  //     ],
-  //     [
-  //         "2017-10-25 17:07:39 90210",
-  //         5041
-  //     ],
-  //     [
-  //         "2017-10-25 17:07:59 390000",
-  //         7641
-  //     ],
-  //     [
-  //         "2017-10-25 17:08:22 300000",
-  //         8789
-  //     ],
-  //     [
-  //         "2017-10-25 17:08:47 170000",
-  //         6666
-  //     ],
-  //     [
-  //         "2017-10-26 09:11:16 80000",
-  //         6826
-  //     ],
-  //     [
-  //         "2017-10-26 15:02:43 130000",
-  //         6769
-  //     ],
-  //     [
-  //         "2017-10-30 10:53:40 80000",
-  //         7865
-  //     ],
-  //     [
-  //         "2017-10-30 10:55:17 180000",
-  //         7008
-  //     ],
-  //     [
-  //         "2017-10-30 10:56:38 450000",
-  //         6475
-  //     ],
-  //     [
-  //         "2017-10-30 10:57:54 730000",
-  //         6597
-  //     ],
-  //     [
-  //         "2017-10-30 10:58:24 310000",
-  //         7740
-  //     ],
-  //     [
-  //         "2017-10-30 10:59:32 440000",
-  //         7432
-  //     ],
-  //     [
-  //         "2017-10-30 11:00:04 950000",
-  //         5136
-  //     ],
-  //     [
-  //         "2017-10-30 14:37:37 790000",
-  //         6356
-  //     ],
-  //     [
-  //         "2017-11-14 15:25:34 440000",
-  //         6900
-  //     ],
-  //     [
-  //         "2017-11-14 15:26:09 230000",
-  //         4966
-  //     ],
-  //     [
-  //         "2017-11-14 15:26:52 760000",
-  //         6744
-  //     ],
-  //     [
-  //         "2017-11-14 15:27:19 400000",
-  //         5344
-  //     ],
-  //     [
-  //         "2017-11-14 15:27:41 840000",
-  //         7242
-  //     ],
-  //     [
-  //         "2017-11-14 15:29:29 710000",
-  //         6520
-  //     ],
-  //     [
-  //         "2017-11-14 16:06:04 540000",
-  //         5780
-  //     ],
-  //     [
-  //         "2017-11-14 16:48:54 820000",
-  //         5640
-  //     ],
-  //     [
-  //         "2017-11-15 15:10:37 440000",
-  //         8444
-  //     ],
-  //     [
-  //         "2017-11-15 15:47:08 150000",
-  //         5404
-  //     ],
-  //     [
-  //         "2017-11-15 17:28:52 60300",
-  //         7848
-  //     ],
-  //     [
-  //         "2017-11-16 15:23:06 380000",
-  //         5618
-  //     ],
-  //     [
-  //         "2017-11-17 09:07:52 700000",
-  //         7432
-  //     ],
-  //     [
-  //         "2017-11-17 17:13:42 800000",
-  //         6461
-  //     ],
-  //     [
-  //         "2017-11-20 08:48:38 150000",
-  //         7618
-  //     ],
-  //     [
-  //         "2017-11-20 09:19:24 670000",
-  //         6932
-  //     ],
-  //     [
-  //         "2017-11-20 09:19:34 250000",
-  //         5708
-  //     ],
-  //     [
-  //         "2017-11-20 16:03:51 330000",
-  //         6120
-  //     ],
-  //     [
-  //         "2017-11-21 16:28:07 560000",
-  //         4085
-  //     ],
-  //     [
-  //         "2017-11-21 16:28:57 880000",
-  //         6709
-  //     ],
-  //     [
-  //         "2017-11-21 16:29:45 190000",
-  //         5413
-  //     ],
-  //     [
-  //         "2017-11-21 16:30:16 0000",
-  //         6232
-  //     ],
-  //     [
-  //         "2017-11-22 14:16:14 410000",
-  //         5259
-  //     ],
-  //     [
-  //         "2017-11-23 15:09:13 310000",
-  //         6694
-  //     ]
-  // ];
-  function formal(t) {
-    if (t < 10) {
-      return '0' + t
-    }
-    return t;
-  }
-
-  function getTime() {
-    var d = new Date();
-    d.setMonth(d.getMonth() - 1);
-    var t = {
-      y: d.getFullYear(),
-      M: formal(d.getMonth() + 1) + '',
-      dd: formal(d.getDate()) + '',
-      h: formal(d.getHours()) + '',
-      min: formal(d.getMinutes()) + '',
-      s: formal(d.getSeconds()) + '',
-      ms: formal(d.getMilliseconds()) + ''
-    }
-    return t.y + t.M + t.dd + t.h + t.min + t.s
-  }
-
-  getTime();
-  // console.log(getTime())
-  function renderChart() {
-    var param = {};
-    var hosName = hos.find("option:selected").text();
-    param.hos = hos.val() === '-1' ? '' : hos.val();
-    param.time = selectTime.val() === '0' ? getTime() : ''
-
-    $.post('/elastic/projectLine', param, function(data) {
-      myEchart.setOption(option = {
-        title: {
-          text: hosName + '细胞识别率',
-          x: 'center'
-        },
-        tooltip: {
-          trigger: 'axis',
-          axisPointer: { // 坐标轴指示器，坐标轴触发有效
-            type: 'line', // 默认为直线，可选为：'line' | 'shadow'
-            lineStyle: { // 直线指示器样式设置
-              color: '#86b',
-              width: 2,
-              type: 'solid'
+      function renderChart() {
+        var param = {};
+        var hosName = hos.find("option:selected").text();
+        param.hos = hos.val() === '-1' ? '' : hos.val();
+        param.time = selectTime.val() === '0' ? getTime() : ''
+        param.doctor_no = renderDoctor.val()==='0'? '':renderDoctor.val()
+        $.post('/elastic/projectLine', param, function(data) {
+          if(data.length<0){
+            layer.msg('暂无数据');
+          }
+          myEchart.setOption(option = {
+            title: {
+              text: hosName + '细胞识别率',
+              x: 'center'
             },
-            shadowStyle: { // 阴影指示器样式设置
-              width: 'auto', // 阴影大小
-              color: 'rgba(150,150,150,0.3)' // 阴影颜色
-            }
-          },
-        },
-        legend: {
-          right: 200,
-          data: ['识别率'],
-          backgroundColor: '#eee'
-        },
-        xAxis: {
-          data: data.map(function(item) {
-            return item[0]
-          })
-        },
-        yAxis: {
-          // splitLine: {
-          //     show: false
-          // }
-        },
-        toolbox: {
-          show: true,
-          left: 'right',
-          color: ['#1e90ff', '#22bb22', '#4b0082', '#d2691e'],
-          feature: {
-            dataView: { //数据视图
-              show: true
+            tooltip: {
+              trigger: 'axis',
+              axisPointer: { // 坐标轴指示器，坐标轴触发有效
+                type: 'line', // 默认为直线，可选为：'line' | 'shadow'
+                lineStyle: { // 直线指示器样式设置
+                  color: '#86b',
+                  width: 2,
+                  type: 'solid'
+                },
+                shadowStyle: { // 阴影指示器样式设置
+                  width: 'auto', // 阴影大小
+                  color: 'rgba(150,150,150,0.3)' // 阴影颜色
+                }
+              },
             },
-            dataZoom: {
-              yAxisIndex: 'none'
+            legend: {
+              right: 200,
+              data: ['识别率'],
+              backgroundColor: '#eee'
             },
-            restore: {},
-            saveAsImage: {},
-            mark: {
+            xAxis: {
+              data: data.map(function(item) {
+                return item[0]
+              })
+            },
+            yAxis: {
+              // splitLine: {
+              //     show: false
+              // }
+            },
+            toolbox: {
               show: true,
-              lineStyle: {
-                width: 1,
-                color: '#1e90ff',
-                type: 'dashed'
+              left: 'right',
+              color: ['#1e90ff', '#22bb22', '#4b0082', '#d2691e'],
+              feature: {
+                dataView: { //数据视图
+                  show: true
+                },
+                dataZoom: {
+                  yAxisIndex: 'none'
+                },
+                restore: {},
+                saveAsImage: {},
+                mark: {
+                  show: true,
+                  lineStyle: {
+                    width: 1,
+                    color: '#1e90ff',
+                    type: 'dashed'
+                  }
+                },
               }
             },
-          }
-        },
-        dataZoom: [{
-          startValue: '2015-06-01'
-        }, {
-          type: 'inside'
-        }],
-        series: [{
-          name: '识别率',
-          type: 'line',
-          smooth: true,
-          itemStyle: {
-            normal: {
-              color: '#86b',
-              borderColor: 'red',
+            dataZoom: [{
+              startValue: '2015-06-01'
+            }, {
+              type: 'inside'
+            }],
+            series: [{
+              name: '识别率',
+              type: 'scatter',
+              smooth: true,
+              itemStyle: {
+                normal: {
+                  color: '#86b',
+                  borderColor: 'red',
+                }
+              },
+              data: data.map(function(item) {
+                return (item[1] / 100).toFixed(2);
+              })
+            }],
+            markLine: {
+              silent: true,
+              data: [{
+                yAxis: 20
+              }, {
+                yAxis: 40
+              }, {
+                yAxis: 60
+              }, {
+                yAxis: 80
+              }, {
+                yAxis: 100
+              }]
             }
-          },
-          data: data.map(function(item) {
-            return (item[1] / 100).toFixed(2);
-          })
-        }],
-        markLine: {
-          silent: true,
-          data: [{
-            yAxis: 20
-          }, {
-            yAxis: 40
-          }, {
-            yAxis: 60
-          }, {
-            yAxis: 80
-          }, {
-            yAxis: 100
-          }]
-        }
-      });
-
-    })
-  }
-
-
-
-  //demo
-  // var option = {
-  //     title: {
-  //         text: '细胞识别率',
-  //         subtext: '数据来自杭州智微信科有限公司',
-  //         x: 'center'
-  //     },
-  //     tooltip: {
-  //         trigger: 'axis',
-  //         axisPointer: { // 坐标轴指示器，坐标轴触发有效
-  //             type: 'line', // 默认为直线，可选为：'line' | 'shadow'
-  //             lineStyle: { // 直线指示器样式设置
-  //                 color: '#86b',
-  //                 width: 2,
-  //                 type: 'solid'
-  //             },
-  //             shadowStyle: { // 阴影指示器样式设置
-  //                 width: 'auto', // 阴影大小
-  //                 color: 'rgba(150,150,150,0.3)' // 阴影颜色
-  //             }
-  //         },
-  //     },
-  //     legend: {
-  //         // x: 'right',
-  //         right: 200,
-  //         data:['上海医院的'],
-  //         backgroundColor: '#eee'
-  //     },
-  //     // grid: {
-  //     //     left: '15%',
-  //     //     right: '15%',
-  //     //     bottom: '5%',
-  //     //     containLabel: true
-  //     // },
-  //     xAxis: {
-  //         data: data.map(function(item) {
-  //             return item[0]
-  //         })
-  //     },
-  //     yAxis: {
-  //         // splitLine : {
-  //         //     show:fal
-  //         // }
-  //     },
-  //     toolbox: {
-  //         show: true,
-  //         left: 'right',
-  //         color: ['#1e90ff', '#22bb22', '#4b0082', '#d2691e'],
-  //         feature: {
-  //             dataView: { //数据视图
-  //                 show: true
-  //             },
-  //             dataZoom: {
-  //                 yAxisIndex: 'none'
-  //             },
-  //             restore: {},
-  //             saveAsImage: {},
-  //             mark: {
-  //                 show: true,
-  //                 lineStyle: {
-  //                     width: 1,
-  //                     color: '#1e90ff',
-  //                     type: 'dashed'
-  //                 }
-  //             },
-  //         }
-  //     },
-  //     dataZoom: [{
-  //             startValue: '2015-06-01',
-  //             show: true,
-  //             // start:300,
-  //             // end:70
-  //         },
-  //         {
-  //             type: 'inside'
-  //         }
-  //     ],
-  //     series: [{
-  //         name: '上海医院的',
-  //         type: 'line',
-  //         smooth: true,
-  //         itemStyle: {
-  //             normal: {
-  //                 color: '#86b',
-  //                 // color0:'#096',
-  //                 borderColor: 'red',
-  //                 // border0Color:'#fff',
-  //                 // lineStyle: {
-  //                 //     color: '#ccc'
-  //                 // }
-  //             }
-  //         },
-  //         data: data.map(function(item) {
-  //             return (item[1] / 100).toFixed(2);
-  //             // Maths.round(1234)/100)
-  //         })
-  //     }],
-  //     markLine: {
-  //         silent: true,
-  //         data: [{
-  //             yAxis: 20
-  //         }, {
-  //             yAxis: 40
-  //         }, {
-  //             yAxis: 60
-  //         }, {
-  //             yAxis: 80
-  //         }, {
-  //             yAxis: 100
-  //         }]
-  //     }
-  // }
-  // myEchart.setOption(option)
-  </script>
+          });
+        })
+      }
+    </script>
 </body>
 
 </html>

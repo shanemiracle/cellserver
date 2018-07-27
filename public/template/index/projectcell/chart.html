@@ -351,7 +351,7 @@
         var hosName = hos.find("option:selected").text();
         param.hos = hos.val() === '-1' ? '' : hos.val();
         param.time = selectTime.val() === '0' ? getTime() : ''
-        param.doctor_no = renderDoctor.val()==='0'? '':renderDoctor.val()
+        param.user = renderDoctor.val()==='0'? '':renderDoctor.val()
         $.post('/elastic/projectLine', param, function(data) {
           if(data.length<0){
             layer.msg('暂无数据');

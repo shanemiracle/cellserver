@@ -45,6 +45,11 @@ class apiElastic
             'index'=>'project',
             'body'=>[
                 'settings'=>[
+                    'refresh_interval'=>'10s',
+                    'translog'=>[
+                        'sync_interval'=>'20s',
+                        'durability'=>'async'
+                    ],
                     'number_of_shards'=>3,
                     'number_of_replicas'=>0,
                     'max_result_window'=>1000000
@@ -90,8 +95,13 @@ class apiElastic
         $params=[
             'index'=>'photo',
             'body'=>[
+                'refresh_interval'=>'10s',
+                'translog'=>[
+                    'sync_interval'=>'20s',
+                    'durability'=>'async'
+                ],
                 'settings'=>[
-                    'number_of_shards'=>5,
+                    'number_of_shards'=>3,
                     'number_of_replicas'=>0,
                     'max_result_window'=>1000000
 
@@ -122,7 +132,12 @@ class apiElastic
             'index'=>'cell',
             'body'=>[
                 'settings'=>[
-                    'number_of_shards'=>5,
+                    'refresh_interval'=>'10s',
+                    'translog'=>[
+                        'sync_interval'=>'20s',
+                        'durability'=>'async'
+                    ],
+                    'number_of_shards'=>3,
                     'number_of_replicas'=>0,
                     'max_result_window'=>1000000
 

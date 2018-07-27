@@ -29,6 +29,7 @@
           <span class="">医院切换:</span>
           <select id="hos_id" data-placeholder="支持按名字搜索(不选则搜索全部医院)" style="width:240px;">
           </select>
+          <span class="">医生:</span>
           <select id="doctor" data-placeholder="请选择医生" style="width:120px;">
           </select>
           <span class="ml-10">项目范围:</span>
@@ -354,7 +355,7 @@
         param.user = renderDoctor.val()==='0'? '':renderDoctor.val()
         $.post('/elastic/projectLine', param, function(data) {
             console.log(data);
-          if(data.length<0){
+          if(data.length==0){
             layer.msg('暂无数据');
           }else{
           myEchart.setOption(option = {

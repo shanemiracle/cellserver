@@ -353,9 +353,10 @@
         param.time = selectTime.val() === '0' ? getTime() : ''
         param.user = renderDoctor.val()==='0'? '':renderDoctor.val()
         $.post('/elastic/projectLine', param, function(data) {
+            console.log(data);
           if(data.length<0){
             layer.msg('暂无数据');
-          }
+          }else{
           myEchart.setOption(option = {
             title: {
               text: hosName + '细胞识别率',
@@ -448,6 +449,7 @@
               }]
             }
           });
+         }
         })
       }
     </script>

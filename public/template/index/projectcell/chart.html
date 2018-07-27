@@ -92,8 +92,8 @@
         param.hospital_no= hos.val()== -1 ? '':hos.val()
         $.post('/doctor/ajax_list/',param, function(res) {
           var arrData = res.data;
+          $("<option>").attr("value", "0").html("全部医生").appendTo(renderDoctor);
           $('#doctor').empty();
-            $("<option>").attr("value", "0").html("全部医生").appendTo(hos);
             $.each(arrData, function(index, arr) {
                 $("<option>").attr("value", arr["doctor_no"]).html(arr[
                 "doctor_name"] +

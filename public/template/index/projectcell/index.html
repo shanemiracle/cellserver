@@ -149,8 +149,8 @@
             var param = {
                 time: $('.item-time').val()===''? 0 :$('.item-time').val(),
                 hos: hos.val() ==='-1'?'': hos.val(),
-                perst: $('.rate-first').val() === '' ? 1 : $('.rate-first').val(),
-                pered: $('.rate-last').val() === '' ? 9999 : $('.rate-last').val(),
+                perst: $('.rate-first').val() === '' ? 0 : $('.rate-first').val(),
+                pered: $('.rate-last').val() === '' ? 10000 : $('.rate-last').val(),
                 size: count,
                 from: 0
             };

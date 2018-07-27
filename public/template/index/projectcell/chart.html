@@ -435,6 +435,9 @@
               },
               symbolSize: 5,
               data: data.map(function(item) {
+                if(data.length==0){
+                    layer.msg('该条件下暂无数据')
+                }
                 return (item[1] / 100).toFixed(2);
               })
             }],

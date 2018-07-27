@@ -355,9 +355,9 @@
         param.user = renderDoctor.val()==='0'? '':renderDoctor.val()
         $.post('/elastic/projectLine', param, function(data) {
             // console.log(data);
-          if(data.length==0){
-            layer.msg('所选条件下暂无数据');
-          }else{
+          // if(data.length==0){
+          //   layer.msg('所选条件下暂无数据');
+          // }else{
           myEchart.setOption(option = {
             title: {
               text: hosName + '细胞识别率',
@@ -431,6 +431,7 @@
                   borderColor: 'red',
                 }
               },
+              symbolSize: 5,
               data: data.map(function(item) {
                 return (item[1] / 100).toFixed(2);
               })
@@ -450,7 +451,7 @@
               }]
             }
           });
-         }
+         // }//if
         })
       }
     </script>

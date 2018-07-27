@@ -48,7 +48,7 @@
     <script type="text/javascript">
       //渲染chosen
       $('#date_select').chosen({
-        disable_search_threshold: 10,
+        disable_search_threshold: 6,
         disable_search: false,
         nherit_select_classes: true
       })
@@ -71,6 +71,7 @@
           });
         }
         hos.chosen({
+          disable_search_threshold: 6,
           no_results_text: '没有数据',
           search_contains: true,
           allow_single_deselect: true,
@@ -104,6 +105,7 @@
             })
             renderDoctor.chosen({
                 no_results_text: '没有数据',
+                disable_search_threshold: 6,
                 search_contains: true,
                 allow_single_deselect: true,
                 display_disabled_options: false,

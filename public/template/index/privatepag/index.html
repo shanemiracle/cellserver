@@ -20,8 +20,15 @@
         <article class="cl pd-20">
             <!--<div class="page-container">-->
             <div id="tab_demo" class="HuiTab">
-                <div class="tabBar cl"><span>采集端程序</span><span>审核端程序</span><span>观察者端程序</span><span>会诊端程序</span></div>
+                <div class="tabBar cl">
+                    <span>自动采集端程序</span>
+                    <span>手动采集端程序</span>
+                    <span>审核端程序</span>
+                    <span>观察者端程序</span>
+                    <span>会诊端程序</span>
+                </div>
                 <div class="tabCon">1</div>
+                <div class="tabCon">5</div>
                 <div class="tabCon">2</div>
                 <div class="tabCon">3</div>
                 <div class="tabCon">4</div>
@@ -101,6 +108,9 @@
             }
             else if (4 == $(tabCon).eq(index).html()) {
                 hard_ver = 4;
+            }
+            else if (5 == $(tabCon).eq(index).html()) {
+                hard_ver = 5;
             }
             else {
                 hard_ver = 0;

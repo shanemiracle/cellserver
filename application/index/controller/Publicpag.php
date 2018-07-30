@@ -38,7 +38,7 @@ class Publicpag extends Rest
 
         $hard_ver = Request::instance()->param('hard_ver');
         if( $hard_ver == 1){
-            $hard_name = "采集端程序";
+            $hard_name = "自动采集端程序";
         }
         else if( $hard_ver == 2){
             $hard_name = "审核端程序";
@@ -48,6 +48,9 @@ class Publicpag extends Rest
         }
         else if( $hard_ver == 4){
             $hard_name = "会诊端程序";
+        }
+        else if( $hard_ver == 5){
+            $hard_name = "手动采集端程序";
         }
         else{
             $hard_ver = 1;

@@ -39,7 +39,7 @@ class Privatepag extends Rest
         $hospital_no = Request::instance()->param('hospital_no');
         $hospital_name = Request::instance()->param('hospital_name');
         if( $hard_ver == 1){
-            $hard_name = "采集端程序";
+            $hard_name = "自动采集端程序";
         }
         else if( $hard_ver == 2){
             $hard_name = "审核端程序";

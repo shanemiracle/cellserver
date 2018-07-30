@@ -230,7 +230,7 @@ class apiElastic
             $time = $response['took'];
             $r_data = $all['hits'];
             $all_num = count($r_data);
-            for($i =all_num; $i >0;  $i--){
+            for($i =$all_num; $i >0;  $i--){
                 array_push($all_data,$r_data[$i-1]['_source']);
             }
         }

@@ -204,7 +204,7 @@ class apiElastic
 
                 ],
                 "sort"=> [
-                    ["end_time"=>  ["order"=> "desc" ]]
+                    ["end_time"=>  ["order"=> "asc" ]]
 
                 ],
                 '_source'=>['hospital_no','hospital_name','project_no','end_time','project_db','photo_db','percent'],
@@ -229,8 +229,9 @@ class apiElastic
             $total = $all['total'];
             $time = $response['took'];
             $r_data = $all['hits'];
-            for($i =0; $i < count($r_data); $i++){
-                array_push($all_data,$r_data[$i]['_source']);
+            $all_num = count($r_data);
+            for($i =all_num; $i >0;  $i--){
+                array_push($all_data,$r_data[$i-1]['_source']);
             }
         }
         else{

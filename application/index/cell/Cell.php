@@ -10,7 +10,7 @@ use app\index\tool\RawClient;
  */
 class Cell
 {
-    public static $ip = "115.236.69.122";
+    public static $ip = "127.0.0.1";
     private $biz;
     private $downRoot;
     private $downData;
